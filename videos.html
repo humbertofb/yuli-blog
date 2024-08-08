@@ -4,35 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Videos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="dropdown">
-                <button class="dropbtn">Menú</button>
-                <div class="dropdown-content">
-                    <a href="index.html">Inicio</a>
-                    <a href="galeria.html">Galería</a>
-                    <a href="videos.html">Videos</a>
-                </div>
-            </div>
-        </nav>
+<body class="bg-yellow-100">
+    <nav class="flex justify-between items-center p-5 bg-pink-500 text-white">
+        <h1 class="text-2xl font-bold">Videos</h1>
+        <div id="menu-toggle" class="cursor-pointer">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </div>
+    </nav>
+    <div id="dropdown-menu" class="hidden bg-pink-500 text-white p-2">
+        <a href="index.html" class="block py-1 px-2">Inicio</a>
+        <a href="galeria.html" class="block py-1 px-2">Galería</a>
+    </div>
+    <header class="bg-pink-300 text-center py-3">
+        <h2 class="text-2xl text-white">Te amo mi cosita tierna 🫠🫶🏻</h2>
     </header>
-    <main>
-        <h1>Videos</h1>
-        <div class="videos">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID1" frameborder="0" allowfullscreen></iframe>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID2" frameborder="0" allowfullscreen></iframe>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID3" frameborder="0" allowfullscreen></iframe>
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST1/" data-instgrm-version="12"></blockquote>
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/INSTAGRAM_POST2/" data-instgrm-version="12"></blockquote>
+    <main class="p-10">
+        <h2 class="text-4xl font-bold text-pink-500 text-center">Videos Especiales</h2>
+        <div class="mt-5 space-y-5">
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-lg shadow-lg"></iframe>
+            </div>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-lg shadow-lg"></iframe>
+            </div>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe src="https://www.instagram.com/p/CI7t9ddpThZ/embed" frameborder="0" class="rounded-lg shadow-lg"></iframe>
+            </div>
         </div>
     </main>
-    <footer>
-        <p>Te amo ❤️</p>
-    </footer>
-    <script async src="//www.instagram.com/embed.js"></script>
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
