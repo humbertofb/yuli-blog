@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM completamente cargado");
 
-    // Inicializar Firebase
+    // Configuración de Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyBRr5Q9VTe03Vo8PKSmher5r62W0n7Ej-k",
         authDomain: "my-humber-project-319815.firebaseapp.com",
