@@ -4,34 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galería</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="dropdown">
-                <button class="dropbtn">Menú</button>
-                <div class="dropdown-content">
-                    <a href="index.html">Inicio</a>
-                    <a href="galeria.html">Galería</a>
-                    <a href="videos.html">Videos</a>
-                </div>
-            </div>
-        </nav>
+<body class="bg-purple-100">
+    <nav class="flex justify-between items-center p-5 bg-pink-500 text-white">
+        <h1 class="text-2xl font-bold">Galería</h1>
+        <div id="menu-toggle" class="cursor-pointer">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </div>
+    </nav>
+    <div id="dropdown-menu" class="hidden bg-pink-500 text-white p-2">
+        <a href="index.html" class="block py-1 px-2">Inicio</a>
+        <a href="videos.html" class="block py-1 px-2">Videos</a>
+    </div>
+    <header class="bg-pink-300 text-center py-3">
+        <h2 class="text-2xl text-white">Te amo mi cosita tierna 🫠🫶🏻</h2>
     </header>
-    <main>
-        <h1>Galería</h1>
-        <div class="gallery">
-            <img src="imagen1.jpg" alt="Imagen 1">
-            <img src="imagen2.jpg" alt="Imagen 2">
-            <img src="imagen3.jpg" alt="Imagen 3">
-            <img src="imagen4.jpg" alt="Imagen 4">
-            <img src="imagen5.jpg" alt="Imagen 5">
-            <img src="imagen6.jpg" alt="Imagen 6">
+    <main class="p-10">
+        <h2 class="text-4xl font-bold text-pink-500 text-center">Nuestra Galería</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+            <img src="https://source.unsplash.com/random/300x300?romantic" alt="Imagen 1" class="rounded-lg shadow-lg">
+            <img src="https://source.unsplash.com/random/300x300?love" alt="Imagen 2" class="rounded-lg shadow-lg">
+            <img src="https://source.unsplash.com/random/300x300?couple" alt="Imagen 3" class="rounded-lg shadow-lg">
+            <img src="https://source.unsplash.com/random/300x300?valentine" alt="Imagen 4" class="rounded-lg shadow-lg">
+            <img src="https://source.unsplash.com/random/300x300?flowers" alt="Imagen 5" class="rounded-lg shadow-lg">
+            <img src="https://source.unsplash.com/random/300x300?heart" alt="Imagen 6" class="rounded-lg shadow-lg">
         </div>
     </main>
-    <footer>
-        <p>Te amo ❤️</p>
-    </footer>
+    <script src="scripts.js"></script>
 </body>
 </html>
