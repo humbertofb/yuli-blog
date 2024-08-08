@@ -1,5 +1,20 @@
 // Asegúrate de que el DOM esté completamente cargado antes de ejecutar el código
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyBRr5Q9VTe03Vo8PKSmher5r62W0n7Ej-k",
+        authDomain: "my-humber-project-319815.firebaseapp.com",
+        projectId: "my-humber-project-319815",
+        storageBucket: "my-humber-project-319815.appspot.com",
+        messagingSenderId: "110994378936",
+        appId: "1:110994378936:web:33d8a01b82cc46c07e644d",
+        measurementId: "G-HNWTFFS4BP"
+    };
+
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     // Funcionalidad del menú
     document.getElementById('menu-toggle').addEventListener('click', function () {
         var menu = document.getElementById('dropdown-menu');
