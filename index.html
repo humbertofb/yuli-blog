@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Novia</title>
+    <title>Página Principal</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <nav>
-            <div class="dropdown">
-                <button class="dropbtn">Menú</button>
-                <div class="dropdown-content">
-                    <a href="index.html">Inicio</a>
-                    <a href="galeria.html">Galería</a>
-                    <a href="videos.html">Videos</a>
-                </div>
-            </div>
-        </nav>
+<body class="bg-blue-100">
+    <nav class="flex justify-between items-center p-5 bg-pink-500 text-white">
+        <h1 class="text-2xl font-bold">Para Mi Novia</h1>
+        <div id="menu-toggle" class="cursor-pointer">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </div>
+    </nav>
+    <div id="dropdown-menu" class="hidden bg-pink-500 text-white p-2">
+        <a href="galeria.html" class="block py-1 px-2">Galería</a>
+        <a href="videos.html" class="block py-1 px-2">Videos</a>
+    </div>
+    <header class="bg-pink-300 text-center py-3">
+        <h2 class="text-2xl text-white">Te amo mi cosita tierna 🫠🫶🏻</h2>
     </header>
-    <main>
-        <h1>Para Mi Novia</h1>
-        <p>"La distancia significa tan poco cuando alguien significa tanto."</p>
-        <img src="tu_imagen.jpg" alt="Imagen bonita">
+    <main class="p-10 text-center">
+        <h2 class="text-4xl font-bold text-pink-500">Frases para Ti</h2>
+        <p class="mt-5 text-xl text-gray-700">"La distancia no puede disminuir lo que siento por ti."</p>
+        <p class="mt-2 text-xl text-gray-700">"Cada día te quiero más que ayer."</p>
+        <img src="https://source.unsplash.com/random/800x600?love" alt="Imagen Romántica" class="mt-5 mx-auto rounded-lg shadow-lg">
     </main>
-    <footer>
-        <p>Te amo ❤️</p>
-    </footer>
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
