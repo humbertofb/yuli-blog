@@ -35,6 +35,8 @@ document.getElementById('commentForm').addEventListener('submit', function(e) {
         // Limpiar el formulario
         document.getElementById('commentForm').reset();
         loadComments(); // Recargar los comentarios
+    }).catch((error) => {
+        console.error("Error al guardar el comentario: ", error);
     });
 });
 
@@ -54,6 +56,8 @@ function loadComments() {
             `;
             commentsList.appendChild(commentElement);
         });
+    }).catch((error) => {
+        console.error("Error al cargar los comentarios: ", error);
     });
 }
 
