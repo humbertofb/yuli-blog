@@ -63,3 +63,27 @@ function loadComments() {
 
 // Cargar comentarios al inicio
 window.onload = loadComments;
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRr5Q9VTe03Vo8PKSmher5r62W0n7Ej-k",
+    authDomain: "my-humber-project-319815.firebaseapp.com",
+    projectId: "my-humber-project-319815",
+    storageBucket: "my-humber-project-319815.appspot.com",
+    messagingSenderId: "110994378936",
+    appId: "1:110994378936:web:33d8a01b82cc46c07e644d",
+    measurementId: "G-HNWTFFS4BP"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
