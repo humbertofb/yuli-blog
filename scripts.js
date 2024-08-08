@@ -52,7 +52,6 @@ function loadComments() {
 // Cargar comentarios al inicio
 window.onload = loadComments;
 
-<script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
@@ -74,4 +73,3 @@ window.onload = loadComments;
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-</script>
