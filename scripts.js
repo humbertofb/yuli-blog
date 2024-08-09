@@ -1,25 +1,25 @@
-// scripts.js
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     console.log("DOM completamente cargado");
 
-    // Inicializar Firebase
-    import initializeApp from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import getFirestore, collection, addDoc, getDocs, orderBy, query from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+    // Importar módulos dinámicamente
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js");
+    const { getFirestore, collection, addDoc, getDocs, orderBy, query } = await import("https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js");
 
     const firebaseConfig = {
-        apiKey: "AIzaSyBRr5Q9VTe03Vo8PKSmher5r62W0n7Ej-k",
-        authDomain: "my-humber-project-319815.firebaseapp.com",
-        projectId: "my-humber-project-319815",
-        storageBucket: "my-humber-project-319815.appspot.com",
-        messagingSenderId: "110994378936",
-        appId: "1:110994378936:web:33d8a01b82cc46c07e644d",
-        measurementId: "G-HNWTFFS4BP"
+  apiKey: "AIzaSyBRr5Q9VTe03Vo8PKSmher5r62W0n7Ej-k",
+  authDomain: "my-humber-project-319815.firebaseapp.com",
+  projectId: "my-humber-project-319815",
+  storageBucket: "my-humber-project-319815.appspot.com",
+  messagingSenderId: "110994378936",
+  appId: "1:110994378936:web:33d8a01b82cc46c07e644d",
     };
 
     // Inicializar la app y Firestore
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    // Resto de tu código
+});
 
     // Funcionalidad del menú
     document.getElementById('menu-toggle').addEventListener('click', function () {
