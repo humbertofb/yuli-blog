@@ -85,4 +85,4 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Cargar comentarios al inicio
     loadComments();
-});
+})
