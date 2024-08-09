@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM completamente cargado");
 
     // Inicializar Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+    import initializeApp from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import getFirestore, collection, addDoc, getDocs, orderBy, query from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyBRr5Q9VTe03Vo8PKSmher5r62W0n7Ej-k",
