@@ -1,7 +1,9 @@
 // Función para alternar el menú
 function toggleMenu() {
     const menu = document.getElementById('menu');
-    menu.classList.toggle('hidden');
+    if (menu) {
+        menu.classList.toggle('hidden');
+    }
 }
 
 // Función para manejar el envío del formulario en la página de Frases
@@ -27,5 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('respuestaForm');
     if (form) {
         form.addEventListener('submit', handleFormSubmit);
+    }
+
+    // Agregar evento al botón de menú
+    const menuToggle = document.querySelector('.menu-toggle');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', toggleMenu);
     }
 });
