@@ -25,6 +25,12 @@ header {
     font-size: 1.5rem;
     cursor: pointer;
     color: white;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#menuButton:hover {
+    background-color: #ff3333;
+    transform: scale(1.1);
 }
 
 /* Menú */
@@ -52,6 +58,12 @@ nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 1.2rem;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff3333;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Contenido principal */
@@ -69,11 +81,12 @@ main {
 .gallery img {
     width: 100%;
     border-radius: 10px;
-    transition: transform 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .gallery img:hover {
     transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Efectos especiales */
@@ -93,12 +106,14 @@ h3 {
 }
 
 button, a {
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 button:hover, a:hover {
     background-color: #ff6666;
     color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #countdown {
@@ -144,10 +159,13 @@ form button {
     cursor: pointer;
     border-radius: 5px;
     margin-top: 1rem; /* Añadido para separar más los botones */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 form button:hover {
     background-color: #ff3333;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilo de los comentarios */
@@ -171,10 +189,12 @@ form button:hover {
     color: #ff6666;
     font-size: 0.8rem;
     margin-left: 0.5rem;
+    transition: color 0.3s, transform 0.3s;
 }
 
 .comment button:hover {
     color: #ff3333;
+    transform: scale(1.1);
 }
 
 .comment .editButton {
