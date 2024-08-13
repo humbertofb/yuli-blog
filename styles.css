@@ -200,7 +200,7 @@ form button:hover {
 .comment .editButton {
     position: absolute;
     top: 0.5rem;
-    right: 1.5rem;
+    right: 3.5rem;
 }
 
 .comment .deleteButton {
