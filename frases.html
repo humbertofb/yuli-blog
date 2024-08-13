@@ -62,13 +62,17 @@
             event.preventDefault();
             const name = document.getElementById('name').value;
             const message = document.getElementById('message').value;
-            database.ref('messages').push({
+            firebase.database.ref('messages').push({
                 name: name,
                 message: message
-            });
+            });.then(() => {
             alert('Mensaje enviado');
+            
             document.getElementById('messageForm').reset();
-        });
+        }).catch((error) => {
+            console.error('Error al enviar el mensaje:', error);
+            });
+});
 
         // Mostrar comentarios
         database.ref('messages').on('value', function(snapshot) {
