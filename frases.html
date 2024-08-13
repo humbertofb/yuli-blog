@@ -42,7 +42,7 @@
     <script type="module">
         // Importar los módulos de Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
         // Configuración de Firebase
         const firebaseConfig = {
@@ -64,15 +64,30 @@
             event.preventDefault();
             const name = document.getElementById('name').value;
             const message = document.getElementById('message').value;
-            push(ref(database, 'messages'), {
-                name: name,
-                message: message
-            }).then(() => {
-                alert('Mensaje enviado');
-                document.getElementById('messageForm').reset();
-            }).catch((error) => {
-                console.error('Error al enviar el mensaje:', error);
-            });
+            const editingId = document.getElementById('messageForm').dataset.editing;
+
+            if (editingId) {
+                update(ref(database, 'messages/' + editingId), {
+                    name: name,
+                    message: message
+                }).then(() => {
+                    alert('Mensaje actualizado');
+                    document.getElementById('messageForm').reset();
+                    delete document.getElementById('messageForm').dataset.editing;
+                }).catch((error) => {
+                    console.error('Error al actualizar el mensaje:', error);
+                });
+            } else {
+                push(ref(database, 'messages'), {
+                    name: name,
+                    message: message
+                }).then(() => {
+                    alert('Mensaje enviado');
+                    document.getElementById('messageForm').reset();
+                }).catch((error) => {
+                    console.error('Error al enviar el mensaje:', error);
+                });
+            }
         });
 
         // Mostrar comentarios
@@ -83,8 +98,34 @@
                 const comment = childSnapshot.val();
                 const commentElement = document.createElement('div');
                 commentElement.classList.add('comment');
-                commentElement.innerHTML = `<strong>${comment.name}</strong><p>${comment.message}</p>`;
+                commentElement.innerHTML = `
+                    <strong>${comment.name}</strong>
+                    <p>${comment.message}</p>
+                    <button class="editButton" data-id="${childSnapshot.key}">Editar</button>
+                    <button class="deleteButton" data-id="${childSnapshot.key}">Eliminar</button>
+                `;
                 commentsContainer.appendChild(commentElement);
+            });
+
+            // Añadir eventos a los botones de eliminar
+            document.querySelectorAll('.deleteButton').forEach(button => {
+                button.addEventListener('click', function() {
+                    const commentId = this.getAttribute('data-id');
+                    remove(ref(database, 'messages/' + commentId));
+                });
+            });
+
+            // Añadir eventos a los botones de editar
+            document.querySelectorAll('.editButton').forEach(button => {
+                button.addEventListener('click', function() {
+                    const commentId = this.getAttribute('data-id');
+                    const commentElement = this.parentElement;
+                    const name = commentElement.querySelector('strong').innerText;
+                    const message = commentElement.querySelector('p').innerText;
+                    document.getElementById('name').value = name;
+                    document.getElementById('message').value = message;
+                    document.getElementById('messageForm').dataset.editing = commentId;
+                });
             });
         });
     </script>
