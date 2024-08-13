@@ -3,64 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Te amo mi cosita tierna</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-blue-100">
-    <nav class="flex justify-between items-center p-5 bg-pink-500 text-white">
-        <h1 class="text-2xl font-bold">Inicio</h1>
-        <div id="menu-toggle" class="cursor-pointer">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-        </div>
-    </nav>
-    <div id="dropdown-menu" class="hidden bg-pink-500 text-white p-2">
-        <a href="galeria.html" class="block py-1 px-2">Galería</a>
-        <a href="videos.html" class="block py-1 px-2">Videos</a>
+<body>
+    <header>
+        <h1>Te amo mi cosita tierna</h1>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav id="menu" class="hidden">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="videos.html">Videos</a></li>
+                <li><a href="frases.html">Frases</a></li>
+                <li><a href="viajes.html">Viajes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="gallery">
+        <img src="ruta/a/imagen1.jpg" alt="Imagen 1" class="zoom">
+        <img src="ruta/a/imagen2.jpg" alt="Imagen 2" class="zoom">
+        <img src="ruta/a/imagen3.jpg" alt="Imagen 3" class="zoom">
     </div>
-    <main class="p-10 text-center">
-        <h2 class="text-4xl font-bold text-pink-500">Frases para Ti ❤️</h2>
-        <p class="mt-5 text-xl text-gray-700">"Mi amor por ti arde más fuerte que cualquier llama, sin importar la distancia."
 
-<br>"Cada kilómetro que nos separa no hace más que aumentar mi deseo de tenerte a mi lado."
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('hidden');
+        }
 
-<br>"Tu ausencia enciende en mí un fuego que solo tus besos pueden apagar."
-
-<br>"Sueño con el día en que nuestros cuerpos se unan y la distancia sea solo un mal recuerdo."
-
-<br>"Mi pasión por ti atraviesa cualquier barrera que se interponga entre nosotros."
-
-<br>"Eres el deseo más profundo que mi alma jamás ha conocido."
-
-<br>"A pesar de la distancia, mi amor por ti es tan intenso como siempre."
-
-<br>"La espera solo aviva el fuego de mi deseo por ti."
-
-<br>"Cada segundo sin ti es una tortura que soportaría eternamente por el placer de tenerte."
-
-<br>"El pensamiento de tus caricias me mantiene vivo, incluso a miles de kilómetros."</p>
-        <img src="IMG_5601.jpeg" alt="Imagen Romántica" class="mt-5 mx-auto rounded-lg shadow-lg">
-        <br><p class="mt-5 text-xl text-gray-700">“La distancia nos enseña a valorar lo que tenemos, y pronto disfrutaremos de nuestro amor plenamente, sin separación.” Esto es una prueba más que la vida nos pone, pero como siempre, la vamos a poder vencer juntos, porque nada ni nadie podrá contra nosotros, lo más difícil fue conocernos y coincidir, pues ahora hay que luchar juntos por lo nuestro y salir adelante, ambos cambiaremos y seremos mejores personas y pronto cuando logremos vivir juntos, todo esfuerzo habrá valido la pena y los momentos malos sólo serán recuerdos y enseñanzas para nuestras vidas. Te amo mi cosita tierna 🫠🫶🏻 pronto te tendré aquí conmigo y seremos muy felices 😍❤️ nunca olvides cuanto te amo, siempre estarás en lo más profundo de mi corazón 🫶🏻🥰. Recuerda siempre, estamos destinados a estar juntos, por mas lejos que estemos y por más problemas que hayan entre nosotros, siempre existirá un hilo rojo que nos una y nos mantendrá unidos por toda la eternidad ♾️💘.</p>
-        <div class="bg-white shadow-md rounded-lg p-4 mt-5">
-            <h2 class="text-2xl font-bold mb-4">Comentarios</h2>
-            <form id="commentForm">
-                <div class="mb-4">
-                    <label for="username" class="block text-gray-700">Nombre:</label>
-                    <input type="text" id="username" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
-                </div>
-                <div class="mb-4">
-                    <label for="comment" class="block text-gray-700">Comentario:</label>
-                    <textarea id="comment" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required></textarea>
-                </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Enviar</button>
-            </form>
-        </div>
-        <div id="commentsList" class="bg-white shadow-md rounded-lg p-4 mt-5">
-            <!-- Los comentarios se mostrarán aquí -->
-        </div>
-    </main>
-    <script type="module" src="scripts.js"></script>
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-toggle')) {
+                const menu = document.getElementById('menu');
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            }
+        }
+    </script>
 </body>
 </html>
