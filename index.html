@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Te amo mi cosita tierna</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
 </head>
 <body>
     <header>
@@ -25,21 +26,5 @@
         <img src="ruta/a/imagen2.jpg" alt="Imagen 2" class="zoom">
         <img src="ruta/a/imagen3.jpg" alt="Imagen 3" class="zoom">
     </div>
-
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('hidden');
-        }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-toggle')) {
-                const menu = document.getElementById('menu');
-                if (!menu.classList.contains('hidden')) {
-                    menu.classList.add('hidden');
-                }
-            }
-        }
-    </script>
 </body>
 </html>
