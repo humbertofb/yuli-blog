@@ -1,30 +1,191 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Te amo mi cosita tierna</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js" defer></script>
-</head>
-<body>
-    <header>
-        <h1>Te amo mi cosita tierna</h1>
-        <div class="menu-toggle">☰</div>
-        <nav id="menu" class="hidden">
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="videos.html">Videos</a></li>
-                <li><a href="frases.html">Frases</a></li>
-                <li><a href="viajes.html">Viajes</a></li>
-            </ul>
-        </nav>
-    </header>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Plus+Jakarta+Sans%3Awght%40400%3B500%3B700%3B800"
+    />
 
-    <div class="gallery">
-        <img src="ruta/a/imagen1.jpg" alt="Imagen 1" class="zoom">
-        <img src="ruta/a/imagen2.jpg" alt="Imagen 2" class="zoom">
-        <img src="ruta/a/imagen3.jpg" alt="Imagen 3" class="zoom">
+    <title>Galileo Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-white justify-between group/design-root overflow-x-hidden"
+      style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'
+    >
+      <div>
+        <div class="flex items-center bg-white p-4 pb-2 justify-between">
+          <h2 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">The Love Book</h2>
+          <div class="flex w-12 items-center justify-end">
+            <button
+              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 bg-transparent text-[#111418] gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0"
+            >
+              <div class="text-[#111418]" data-icon="MagnifyingGlass" data-size="24px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div class="@container">
+          <div class="@[480px]:p-4">
+            <div
+              class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-xl items-center justify-center p-4"
+              style='background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%), url("https://cdn.usegalileo.ai/sdxl10/dcae08c0-263f-417f-ac40-bfe108665918.png");'
+            >
+              <div class="flex flex-col gap-2 text-center">
+                <h1
+                  class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]"
+                >
+                  Write a letter to your loved ones
+                </h1>
+                <h2 class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                  Remind them how much you love them in the future
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Popular Letter Ideas</h2>
+        <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+          <div class="flex items-stretch p-4 gap-3">
+            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
+              <div
+                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl flex flex-col"
+                style='background-image: url("https://cdn.usegalileo.ai/sdxl10/55d623fe-f041-4cce-a51e-b3627ca5176b.png");'
+              ></div>
+              <p class="text-[#111418] text-base font-medium leading-normal">To my better half</p>
+            </div>
+            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
+              <div
+                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl flex flex-col"
+                style='background-image: url("https://cdn.usegalileo.ai/stability/42a53ca2-2725-4c53-95b1-dbbdc52e4ace.png");'
+              ></div>
+              <p class="text-[#111418] text-base font-medium leading-normal">I miss you</p>
+            </div>
+          </div>
+        </div>
+        <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Start your letter</h2>
+        <div class="p-4">
+          <div class="flex items-stretch justify-between gap-4 rounded-xl">
+            <div class="flex flex-[2_2_0px] flex-col gap-4">
+              <div class="flex flex-col gap-1">
+                <p class="text-[#111418] text-base font-bold leading-tight">What's your relationship with this person?</p>
+                <p class="text-[#637588] text-sm font-normal leading-normal">Choose one of these options</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
+              >
+                <div class="text-[#111418]" data-icon="ArrowRight" data-size="18px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="truncate">Select</span>
+              </button>
+            </div>
+            <div
+              class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+              style='background-image: url("https://cdn.usegalileo.ai/sdxl10/94acf4a6-02f3-4b0e-b5b8-dcabaa66420c.png");'
+            ></div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-stretch justify-between gap-4 rounded-xl">
+            <div class="flex flex-[2_2_0px] flex-col gap-4">
+              <div class="flex flex-col gap-1">
+                <p class="text-[#111418] text-base font-bold leading-tight">How do you feel about this person?</p>
+                <p class="text-[#637588] text-sm font-normal leading-normal">You can choose more than one</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
+              >
+                <div class="text-[#111418]" data-icon="ArrowRight" data-size="18px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="truncate">Select</span>
+              </button>
+            </div>
+            <div
+              class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+              style='background-image: url("https://cdn.usegalileo.ai/sdxl10/d27d515f-2d49-4110-8015-c27be096d4c6.png");'
+            ></div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex items-stretch justify-between gap-4 rounded-xl">
+            <div class="flex flex-[2_2_0px] flex-col gap-4">
+              <div class="flex flex-col gap-1">
+                <p class="text-[#111418] text-base font-bold leading-tight">What's the occasion for this letter?</p>
+                <p class="text-[#637588] text-sm font-normal leading-normal">We have ideas for you</p>
+              </div>
+              <button
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 flex-row-reverse bg-[#f0f2f4] text-[#111418] pr-2 gap-1 text-sm font-medium leading-normal w-fit"
+              >
+                <div class="text-[#111418]" data-icon="ArrowRight" data-size="18px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                    ></path>
+                  </svg>
+                </div>
+                <span class="truncate">Select</span>
+              </button>
+            </div>
+            <div
+              class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl flex-1"
+              style='background-image: url("https://cdn.usegalileo.ai/sdxl10/ee35a92f-f816-4eeb-a524-07ac1e9eb673.png");'
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="flex gap-2 border-t border-[#f0f2f4] bg-white px-4 pb-3 pt-2">
+          <a class="just flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-[#111418]" href="#">
+            <div class="text-[#111418] flex h-8 items-center justify-center" data-icon="House" data-size="24px" data-weight="fill">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-[#111418] text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+          </a>
+          <a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#637588]" href="#">
+            <div class="text-[#637588] flex h-8 items-center justify-center" data-icon="EnvelopeOpen" data-size="24px" data-weight="regular">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M228.44,89.34l-96-64a8,8,0,0,0-8.88,0l-96,64A8,8,0,0,0,24,96V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V96A8,8,0,0,0,228.44,89.34ZM96.72,152,40,192V111.53Zm16.37,8h29.82l56.63,40H56.46Zm46.19-8L216,111.53V192ZM128,41.61l81.91,54.61-67,47.78H113.11l-67-47.78Z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-[#637588] text-xs font-medium leading-normal tracking-[0.015em]">Letters</p>
+          </a>
+          <a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#637588]" href="#">
+            <div class="text-[#637588] flex h-8 items-center justify-center" data-icon="UserCircle" data-size="24px" data-weight="regular">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM74.08,197.5a64,64,0,0,1,107.84,0,87.83,87.83,0,0,1-107.84,0ZM96,120a32,32,0,1,1,32,32A32,32,0,0,1,96,120Zm97.76,66.41a79.66,79.66,0,0,0-36.06-28.75,48,48,0,1,0-59.4,0,79.66,79.66,0,0,0-36.06,28.75,88,88,0,1,1,131.52,0Z"
+                ></path>
+              </svg>
+            </div>
+            <p class="text-[#637588] text-xs font-medium leading-normal tracking-[0.015em]">Profile</p>
+          </a>
+        </div>
+        <div class="h-5 bg-white"></div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
