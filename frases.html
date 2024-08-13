@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h3>Frases Bonitas</h3>
+        <h1>Frases Bonitas</h1>
         <button id="menuButton">☰</button>
     </header>
     <nav id="menu">
@@ -29,10 +29,13 @@
             <form id="messageForm">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" name="name" required>
-                <br><label for="message">Mensaje:</label>
+                <label for="message">Mensaje:</label>
                 <textarea id="message" name="message" required></textarea>
                 <button type="submit">Enviar</button>
             </form>
+            <div class="comments" id="comments">
+                <!-- Los comentarios se mostrarán aquí -->
+            </div>
         </section>
     </main>
     <script src="scripts.js"></script>
@@ -41,13 +44,13 @@
     <script>
         // Configuración de Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
-            authDomain: "mi-web-5402c.firebaseapp.com",
-            databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "mi-web-5402c",
-            storageBucket: "mi-web-5402c.appspot.com",
-            messagingSenderId: "31272724190",
-            appId: "1:31272724190:web:51fcc8750c51abf783844f"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Inicializar Firebase
@@ -65,6 +68,19 @@
             });
             alert('Mensaje enviado');
             document.getElementById('messageForm').reset();
+        });
+
+        // Mostrar comentarios
+        database.ref('messages').on('value', function(snapshot) {
+            const commentsContainer = document.getElementById('comments');
+            commentsContainer.innerHTML = '';
+            snapshot.forEach(function(childSnapshot) {
+                const comment = childSnapshot.val();
+                const commentElement = document.createElement('div');
+                commentElement.classList.add('comment');
+                commentElement.innerHTML = `<strong>${comment.name}</strong><p>${comment.message}</p>`;
+                commentsContainer.appendChild(commentElement);
+            });
         });
     </script>
 </body>
