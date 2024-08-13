@@ -160,16 +160,26 @@ form button:hover {
 }
 
 .comment button {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
     background: none;
     border: none;
     cursor: pointer;
     color: #ff6666;
     font-size: 0.8rem;
+    margin-left: 0.5rem;
 }
 
 .comment button:hover {
     color: #ff3333;
+}
+
+.comment .editButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 3rem;
+}
+
+.comment .deleteButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
 }
