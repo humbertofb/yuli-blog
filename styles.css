@@ -200,11 +200,25 @@ form button:hover {
 .comment .editButton {
     position: absolute;
     top: 0.5rem;
-    right: 4.5rem;
+    right: 3rem;
 }
 
 .comment .deleteButton {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
+}
+
+/* Estilo de los videos */
+.video-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.video-container video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
