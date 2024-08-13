@@ -1,29 +1,41 @@
 /* Estilos generales */
 body {
-    font-family: 'Georgia', serif; /* Fuente más elegante */
+    font-family: 'Arial', sans-serif;
+    background-color: #ffe6e6;
+    color: #333;
     margin: 0;
     padding: 0;
-    background-color: #f9f3f3; /* Color de fondo suave */
-    color: #333;
 }
 
-/* Estilo del encabezado */
+/* Encabezado */
 header {
-    background: #eab8d1; /* Color de fondo suave y romántico */
-    color: #ffffff;
-    padding: 20px 0;
+    background-color: #ff9999;
+    color: white;
+    padding: 1rem;
     text-align: center;
-    border-bottom: 2px solid #d1a6c9; /* Borde inferior para un toque elegante */
+    position: relative;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.5em; /* Tamaño de fuente más grande */
+#menuButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
-/* Estilo del menú */
+/* Menú */
 nav {
-    margin: 20px 0;
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(255, 153, 153, 0.9);
+    padding: 2rem;
 }
 
 nav ul {
@@ -32,72 +44,57 @@ nav ul {
 }
 
 nav ul li {
-    display: inline;
-    margin: 0 15px;
+    margin: 1rem 0;
 }
 
 nav ul li a {
-    color: #ffffff;
+    color: white;
     text-decoration: none;
-    font-weight: bold; /* Texto en negrita */
+    font-size: 1.2rem;
 }
 
-/* Estilo de la galería */
+/* Contenido principal */
+main {
+    padding: 2rem;
+}
+
+/* Galería */
 .gallery {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
 }
 
 .gallery img {
-    width: 300px;
-    height: auto;
-    margin: 10px;
-    border-radius: 15px; /* Bordes redondeados */
-    transition: transform 0.2s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s;
 }
 
 .gallery img:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
-/* Estilo del formulario */
-form {
-    margin: 20px auto;
-    max-width: 600px;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Efectos especiales */
+h1, h2, h3 {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-form textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
+button, a {
+    transition: background-color 0.3s, color 0.3s;
 }
 
-form button {
-    background: #d1a6c9; /* Color de botón romántico */
-    color: #ffffff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold; /* Texto en negrita */
+button:hover, a:hover {
+    background-color: #ff6666;
+    color: white;
 }
 
-form button:hover {
-    background: #c18dbf; /* Color de botón al pasar el ratón */
+#countdown {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 2rem;
 }
 
-/* Estilo de los mensajes */
-h2, h3 {
-    color: #35424a;
-    font-family: 'Georgia', serif; /* Fuente elegante para los encabezados */
+#countdown p {
+    margin: 0.5rem 0;
 }
