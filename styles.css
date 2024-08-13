@@ -18,7 +18,7 @@ header {
 
 #menuButton {
     position: absolute;
-    top: 1rem;
+    top: 0.5rem;
     right: 0.5rem;
     background: #ff6666;
     border: none;
@@ -156,4 +156,20 @@ form button:hover {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 1rem;
+    position: relative;
+}
+
+.comment button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff6666;
+    font-size: 0.8rem;
+}
+
+.comment button:hover {
+    color: #ff3333;
 }
