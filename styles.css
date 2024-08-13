@@ -18,8 +18,8 @@ header {
 
 #menuButton {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+    top: 1rem;
+    right: 1rem;
     background: #ff6666;
     border: none;
     font-size: 1.5rem;
@@ -31,7 +31,7 @@ header {
 nav {
     display: none;
     position: fixed;
-    top: 0;
+    top: 3rem;
     right: 0;
     width: 50%;
     height: 100%;
@@ -105,6 +105,10 @@ button:hover, a:hover {
     font-size: 1.5rem;
     text-align: center;
     margin-top: 2rem;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #countdown p {
@@ -139,6 +143,7 @@ form button {
     color: white;
     cursor: pointer;
     border-radius: 5px;
+    margin-top: 1rem; /* Añadido para separar más los botones */
 }
 
 form button:hover {
