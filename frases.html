@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frases</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <!-- Firebase Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
+            authDomain: "mi-web-5402c.firebaseapp.com",
+            databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app/",
+            projectId: "mi-web-5402c",
+            storageBucket: "mi-web-5402c.appspot.com",
+            messagingSenderId: "31272724190",
+            appId: "1:31272724190:web:51fcc8750c51abf783844f"
+        };
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Te amo mi cosita tierna</h1>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav id="menu" class="hidden">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="videos.html">Videos</a></li>
+                <li><a href="frases.html">Frases</a></li>
+                <li><a href="viajes.html">Viajes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h2>Frases Especiales</h2>
+    <p>"El amor no se mira, se siente."</p>
+    <p>"Eres mi razón de sonreír."</p>
+
+    <h3>Deja tu respuesta</h3>
+    <form id="respuestaForm">
+        <textarea name="respuesta" id="respuesta" required placeholder="Escribe tu respuesta aquí..."></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.getElementById('respuestaForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el envío del formulario
+
+            const respuesta = document.getElementById('respuesta').value;
+
+            // Guardar la respuesta en Firebase
+            database.ref('respuestas/').push({
+                respuesta: respuesta,
+                fecha: new Date().toISOString()
+            }).then(() => {
+                alert('Respuesta guardada exitosamente.');
+                document.getElementById('respuesta').value = ''; // Limpiar el campo
+            }).catch((error) => {
+                console.error('Error al guardar la respuesta: ', error);
+            });
+        });
+    </script>
+</body>
+</html>
