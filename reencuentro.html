@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reencuentro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Reencuentro</h1>
+        <button id="menuButton">☰</button>
+    </header>
+    <nav id="menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="frases.html">Frases</a></li>
+            <li><a href="videos.html">Videos</a></li>
+            <li><a href="viajes.html">Viajes</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>Cuenta Regresiva</h2>
+            <div id="countdown">
+                <p>Días hasta el reencuentro: <span id="daysUntilReunion"></span></p>
+                <p>Días juntos: <span id="daysTogether"></span></p>
+            </div>
+        </section>
+    </main>
+    <script src="scripts.js"></script>
+    <script>
+        // Configuración de las fechas
+        const reunionDate = new Date('2024-12-31'); // Fecha del reencuentro
+        const startDate = new Date('2023-01-01'); // Fecha de inicio de la relación
+
+        function updateCountdown() {
+            const now = new Date();
+            const daysUntilReunion = Math.ceil((reunionDate - now) / (1000 * 60 * 60 * 24));
+            const daysTogether = Math.ceil((now - startDate) / (1000 * 60 * 60 * 24));
+
+            document.getElementById('daysUntilReunion').textContent = daysUntilReunion;
+            document.getElementById('daysTogether').textContent = daysTogether;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 86400000); // Actualizar cada día
+    </script>
+</body>
+</html>
