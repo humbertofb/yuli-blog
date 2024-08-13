@@ -1,39 +1,15 @@
-// Función para alternar el menú
-function toggleMenu() {
-    const menu = document.getElementById('menu');
-    if (menu) {
-        menu.classList.toggle('hidden');
+document.getElementById('menuButton').addEventListener('click', function() {
+    document.getElementById('menu').style.display = 'block';
+});
+
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('#menu') && !event.target.closest('#menuButton')) {
+        document.getElementById('menu').style.display = 'none';
     }
-}
+});
 
-// Función para manejar el envío del formulario en la página de Frases
-function handleFormSubmit(event) {
-    event.preventDefault(); // Evitar el envío del formulario
-
-    const respuesta = document.getElementById('respuesta').value;
-
-    // Guardar la respuesta en Firebase
-    database.ref('respuestas/').push({
-        respuesta: respuesta,
-        fecha: new Date().toISOString()
-    }).then(() => {
-        alert('Respuesta guardada exitosamente.');
-        document.getElementById('respuesta').value = ''; // Limpiar el campo
-    }).catch((error) => {
-        console.error('Error al guardar la respuesta: ', error);
+document.querySelectorAll('nav ul li a').forEach(function(link) {
+    link.addEventListener('click', function() {
+        document.getElementById('menu').style.display = 'none';
     });
-}
-
-// Agregar el evento al formulario cuando el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('respuestaForm');
-    if (form) {
-        form.addEventListener('submit', handleFormSubmit);
-    }
-
-    // Agregar evento al botón de menú
-    const menuToggle = document.querySelector('.menu-toggle');
-    if (menuToggle) {
-        menuToggle.addEventListener('click', toggleMenu);
-    }
 });
