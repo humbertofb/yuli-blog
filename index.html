@@ -23,9 +23,48 @@
         <section>
             <h2>Bienvenida</h2>
             <p>Frases e imágenes románticas para ti.</p>
-            <!-- Aquí puedes agregar más contenido -->
+            <div class="gallery">
+                <img src="images/foto1.jpg" alt="Foto 1">
+                <img src="images/foto2.jpg" alt="Foto 2">
+                <img src="images/foto3.jpg" alt="Foto 3">
+            </div>
+            <div class="quote-of-the-day">
+                <h3>Frase del Día</h3>
+                <p>"El amor no tiene cura, pero es la única cura para todos los males."</p>
+            </div>
+            <div class="countdown">
+                <h3>Próximo Evento Especial</h3>
+                <p>Cuenta regresiva hasta nuestro próximo aniversario:</p>
+                <div id="eventCountdown"></div>
+            </div>
+            <div class="video-welcome">
+                <h3>Video de Bienvenida</h3>
+                <video controls>
+                    <source src="videos/welcome.mp4" type="video/mp4">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+            </div>
         </section>
     </main>
     <script src="scripts.js"></script>
+    <script>
+        // Configuración de la cuenta regresiva
+        const eventDate = new Date('2024-12-31T00:00:00'); // Fecha del evento especial
+
+        function updateEventCountdown() {
+            const now = new Date();
+            const timeUntilEvent = eventDate - now;
+
+            const daysUntilEvent = Math.floor(timeUntilEvent / (1000 * 60 * 60 * 24));
+            const hoursUntilEvent = Math.floor((timeUntilEvent % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutesUntilEvent = Math.floor((timeUntilEvent % (1000 * 60 * 60)) / (1000 * 60));
+            const secondsUntilEvent = Math.floor((timeUntilEvent % (1000 * 60)) / 1000);
+
+            document.getElementById('eventCountdown').textContent = `${daysUntilEvent} días, ${hoursUntilEvent} horas, ${minutesUntilEvent} minutos, ${secondsUntilEvent} segundos`;
+        }
+
+        updateEventCountdown();
+        setInterval(updateEventCountdown, 1000); // Actualizar cada segundo
+    </script>
 </body>
 </html>
