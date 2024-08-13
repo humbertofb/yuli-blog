@@ -11,14 +11,14 @@ body {
 header {
     background-color: #ff9999;
     color: white;
-    padding: 1rem;
+    padding: 0.5rem;
     text-align: center;
     position: relative;
 }
 
 #menuButton {
     position: absolute;
-    top: 3rem;
+    top: 2rem;
     right: 1rem;
     background: none;
     border: none;
