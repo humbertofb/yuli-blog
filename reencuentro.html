@@ -24,27 +24,37 @@
             <h2>Cuenta Regresiva</h2>
             <div id="countdown">
                 <p>Días hasta el reencuentro: <span id="daysUntilReunion"></span></p>
-                <p>Días juntos: <span id="daysTogether"></span></p>
+                <p>Tiempo juntos: <span id="timeTogether"></span></p>
             </div>
         </section>
     </main>
     <script src="scripts.js"></script>
     <script>
         // Configuración de las fechas
-        const reunionDate = new Date('2024-12-31'); // Fecha del reencuentro
-        const startDate = new Date('2023-01-01'); // Fecha de inicio de la relación
+        const reunionDate = new Date('2024-12-31T00:00:00'); // Fecha del reencuentro
+        const startDate = new Date('2023-01-01T00:00:00'); // Fecha de inicio de la relación
 
         function updateCountdown() {
             const now = new Date();
-            const daysUntilReunion = Math.ceil((reunionDate - now) / (1000 * 60 * 60 * 24));
-            const daysTogether = Math.ceil((now - startDate) / (1000 * 60 * 60 * 24));
+            const timeUntilReunion = reunionDate - now;
+            const timeTogether = now - startDate;
 
-            document.getElementById('daysUntilReunion').textContent = daysUntilReunion;
-            document.getElementById('daysTogether').textContent = daysTogether;
+            const daysUntilReunion = Math.floor(timeUntilReunion / (1000 * 60 * 60 * 24));
+            const hoursUntilReunion = Math.floor((timeUntilReunion % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutesUntilReunion = Math.floor((timeUntilReunion % (1000 * 60 * 60)) / (1000 * 60));
+            const secondsUntilReunion = Math.floor((timeUntilReunion % (1000 * 60)) / 1000);
+
+            const daysTogether = Math.floor(timeTogether / (1000 * 60 * 60 * 24));
+            const hoursTogether = Math.floor((timeTogether % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutesTogether = Math.floor((timeTogether % (1000 * 60 * 60)) / (1000 * 60));
+            const secondsTogether = Math.floor((timeTogether % (1000 * 60)) / 1000);
+
+            document.getElementById('daysUntilReunion').textContent = `${daysUntilReunion} días, ${hoursUntilReunion} horas, ${minutesUntilReunion} minutos, ${secondsUntilReunion} segundos`;
+            document.getElementById('timeTogether').textContent = `${daysTogether} días, ${hoursTogether} horas, ${minutesTogether} minutos, ${secondsTogether} segundos`;
         }
 
         updateCountdown();
-        setInterval(updateCountdown, 86400000); // Actualizar cada día
+        setInterval(updateCountdown, 1000); // Actualizar cada segundo
     </script>
 </body>
 </html>
