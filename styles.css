@@ -80,7 +80,7 @@ main {
 
 .gallery img {
     width: 100%;
-    max-width: 300px; /* Ajusta el tamaño máximo de las imágenes */
+    max-width: 400px; /* Ajusta el tamaño máximo de las imágenes */
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -188,4 +188,39 @@ form button:hover {
     border: none;
     cursor: pointer;
     color: #ff6666;
-    font-size: 0.8
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.comment button:hover {
+    color: #ff3333;
+    transform: scale(1.1);
+}
+
+.comment .editButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 3rem;
+}
+
+.comment .deleteButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+/* Estilo de los videos */
+.video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.video-container video {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
