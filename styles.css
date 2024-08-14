@@ -171,7 +171,7 @@ form button:hover {
 
 /* Estilo de los comentarios */
 .comments {
-    margin-top: 5rem;
+    margin-top: 2rem;
 }
 
 .comment {
@@ -201,7 +201,7 @@ form button:hover {
 .comment .editButton {
     position: absolute;
     top: 0.5rem;
-    right: 3rem;
+    right: 5rem;
 }
 
 .comment .deleteButton {
