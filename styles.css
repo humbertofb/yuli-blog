@@ -80,7 +80,7 @@ main {
 
 .gallery img {
     width: 100%;
-    max-width: 400px; /* Ajusta el tamaño máximo de las imágenes */
+    max-width: 800px; /* Ajusta el tamaño máximo de las imágenes */
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
