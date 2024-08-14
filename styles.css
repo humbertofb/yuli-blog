@@ -80,7 +80,7 @@ main {
 
 .gallery img {
     width: 100%;
-    max-width: 800px; /* Ajusta el tamaño máximo de las imágenes */
+    max-width: 2000px; /* Ajusta el tamaño máximo de las imágenes */
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -179,7 +179,7 @@ form button:hover {
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
+    margin-top: 1rem;
     position: relative;
 }
 
