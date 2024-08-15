@@ -69,6 +69,14 @@
         const database = getDatabase(app);
 
         // Enviar formulario
+        firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // El usuario está autenticado
+  } else {
+    // Redirigir al usuario a la página de inicio de sesión
+  }
+});
+
         document.getElementById('messageForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const name = document.getElementById('name').value;
