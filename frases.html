@@ -65,27 +65,44 @@
         };
 
         // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth(app);
 
 // Iniciar sesión anónima
 signInAnonymously(auth).catch((error) => {
   console.error('Error al iniciar sesión anónima:', error);
 });
-        // Enviar formulario
-        document.getElementById('messageForm').addEventListener('submit', function(event) {
+
+// Verificar el estado de autenticación
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('Usuario autenticado:', user);
+  } else {
+    console.log('Usuario no autenticado');
+  }
+});
+
+// Enviar comentario
+document.getElementById('messageForm').addEventListener('submit', function(event) {
   event.preventDefault();
 
   // Verificar si el usuario está autenticado
-  const user = firebase.auth().currentUser;
+  const user = auth.currentUser;
   if (user) {
     console.log('Usuario autenticado:', user); // Log para verificar que el usuario esté autenticado
     const name = document.getElementById('name').value;
     const message = document.getElementById('message').value;
     const editingId = document.getElementById('messageForm').dataset.editing;
 
+    // Verificar que los campos no estén vacíos
+    if (name.trim() === '' || message.trim() === '') {
+      alert('Por favor, completa todos los campos.');
+      return;
+    }
+
     if (editingId) {
+      // Actualizar un comentario existente
       update(ref(database, 'messages/' + editingId), {
         name: name,
         message: message
@@ -97,6 +114,7 @@ signInAnonymously(auth).catch((error) => {
         console.error('Error al actualizar el mensaje:', error);
       });
     } else {
+      // Enviar un nuevo comentario
       push(ref(database, 'messages'), {
         name: name,
         message: message
@@ -113,27 +131,25 @@ signInAnonymously(auth).catch((error) => {
   }
 });
 
-
-        // Mostrar comentarios
+// Mostrar comentarios
 onValue(ref(database, 'messages'), (snapshot) => {
-    const commentsContainer = document.getElementById('comments');
-    commentsContainer.innerHTML = '';
-    snapshot.forEach((childSnapshot) => {
-        const comment = childSnapshot.val();
-        const commentElement = document.createElement('div');
-        commentElement.classList.add('comment');
-        commentElement.innerHTML = `
-            <strong>${comment.name}</strong>
-            <p>${comment.message}</p>
-            <button class="editButton" data-id="${childSnapshot.key}">Editar</button>
-            <button class="deleteButton" data-id="${childSnapshot.key}">Eliminar</button>
-        `;
-        commentsContainer.appendChild(commentElement);
-    });
+  const commentsContainer = document.getElementById('comments');
+  commentsContainer.innerHTML = '';
+  snapshot.forEach((childSnapshot) => {
+    const comment = childSnapshot.val();
+    const commentElement = document.createElement('div');
+    commentElement.classList.add('comment');
+    commentElement.innerHTML = `
+      <strong>${comment.name}</strong>
+      <p>${comment.message}</p>
+      <button class="editButton" data-id="${childSnapshot.key}">Editar</button>
+      <button class="deleteButton" data-id="${childSnapshot.key}">Eliminar</button>
+    `;
+    commentsContainer.appendChild(commentElement);
+  });
 }, (error) => {
-    console.error('Error al leer los comentarios:', error);
+  console.error('Error al leer los comentarios:', error);
 });
-
 
             // Añadir eventos a los botones de eliminar
             document.querySelectorAll('.deleteButton').forEach(button => {
