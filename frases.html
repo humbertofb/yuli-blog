@@ -110,21 +110,25 @@
 
 
         // Mostrar comentarios
-        onValue(ref(database, 'messages'), (snapshot) => {
-            const commentsContainer = document.getElementById('comments');
-            commentsContainer.innerHTML = '';
-            snapshot.forEach((childSnapshot) => {
-                const comment = childSnapshot.val();
-                const commentElement = document.createElement('div');
-                commentElement.classList.add('comment');
-                commentElement.innerHTML = `
-                    <strong>${comment.name}</strong>
-                    <p>${comment.message}</p>
-                    <button class="editButton" data-id="${childSnapshot.key}">Editar</button>
-                    <button class="deleteButton" data-id="${childSnapshot.key}">Eliminar</button>
-                `;
-                commentsContainer.appendChild(commentElement);
-            });
+onValue(ref(database, 'messages'), (snapshot) => {
+    const commentsContainer = document.getElementById('comments');
+    commentsContainer.innerHTML = '';
+    snapshot.forEach((childSnapshot) => {
+        const comment = childSnapshot.val();
+        const commentElement = document.createElement('div');
+        commentElement.classList.add('comment');
+        commentElement.innerHTML = `
+            <strong>${comment.name}</strong>
+            <p>${comment.message}</p>
+            <button class="editButton" data-id="${childSnapshot.key}">Editar</button>
+            <button class="deleteButton" data-id="${childSnapshot.key}">Eliminar</button>
+        `;
+        commentsContainer.appendChild(commentElement);
+    });
+}, (error) => {
+    console.error('Error al leer los comentarios:', error);
+});
+
 
             // Añadir eventos a los botones de eliminar
             document.querySelectorAll('.deleteButton').forEach(button => {
