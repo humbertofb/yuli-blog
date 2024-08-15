@@ -69,43 +69,41 @@
         const database = getDatabase(app);
 
         // Enviar formulario
-        firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    // El usuario está autenticado
-  } else {
-    // Redirigir al usuario a la página de inicio de sesión
-  }
-});
-
         document.getElementById('messageForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value;
-            const editingId = document.getElementById('messageForm').dataset.editing;
+    event.preventDefault();
+    // Verificar si el usuario está autenticado
+    const user = firebase.auth().currentUser;
+    if (user) {
+        const name = document.getElementById('name').value;
+        const message = document.getElementById('message').value;
+        const editingId = document.getElementById('messageForm').dataset.editing;
 
-            if (editingId) {
-                update(ref(database, 'messages/' + editingId), {
-                    name: name,
-                    message: message
-                }).then(() => {
-                    alert('Mensaje actualizado');
-                    document.getElementById('messageForm').reset();
-                    delete document.getElementById('messageForm').dataset.editing;
-                }).catch((error) => {
-                    console.error('Error al actualizar el mensaje:', error);
-                });
-            } else {
-                push(ref(database, 'messages'), {
-                    name: name,
-                    message: message
-                }).then(() => {
-                    alert('Mensaje enviado');
-                    document.getElementById('messageForm').reset();
-                }).catch((error) => {
-                    console.error('Error al enviar el mensaje:', error);
-                });
-            }
-        });
+        if (editingId) {
+            update(ref(database, 'messages/' + editingId), {
+                name: name,
+                message: message
+            }).then(() => {
+                alert('Mensaje actualizado');
+                document.getElementById('messageForm').reset();
+                delete document.getElementById('messageForm').dataset.editing;
+            }).catch((error) => {
+                console.error('Error al actualizar el mensaje:', error);
+            });
+        } else {
+            push(ref(database, 'messages'), {
+                name: name,
+                message: message
+            }).then(() => {
+                alert('Mensaje enviado');
+                document.getElementById('messageForm').reset();
+            }).catch((error) => {
+                console.error('Error al enviar el mensaje:', error);
+            });
+        }
+    } else {
+        alert('Por favor, espera a que el sistema complete la autenticación.');
+    }
+});
 
         // Mostrar comentarios
         onValue(ref(database, 'messages'), (snapshot) => {
