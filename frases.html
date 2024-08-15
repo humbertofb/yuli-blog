@@ -83,54 +83,6 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Enviar comentario
-document.getElementById('messageForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  // Verificar si el usuario está autenticado
-  const user = auth.currentUser;
-  if (user) {
-    console.log('Usuario autenticado:', user); // Log para verificar que el usuario esté autenticado
-    const name = document.getElementById('name').value;
-    const message = document.getElementById('message').value;
-    const editingId = document.getElementById('messageForm').dataset.editing;
-
-    // Verificar que los campos no estén vacíos
-    if (name.trim() === '' || message.trim() === '') {
-      alert('Por favor, completa todos los campos.');
-      return;
-    }
-
-    if (editingId) {
-      // Actualizar un comentario existente
-      update(ref(database, 'messages/' + editingId), {
-        name: name,
-        message: message
-      }).then(() => {
-        alert('Mensaje actualizado');
-        document.getElementById('messageForm').reset();
-        delete document.getElementById('messageForm').dataset.editing;
-      }).catch((error) => {
-        console.error('Error al actualizar el mensaje:', error);
-      });
-    } else {
-      // Enviar un nuevo comentario
-      push(ref(database, 'messages'), {
-        name: name,
-        message: message
-      }).then(() => {
-        alert('Mensaje enviado');
-        document.getElementById('messageForm').reset();
-      }).catch((error) => {
-        console.error('Error al enviar el mensaje:', error);
-      });
-    }
-  } else {
-    console.log('Usuario no autenticado aún'); // Log si el usuario no está autenticado
-    alert('Por favor, espera a que el sistema complete la autenticación.');
-  }
-});
-
 // Mostrar comentarios
 onValue(ref(database, 'messages'), (snapshot) => {
   const commentsContainer = document.getElementById('comments');
@@ -147,7 +99,8 @@ onValue(ref(database, 'messages'), (snapshot) => {
     `;
     commentsContainer.appendChild(commentElement);
   });
-// Añadir eventos de edición y eliminación
+
+  // Añadir eventos de edición y eliminación
   document.querySelectorAll('.editButton').forEach(button => {
     button.addEventListener('click', (event) => {
       const commentId = event.target.dataset.id;
@@ -171,8 +124,6 @@ onValue(ref(database, 'messages'), (snapshot) => {
       });
     });
   });
-(error) => {
+}, (error) => {
   console.error('Error al leer los comentarios:', error);
-};
-</body>
-</html>
+});
