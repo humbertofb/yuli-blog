@@ -73,14 +73,15 @@ main {
 
 /* Galería */
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+    justify-content: center;
 }
 
 .gallery img {
-    width: 60%;
-    max-width: 3000px; /* Ajusta el tamaño máximo de las imágenes */
+    width: 100%;
+    max-width: 600px; /* Ajusta el tamaño máximo de las imágenes */
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
