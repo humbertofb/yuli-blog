@@ -78,10 +78,12 @@ signInAnonymously(auth).catch((error) => {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log('Usuario autenticado:', user);
+
     // Mostrar comentarios solo si el usuario está autenticado
     onValue(ref(database, 'messages'), (snapshot) => {
       const commentsContainer = document.getElementById('comments');
       commentsContainer.innerHTML = '';
+      
       snapshot.forEach((childSnapshot) => {
         const comment = childSnapshot.val();
         const commentElement = document.createElement('div');
@@ -95,7 +97,7 @@ onAuthStateChanged(auth, (user) => {
         commentsContainer.appendChild(commentElement);
       });
 
-      // Añadir eventos de edición y eliminación
+      // Añadir eventos de edición y eliminación después de que los comentarios se hayan renderizado
       document.querySelectorAll('.editButton').forEach(button => {
         button.addEventListener('click', (event) => {
           const commentId = event.target.dataset.id;
@@ -134,7 +136,7 @@ document.getElementById('messageForm').addEventListener('submit', function(event
   // Verificar si el usuario está autenticado
   const user = auth.currentUser;
   if (user) {
-    console.log('Usuario autenticado:', user); // Log para verificar que el usuario esté autenticado
+    console.log('Usuario autenticado:', user);
     const name = document.getElementById('name').value;
     const message = document.getElementById('message').value;
     const editingId = document.getElementById('messageForm').dataset.editing;
@@ -170,7 +172,7 @@ document.getElementById('messageForm').addEventListener('submit', function(event
       });
     }
   } else {
-    console.log('Usuario no autenticado aún'); // Log si el usuario no está autenticado
+    console.log('Usuario no autenticado aún');
     alert('Por favor, espera a que el sistema complete la autenticación.');
   }
 });
