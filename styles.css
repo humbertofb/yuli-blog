@@ -80,8 +80,8 @@ main {
 }
 
 .gallery img {
-    width: 100%;
-    max-width: 600px; /* Ajusta el tamaño máximo de las imágenes */
+    flex: 1 1 calc(33.333% - 1rem); /* Tres columnas con espacio entre ellas */
+    max-width: calc(33.333% - 1rem);
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
