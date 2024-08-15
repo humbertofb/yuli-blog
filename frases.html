@@ -147,9 +147,6 @@ onValue(ref(database, 'messages'), (snapshot) => {
     `;
     commentsContainer.appendChild(commentElement);
   });
-}, (error) => {
-  console.error('Error al leer los comentarios:', error);
-});
 // Añadir eventos de edición y eliminación
   document.querySelectorAll('.editButton').forEach(button => {
     button.addEventListener('click', (event) => {
