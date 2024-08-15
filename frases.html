@@ -72,8 +72,15 @@
         document.getElementById('messageForm').addEventListener('submit', function(event) {
     event.preventDefault();
     // Verificar si el usuario está autenticado
-    const user = firebase.auth().currentUser;
-    if (user) {
+    firebase.auth().signInAnonymously()
+  .then(() => {
+    console.log('Usuario autenticado anónimamente');
+    alert('Usuario autenticado anónimamente'); // Prueba con un alert para asegurarte de que se ejecuta
+  })
+  .catch((error) => {
+    console.error('Error al autenticar anónimamente:', error);
+    alert('Error al autenticar anónimamente'); // Muestra el error si la autenticación falla
+  });
         const name = document.getElementById('name').value;
         const message = document.getElementById('message').value;
         const editingId = document.getElementById('messageForm').dataset.editing;
