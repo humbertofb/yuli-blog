@@ -70,47 +70,44 @@
 
         // Enviar formulario
         document.getElementById('messageForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Verificar si el usuario está autenticado
-    firebase.auth().signInAnonymously()
-  .then(() => {
-    console.log('Usuario autenticado anónimamente');
-    alert('Usuario autenticado anónimamente'); // Prueba con un alert para asegurarte de que se ejecuta
-  })
-  .catch((error) => {
-    console.error('Error al autenticar anónimamente:', error);
-    alert('Error al autenticar anónimamente'); // Muestra el error si la autenticación falla
-  });
-        const name = document.getElementById('name').value;
-        const message = document.getElementById('message').value;
-        const editingId = document.getElementById('messageForm').dataset.editing;
+  event.preventDefault();
 
-        if (editingId) {
-            update(ref(database, 'messages/' + editingId), {
-                name: name,
-                message: message
-            }).then(() => {
-                alert('Mensaje actualizado');
-                document.getElementById('messageForm').reset();
-                delete document.getElementById('messageForm').dataset.editing;
-            }).catch((error) => {
-                console.error('Error al actualizar el mensaje:', error);
-            });
-        } else {
-            push(ref(database, 'messages'), {
-                name: name,
-                message: message
-            }).then(() => {
-                alert('Mensaje enviado');
-                document.getElementById('messageForm').reset();
-            }).catch((error) => {
-                console.error('Error al enviar el mensaje:', error);
-            });
-        }
+  // Verificar si el usuario está autenticado
+  const user = firebase.auth().currentUser;
+  if (user) {
+    console.log('Usuario autenticado:', user); // Log para verificar que el usuario esté autenticado
+    const name = document.getElementById('name').value;
+    const message = document.getElementById('message').value;
+    const editingId = document.getElementById('messageForm').dataset.editing;
+
+    if (editingId) {
+      update(ref(database, 'messages/' + editingId), {
+        name: name,
+        message: message
+      }).then(() => {
+        alert('Mensaje actualizado');
+        document.getElementById('messageForm').reset();
+        delete document.getElementById('messageForm').dataset.editing;
+      }).catch((error) => {
+        console.error('Error al actualizar el mensaje:', error);
+      });
     } else {
-        alert('Por favor, espera a que el sistema complete la autenticación.');
+      push(ref(database, 'messages'), {
+        name: name,
+        message: message
+      }).then(() => {
+        alert('Mensaje enviado');
+        document.getElementById('messageForm').reset();
+      }).catch((error) => {
+        console.error('Error al enviar el mensaje:', error);
+      });
     }
+  } else {
+    console.log('Usuario no autenticado aún'); // Log si el usuario no está autenticado
+    alert('Por favor, espera a que el sistema complete la autenticación.');
+  }
 });
+
 
         // Mostrar comentarios
         onValue(ref(database, 'messages'), (snapshot) => {
