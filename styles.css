@@ -213,10 +213,9 @@ form button:hover {
 /* Estilo de los videos */
 .video-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-}
+    flex-direction: column; /* Cambiado a columna para apilar los videos verticalmente */
+    gap: 1rem;
+    }
 
 .video-container video {
     width: 100%;
