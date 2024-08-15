@@ -150,6 +150,33 @@ onValue(ref(database, 'messages'), (snapshot) => {
 }, (error) => {
   console.error('Error al leer los comentarios:', error);
 });
+// Añadir eventos de edición y eliminación
+  document.querySelectorAll('.editButton').forEach(button => {
+    button.addEventListener('click', (event) => {
+      const commentId = event.target.dataset.id;
+      const commentRef = ref(database, 'messages/' + commentId);
+      onValue(commentRef, (snapshot) => {
+        const comment = snapshot.val();
+        document.getElementById('name').value = comment.name;
+        document.getElementById('message').value = comment.message;
+        document.getElementById('messageForm').dataset.editing = commentId;
+      });
+    });
+  });
+
+  document.querySelectorAll('.deleteButton').forEach(button => {
+    button.addEventListener('click', (event) => {
+      const commentId = event.target.dataset.id;
+      remove(ref(database, 'messages/' + commentId)).then(() => {
+        alert('Comentario eliminado');
+      }).catch((error) => {
+        console.error('Error al eliminar el comentario:', error);
+      });
+    });
+  });
+}, (error) => {
+  console.error('Error al leer los comentarios:', error);
+});
     </script>
 </body>
 </html>
