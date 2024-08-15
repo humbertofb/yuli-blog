@@ -52,7 +52,7 @@
         // Importar los módulos de Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
         // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
@@ -67,7 +67,12 @@
         // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        const auth = getAuth(app);
 
+// Iniciar sesión anónima
+signInAnonymously(auth).catch((error) => {
+  console.error('Error al iniciar sesión anónima:', error);
+});
         // Enviar formulario
         document.getElementById('messageForm').addEventListener('submit', function(event) {
   event.preventDefault();
