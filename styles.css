@@ -87,6 +87,7 @@ main {
     transition: transform 0.3s, box-shadow 0.3s;
     backface-visibility: hidden; /* Evita distorsión */
     transform: perspective(1000px); /* Mejora la calidad de la transformación */
+    z-index: 1;
 }
 
 /* Estilos específicos para pantallas pequeñas */
