@@ -85,6 +85,8 @@ main {
     height: auto; /* Asegura que la altura se ajuste proporcionalmente */
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
+    backface-visibility: hidden; /* Evita distorsión */
+    transform: perspective(1000px); /* Mejora la calidad de la transformación */
 }
 
 /* Estilos específicos para pantallas pequeñas */
