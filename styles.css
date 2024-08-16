@@ -82,7 +82,6 @@ main {
 .gallery img {
     flex: 1 1 calc(33.333% - 1rem); /* Tres columnas con espacio entre ellas */
     max-width: 100%;
-    height: auto;
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
