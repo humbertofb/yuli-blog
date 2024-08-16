@@ -224,3 +224,25 @@ form button:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Estilos para el botón flotante */
+#scrollTopBtn {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Fijo en la pantalla */
+    bottom: 20px; /* Distancia desde la parte inferior */
+    right: 20px; /* Distancia desde la parte derecha */
+    z-index: 99; /* Asegura que esté por encima de otros elementos */
+    border: none; /* Sin borde */
+    outline: none; /* Sin contorno */
+    background-color: #000; /* Color de fondo */
+    color: white; /* Color del texto */
+    cursor: pointer; /* Cursor de mano */
+    padding: 15px; /* Espaciado interno */
+    border-radius: 50%; /* Bordes redondeados */
+    font-size: 18px; /* Tamaño de la fuente */
+}
+
+#scrollTopBtn:hover {
+    background-color: #555; /* Color de fondo al pasar el ratón */
+}
+
