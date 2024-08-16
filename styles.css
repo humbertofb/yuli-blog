@@ -87,7 +87,7 @@ main {
 }
 
 /* Estilos específicos para pantallas pequeñas */
-@media (max-width: 600px) {
+@media (max-width: 400px) {
     img {
         width: 100%;
         height: auto;
