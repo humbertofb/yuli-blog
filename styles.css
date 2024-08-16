@@ -101,7 +101,9 @@ main {
 .gallery img:hover {
     transform: scale(1.1);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10; /* Asegura que el hover esté por encima de otros elementos */
 }
+
 
 /* Efectos especiales */
 h1 {
