@@ -95,9 +95,13 @@ main {
 /* Estilos específicos para pantallas pequeñas */
 @media (max-width: 600px) {
     .gallery img {
-        flex: 1 1 100%; /* Una columna en pantallas pequeñas */
-        width: 100%;
-        height: auto;
+        flex: 100%; /* Una columna en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 800px) {
+    .gallery img {
+        flex: 50%; /* Una columna en pantallas pequeñas */
     }
 }
 
