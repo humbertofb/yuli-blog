@@ -86,7 +86,7 @@ main {
 .gallery img {
     flex: 1 1 calc(33.333% - 1rem); /* Tres columnas con espacio entre ellas */
     width: 100%;
-    height: 20vh; /* Asegura que la altura se ajuste proporcionalmente */
+    height: 100%; /* Asegura que la altura se ajuste proporcionalmente */
     border-radius: 5px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
