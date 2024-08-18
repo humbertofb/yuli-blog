@@ -75,6 +75,12 @@
 
         updateEventCountdown();
         setInterval(updateEventCountdown, 1000); // Actualizar cada segundo
+
+    document.addEventListener('click', function() {
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    backgroundMusic.play();
+}, { once: true }); // Solo se ejecuta una vez
+
     </script>
 </body>
 </html>
