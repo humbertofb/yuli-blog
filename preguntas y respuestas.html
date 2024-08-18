@@ -100,10 +100,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase();
 
-// Autenticación anónima
-auth.signInAnonymously().catch((error) => {
-    console.error("Error al autenticar:", error);
+// Iniciar sesión anónima
+signInAnonymously(auth).catch((error) => {
+  console.error('Error al iniciar sesión anónima:', error);
 });
+
+// Verificar el estado de autenticación
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('Usuario autenticado:', user);
 
 // Referencia a la base de datos
 const questionsRef = database.ref('questions');
