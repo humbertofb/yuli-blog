@@ -85,7 +85,13 @@
 import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
     
-    // Configuración de Firebase
+    
+    // Inicializar Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
+
+// Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
             authDomain: "mi-web-5402c.firebaseapp.com",
@@ -95,11 +101,6 @@ import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gsta
             messagingSenderId: "31272724190",
             appId: "1:31272724190:web:51fcc8750c51abf783844f"
         };
-    
-    // Inicializar Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const database = firebase.database();
 
 // Autenticación anónima
 auth.signInAnonymously().catch(function(error) {
