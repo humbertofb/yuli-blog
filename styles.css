@@ -159,7 +159,7 @@ button:hover, a:hover {
 }
 
 #responder::before {
-    content: '←';
+    content: src='reenviar.png';
     margin-right: 5px;
 }
 
