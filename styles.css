@@ -189,6 +189,7 @@ button:hover {
 #responder {
     display: flex;
     align-items: center;
+    felx-wrap: wrap;
 }
 
 #responder::before {
