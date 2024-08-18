@@ -123,6 +123,16 @@ button:hover, a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.forms-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
 #questionsContainer {
     margin-top: 2rem;
 }
@@ -159,7 +169,6 @@ button:hover, a:hover {
 }
 
 #responder::before {
-    content: '←';
     margin-right: 5px;
 }
 
