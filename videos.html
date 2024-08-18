@@ -114,11 +114,14 @@
     const videos = videoContainer.querySelectorAll('video');
 
     videos.forEach(video => {
-        const fileURL = video.querySelector('source').src;
+        const source = video.querySelector('source');
+        const fileURL = source.src;
         const videoElement = document.createElement('video');
         videoElement.width = 300; // Ajusta el ancho del video según sea necesario
         videoElement.controls = true;
         videoElement.src = fileURL;
+        videoElement.playsInline = true; // Asegura que el video se reproduzca en línea en dispositivos móviles
+        videoElement.muted = true; // Silencia el video para evitar restricciones de reproducción automática
         videoPreviews.appendChild(videoElement);
     });
 });
