@@ -27,40 +27,19 @@
         </nav>
     <main>
         <h1>Juego de Preguntas y Respuestas</h1>
-        <form id="questionForm">
-          <input type="text" id="name" placeholder="Escribe tu nombre" required>
-            <input type="text" id="question" placeholder="Escribe tu pregunta" required>
-            <button type="submit">Enviar</button>
-            <div id="questionsContainer"></div>
-        </form>
-        
-        <br><form id="questionForm">
-          <input type="text" id="name" placeholder="Escribe tu nombre" required>
-            <input type="text" id="question" placeholder="Escribe tu pregunta" required>
-            <button type="submit">Enviar</button>
-            <div id="questionsContainer"></div>
-        </form>
-        
-        <br><form id="questionForm">
-          <input type="text" id="name" placeholder="Escribe tu nombre" required>
-            <input type="text" id="question" placeholder="Escribe tu pregunta" required>
-            <button type="submit">Enviar</button>
-            <div id="questionsContainer"></div>
-        </form>
-        
-        <br><form id="questionForm">
-          <input type="text" id="name" placeholder="Escribe tu nombre" required>
-            <input type="text" id="question" placeholder="Escribe tu pregunta" required>
-            <button type="submit">Enviar</button>
-            <div id="questionsContainer"></div>
-        </form>
-        
-        <br><form id="questionForm">
-          <input type="text" id="name" placeholder="Escribe tu nombre" required>
-            <input type="text" id="question" placeholder="Escribe tu pregunta" required>
-            <button type="submit">Enviar</button>
-            <div id="questionsContainer"></div>
-        </form>
+        <div class="forms-container">
+            <!-- Repetir el formulario cinco veces -->
+            ${Array(5).fill().map((_, i) => `
+                <form id="questionForm${i}">
+                    <input type="text" id="name${i}" placeholder="Escribe tu nombre" required>
+                    <textarea id="question${i}" placeholder="Escribe tu pregunta" required></textarea>
+                    <button type="submit">Enviar</button>
+                    <div id="questionsContainer${i}" class="styled-container">
+                        <!-- Las preguntas y respuestas se mostrarán aquí -->
+                    </div>
+                </form>
+            `).join('')}
+        </div>
         
     </main>
     <script src="scripts.js"></script>
