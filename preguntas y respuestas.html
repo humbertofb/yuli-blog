@@ -80,22 +80,22 @@
     </main>
     <script src="scripts.js"></script>
     <script type="module">
-    // Importar los módulos de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-    // Configuración de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
-            authDomain: "mi-web-5402c.firebaseapp.com",
-            databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "mi-web-5402c",
-            storageBucket: "mi-web-5402c.appspot.com",
-            messagingSenderId: "31272724190",
-            appId: "1:31272724190:web:51fcc8750c51abf783844f"
-        };
-    
-    // Inicializar Firebase
+
+// Configuración de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
+    authDomain: "mi-web-5402c.firebaseapp.com",
+    databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "mi-web-5402c",
+    storageBucket: "mi-web-5402c.appspot.com",
+    messagingSenderId: "31272724190",
+    appId: "1:31272724190:web:51fcc8750c51abf783844f"
+};
+
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase();
@@ -110,34 +110,58 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log('Usuario autenticado:', user);
 
-// Referencia a la base de datos
-const questionsRef = database.ref('questions');
+    // Referencia a la base de datos
+    const questionsRef = ref(database, 'questions');
 
-// Función para enviar una pregunta y respuesta
-document.getElementById('questionForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const question = document.getElementById('question').value;
-    const answer = document.getElementById('answer').value;
-    questionsRef.push().set({
-        question: question,
-        answer: answer
+    // Función para enviar una pregunta
+    document.getElementById('questionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const question = document.getElementById('question').value;
+        push(questionsRef, {
+            name: name,
+            question: question
+        });
+        document.getElementById('name').value = '';
+        document.getElementById('question').value = '';
     });
-    document.getElementById('question').value = '';
-    document.getElementById('answer').value = '';
-});
 
-// Función para mostrar las preguntas y respuestas
-questionsRef.on('value', function(snapshot) {
-    const questionsContainer = document.getElementById('questionsContainer');
-    questionsContainer.innerHTML = '';
-    snapshot.forEach(function(childSnapshot) {
-        const data = childSnapshot.val();
-        const div = document.createElement('div');
-        div.className = 'question';
-        div.innerHTML = `<strong>Pregunta:</strong> ${data.question}<br><strong>Respuesta:</strong> ${data.answer}`;
-        questionsContainer.appendChild(div);
+    // Función para mostrar las preguntas
+    onValue(questionsRef, (snapshot) => {
+        const questionsContainer = document.getElementById('questionsContainer');
+        questionsContainer.innerHTML = '';
+        snapshot.forEach((childSnapshot) => {
+            const data = childSnapshot.val();
+            const div = document.createElement('div');
+            div.className = 'question';
+            div.innerHTML = `
+                <p><strong>${data.name}</strong>: ${data.question}</p>
+                <div class="question-buttons">
+                    <button onclick="deleteQuestion('${childSnapshot.key}')">Eliminar</button>
+                    <button onclick="editQuestion('${childSnapshot.key}')">Editar</button>
+                    <button id="responder" onclick="answerQuestion('${childSnapshot.key}')">Responder</button>
+                </div>
+            `;
+            questionsContainer.appendChild(div);
+        });
     });
+
+    // Función para eliminar una pregunta
+    window.deleteQuestion = function(id) {
+        remove(ref(database, 'questions/' + id));
+    };
+
+    // Función para editar una pregunta
+    window.editQuestion = function(id) {
+        // Lógica para editar la pregunta
+    };
+
+    // Función para responder una pregunta
+    window.answerQuestion = function(id) {
+        // Lógica para responder la pregunta
+    };
+  }
 });
-        </script>
+</script>
 </body>
 </html>
