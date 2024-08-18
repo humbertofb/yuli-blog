@@ -20,13 +20,6 @@
             <li><a href="reencuentro.html">Reencuentro</a></li>
         </ul>
     </nav>
-    <!-- Botón para iniciar la música -->
-    <button id="playButton">Reproducir Música</button>
-    <!-- Agregar música de fondo -->
-    <audio id="backgroundMusic" autoplay loop>
-        <source src="amor de febrero.mp3" type="audio/mpeg">
-        Tu navegador no soporta la etiqueta de audio.
-    </audio>
     <main>
         <section>
             <h2>Bienvenida mi cosita tierna 🫠🫶🏻</h2>
@@ -75,11 +68,6 @@
 
         updateEventCountdown();
         setInterval(updateEventCountdown, 1000); // Actualizar cada segundo
-
-    document.addEventListener('click', function() {
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    backgroundMusic.play();
-}, { once: true }); // Solo se ejecuta una vez
 
     </script>
 </body>
