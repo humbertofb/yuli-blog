@@ -23,6 +23,8 @@
     <main>
         <section>
             <h2>Videos Locales</h2>
+            <input type="file" id="videoInput" accept="video/*" multiple>
+    <div id="videoPreviews"></div>
             <div class="video-container">
                 <video controls>
                     <source src="Videos/-167931502590472495.mp4" type="video/mp4">
@@ -104,6 +106,25 @@
                 scrollTopBtn.style.display = 'none';
             }
         };
+        
+        document.getElementById('videoInput').addEventListener('change', function(event) {
+    const files = event.target.files;
+    const videoPreviews = document.getElementById('videoPreviews');
+    videoPreviews.innerHTML = ''; // Limpiar las vistas previas anteriores
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.type.match('video.*')) {
+            const fileURL = URL.createObjectURL(file);
+            const videoElement = document.createElement('video');
+            videoElement.width = 300; // Ajusta el ancho del video según sea necesario
+            videoElement.controls = true;
+            videoElement.src = fileURL;
+            videoPreviews.appendChild(videoElement);
+        }
+    }
+});
+
     </script>
     </main>
     <script src="scripts.js"></script>
