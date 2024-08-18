@@ -101,9 +101,9 @@ const auth = getAuth();
 const database = getDatabase();
 
 // Autenticación anónima
-auth.signInAnonymously().catch(error) {
+auth.signInAnonymously().catch((error) {
     console.error("Error al autenticar:", error);
-};
+});
 
 // Referencia a la base de datos
 const questionsRef = database.ref('questions');
