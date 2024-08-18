@@ -74,68 +74,90 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log('Usuario autenticado:', user);
 
-    // Referencia a la base de datos
-    const questionsRef = ref(database, 'questions');
+    // Función para inicializar formularios
+    function initializeForm(formIndex) {
+        const questionsRef = ref(database, `questions${formIndex}`);
 
-    // Función para enviar una pregunta
-    document.getElementById('questionForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const question = document.getElementById('question').value;
-        push(questionsRef, {
-            name: name,
-            question: question
-        });
-        document.getElementById('name').value = '';
-        document.getElementById('question').value = '';
-    });
-
-    // Función para mostrar las preguntas
-    onValue(questionsRef, (snapshot) => {
-        const questionsContainer = document.getElementById('questionsContainer');
-        questionsContainer.innerHTML = '';
-        snapshot.forEach((childSnapshot) => {
-            const data = childSnapshot.val();
-            const div = document.createElement('div');
-            div.className = 'question';
-            div.innerHTML = `
-                <p><strong>${data.name}</strong>: ${data.question}</p>
-                <div class="question-buttons">
-                    <button onclick="deleteQuestion('${childSnapshot.key}')">Eliminar</button>
-                    <button onclick="editQuestion('${childSnapshot.key}')">Editar</button>
-                    <button id="responder" onclick="answerQuestion('${childSnapshot.key}')">Responder</button>
-                </div>
-            `;
-            questionsContainer.appendChild(div);
-        });
-    });
-
-    // Función para eliminar una pregunta
-    window.deleteQuestion = function(id) {
-        remove(ref(database, 'questions/' + id));
-    };
-
-    // Función para editar una pregunta
-    window.editQuestion = function(id) {
-        const newQuestion = prompt("Edita tu pregunta:");
-        if (newQuestion) {
-            update(ref(database, 'questions/' + id), {
-                question: newQuestion
+        // Función para enviar una pregunta
+        document.getElementById(`questionForm${formIndex}`).addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById(`name${formIndex}`).value;
+            const question = document.getElementById(`question${formIndex}`).value;
+            push(questionsRef, {
+                name: name,
+                question: question
             });
-        }
-    };
+            document.getElementById(`name${formIndex}`).value = '';
+            document.getElementById(`question${formIndex}`).value = '';
+        });
 
-    // Función para responder una pregunta
-    window.answerQuestion = function(id) {
-        const answer = prompt("Escribe tu respuesta:");
-        if (answer) {
-            update(ref(database, 'questions/' + id), {
-                answer: answer
+        // Función para mostrar las preguntas
+        onValue(questionsRef, (snapshot) => {
+            const questionsContainer = document.getElementById(`questionsContainer${formIndex}`);
+            questionsContainer.innerHTML = '';
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `
+                    <p><strong>${data.name}</strong>: ${data.question}</p>
+                    ${data.answer ? `<p><strong>Respuesta:</strong> ${data.answer}</p>` : ''}
+                    <div class="question-buttons">
+                        <button onclick="deleteQuestion('${formIndex}', '${childSnapshot.key}')">Eliminar</button>
+                        <button onclick="editQuestion('${formIndex}', '${childSnapshot.key}', 'question')">Editar Pregunta</button>
+                        ${data.answer ? `<button onclick="editQuestion('${formIndex}', '${childSnapshot.key}', 'answer')">Editar Respuesta</button>` : ''}
+                        <button id="responder" onclick="showAnswerInput('${formIndex}', '${childSnapshot.key}')">
+                            <i class="fa fa-reply"></i> Responder
+                        </button>
+                    </div>
+                    <div id="answerInput${formIndex}-${childSnapshot.key}" class="answer-input" style="display: none;">
+                        <textarea id="answer${formIndex}-${childSnapshot.key}" placeholder="Escribe tu respuesta"></textarea>
+                        <button onclick="submitAnswer('${formIndex}', '${childSnapshot.key}')">Enviar Respuesta</button>
+                    </div>
+                `;
+                questionsContainer.appendChild(div);
             });
-        }
-    };
+        });
+
+        // Función para eliminar una pregunta
+        window.deleteQuestion = function(formIndex, id) {
+            remove(ref(database, `questions${formIndex}/${id}`));
+        };
+
+        // Función para editar una pregunta o respuesta
+        window.editQuestion = function(formIndex, id, type) {
+            const newValue = prompt(`Edita tu ${type}:`);
+            if (newValue) {
+                update(ref(database, `questions${formIndex}/${id}`), {
+                    [type]: newValue
+                });
+            }
+        };
+
+        // Función para mostrar el campo de respuesta
+        window.showAnswerInput = function(formIndex, id) {
+            document.getElementById(`answerInput${formIndex}-${id}`).style.display = 'block';
+        };
+
+        // Función para enviar una respuesta
+        window.submitAnswer = function(formIndex, id) {
+            const answer = document.getElementById(`answer${formIndex}-${id}`).value;
+            if (answer) {
+                update(ref(database, `questions${formIndex}/${id}`), {
+                    answer: answer
+                });
+                document.getElementById(`answerInput${formIndex}-${id}`).style.display = 'none';
+            }
+        };
+    }
+
+    // Inicializar los cinco formularios
+    for (let i = 0; i < 5; i++) {
+        initializeForm(i);
+    }
   }
-});
+});  
+    
 </script>
 </body>
 </html>
