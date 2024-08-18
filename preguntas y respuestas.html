@@ -97,8 +97,8 @@ import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gsta
     
     // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getauth();
-const database = firebase.database();
+const auth = getAuth();
+const database = getDatabase();
 
 // Autenticación anónima
 auth.signInAnonymously().catch(function(error) {
