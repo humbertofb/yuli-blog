@@ -137,12 +137,22 @@ onAuthStateChanged(auth, (user) => {
 
     // Función para editar una pregunta
     window.editQuestion = function(id) {
-        // Lógica para editar la pregunta
+        const newQuestion = prompt("Edita tu pregunta:");
+        if (newQuestion) {
+            update(ref(database, 'questions/' + id), {
+                question: newQuestion
+            });
+        }
     };
 
     // Función para responder una pregunta
     window.answerQuestion = function(id) {
-        // Lógica para responder la pregunta
+        const answer = prompt("Escribe tu respuesta:");
+        if (answer) {
+            update(ref(database, 'questions/' + id), {
+                answer: answer
+            });
+        }
     };
   }
 });
