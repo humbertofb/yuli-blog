@@ -123,6 +123,55 @@ button:hover, a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+#questionsContainer {
+    margin-top: 20px;
+}
+
+.question {
+    background: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.question-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.question-buttons button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.question-buttons button:hover {
+    background-color: #0056b3;
+}
+
+#responder {
+    display: flex;
+    align-items: center;
+}
+
+#responder::before {
+    content: '←';
+    margin-right: 5px;
+}
+
+/* Estilos adicionales del archivo CSS proporcionado */
+.styled-container {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 #countdown {
     font-size: 1.5rem;
     text-align: center;
