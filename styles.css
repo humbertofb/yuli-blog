@@ -82,10 +82,10 @@ main {
 }
 
 .gallery img {
-    width: 100%;
+    width: calc(50% - 10px);
     height: auto; /* Asegura que la altura se ajuste proporcionalmente */
     border-radius: 10px;
-    max-width: 600px;
+    max-width: 100%;
 }
 
 /* Estilos específicos para pantallas pequeñas */
