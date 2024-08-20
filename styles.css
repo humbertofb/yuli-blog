@@ -82,7 +82,7 @@ main {
 }
 
 .gallery img {
-    width: calc(85% - 5px);
+    width: calc(75% - 5px);
     height: auto; /* Asegura que la altura se ajuste proporcionalmente */
     border-radius: 10px;
     max-width: 100%;
