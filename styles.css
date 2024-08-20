@@ -130,7 +130,7 @@ main {
 }
 
 .comments .send-comment {
-    background-color: #4caf50;
+    background-color: #ffe6e6;
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -156,7 +156,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 96%;
 }
 
 .comment-list .comment .edit-button,
