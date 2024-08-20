@@ -185,6 +185,7 @@
         console.log("Firebase inicializado");
 
 // Autenticación anónima
+const auth = getAuth(app);
 firebase.auth().signInAnonymously()
     .catch((error) => {
         alert("Error al autenticar: " + error.message);
