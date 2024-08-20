@@ -312,7 +312,7 @@ form button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilos para el botón flotante */
+/* Estilos para el botón flotante (videos) */
 #scrollTopBtn {
     display: none; /* Oculto por defecto */
     position: fixed; /* Fijo en la pantalla */
@@ -333,3 +333,26 @@ form button:hover {
     background-color: #555; /* Color de fondo al pasar el ratón */
 }
 
+/* Estilos para el botón flotante (viajes) */
+#upButton {
+    background-color: #ff4081;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#upButton:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+#upButton:active {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
