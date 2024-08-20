@@ -186,10 +186,10 @@
 
 // Autenticación anónima
 const auth = getAuth(app);
-firebase.auth().signInAnonymously()
-    .catch((error) => {
-        alert("Error al autenticar: " + error.message);
-    });
+signInAnonymously(auth)
+            .catch((error) => {
+                alert("Error al autenticar: " + error.message);
+            });
 
 // Referencia a Firestore
 const db = firebase.firestore();
