@@ -233,6 +233,31 @@ async function saveComment(imageId, comment) {
                         </div>
                     `;
                     commentList.appendChild(newComment);
+                    // Función para editar los comentarios
+                    async function editComment(commentId, newText) {
+    try {
+        const commentRef = doc(db, "comments", commentId);
+        await updateDoc(commentRef, {
+            text: newText,
+            timestamp: serverTimestamp()
+        });
+        console.log("Comentario editado correctamente");
+    } catch (error) {
+        console.error("Error al editar el comentario:", error);
+    }
+}
+
+                     // Función para eliminar los comentarios
+                      async function deleteComment(commentId) {
+    try {
+        const commentRef = doc(db, "comments", commentId);
+        await deleteDoc(commentRef);
+        console.log("Comentario eliminado correctamente");
+    } catch (error) {
+        console.error("Error al eliminar el comentario:", error);
+    }
+}
+
 
                     // Agregar funcionalidad de editar y eliminar
                     newComment.querySelector('.edit-button').addEventListener('click', () => {
