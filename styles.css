@@ -107,6 +107,7 @@ main {
     border: none;
     font-size: 18px;
     cursor: pointer;
+    margin-left: 5px;
 }
 
 .like-button .like-count {
