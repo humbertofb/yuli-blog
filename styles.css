@@ -99,7 +99,7 @@ main {
 .actions {
     display: flex;
     justify-content: space-between;
-    padding: 5px;
+    padding: 10px;
 }
 
 .like-button, .comment-button {
@@ -107,7 +107,7 @@ main {
     border: none;
     font-size: 18px;
     cursor: pointer;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .like-button .like-count {
