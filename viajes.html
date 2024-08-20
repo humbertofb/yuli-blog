@@ -177,6 +177,7 @@
 
 // Inicializa Firebase
 firebase.initializeApp(firebaseConfig);
+console.log("Firebase inicializado");
 
 // Autenticación anónima
 firebase.auth().signInAnonymously()
@@ -186,6 +187,7 @@ firebase.auth().signInAnonymously()
 
 // Referencia a Firestore
 const db = firebase.firestore();
+console.log("Firestore inicializado");
 
 document.addEventListener('DOMContentLoaded', () => {
     const likeButtons = document.querySelectorAll('.like-button');
