@@ -95,6 +95,53 @@ main {
     }
 }
 
+.actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.like-button, .comment-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.comments {
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.comments textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.comments .send-comment {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-list {
+    margin-top: 10px;
+}
+
+.comment-list .comment {
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 /* Efectos especiales */
 h1 {
