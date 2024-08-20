@@ -335,7 +335,8 @@ form button:hover {
 
 /* Estilos para el botón flotante (viajes) */
 #upButton {
-    background-color: #ff4081;
+    display: none;
+    background-color: #000;
     color: #ff9999;
     bottom: 20px;
     right: 20px; /* Distancia desde la parte derecha */
@@ -349,5 +350,5 @@ form button:hover {
 }
 
 #upButton:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #555;
 }
