@@ -188,6 +188,7 @@
 
 // Autenticación anónima
 const auth = getAuth(app);
+let userId = null;
 signInAnonymously(auth)
 .then(() => {
                 console.log("Autenticación anónima exitosa");
@@ -195,6 +196,16 @@ signInAnonymously(auth)
             .catch((error) => {
                 alert("Error al autenticar: " + error.message);
             });
+            
+// Obtener el ID del usuario autenticado
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        userId = user.uid; // El ID único del usuario autenticado
+        console.log("Usuario autenticado:", userId);
+    } else {
+        console.log("No hay usuario autenticado");
+    }
+});
 
 // Referencia a Firestore
 const db = getFirestore(app);
