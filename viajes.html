@@ -167,7 +167,7 @@
     // Importa los módulos de Firebase
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
         import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
         
         // Configuración de Firebase
         const firebaseConfig = {
@@ -261,13 +261,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Guardar un nuevo comentario
-function saveComment(imageId, comment) {
-    return db.collection("comments").add({
-        imageId: imageId,
-        text: comment,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-}
+async function saveComment(imageId, comment) {
+            try {
+                await addDoc(collection(db, "comments"), {
+                    imageId: imageId,
+                    text: comment,
+                    timestamp: serverTimestamp()
+                });
+                console.log("Comentario guardado");
+            } catch (error) {
+                console.error("Error al guardar el comentario: ", error);
+            }
+        }
 
 // Recuperar comentarios
 function loadComments(imageId, commentList) {
