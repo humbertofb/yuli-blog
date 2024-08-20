@@ -187,6 +187,9 @@
 // Autenticación anónima
 const auth = getAuth(app);
 signInAnonymously(auth)
+.then(() => {
+                console.log("Autenticación anónima exitosa");
+                })
             .catch((error) => {
                 alert("Error al autenticar: " + error.message);
             });
