@@ -164,7 +164,16 @@
     </script>
     <script>
     // Comentarios y reacciones
-    // Configuración de Firebase
+    // Importa los módulos de Firebase
+    
+
+// Inicializa Firebase
+   <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
             authDomain: "mi-web-5402c.firebaseapp.com",
@@ -174,12 +183,10 @@
             messagingSenderId: "31272724190",
             appId: "1:31272724190:web:51fcc8750c51abf783844f"
         };
-
-// Inicializa Firebase
-   <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        console.log("Firebase inicializado");
 
 // Autenticación anónima
 firebase.auth().signInAnonymously()
