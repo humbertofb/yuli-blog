@@ -221,8 +221,11 @@ async function saveComment(imageId, comment) {
                 querySnapshot.forEach((doc) => {
                     const comment = doc.data().text;
                     console.log("Comentario:", comment); // Verifica el contenido de cada comentario
+                     const commentId = doc.id;
                     const newComment = document.createElement('div');
                     newComment.classList.add('comment');
+                    newComment.classList.add('comment');
+            newComment.dataset.id = commentId; // Añadir el ID del comentario
                     newComment.innerHTML = `
                         <div class="comment-content">
                             <span>${comment}</span>
