@@ -176,8 +176,10 @@
         };
 
 // Inicializa Firebase
-firebase.initializeApp(firebaseConfig);
-console.log("Firebase inicializado");
+<script type="module">
+        import { initializeApp } from './path/to/firebase-app.js';
+        import { getAuth, signInAnonymously } from './path/to/firebase-auth.js';
+        import { getFirestore } from './path/to/firebase-firestore.js';
 
 // Autenticación anónima
 firebase.auth().signInAnonymously()
