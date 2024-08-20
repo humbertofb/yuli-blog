@@ -37,7 +37,7 @@
         </section>
     </main>
     <!-- Botón flotante -->
-    <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+    <button id="upButton" onclick="scrollToTop()">↑</button>
 
     <script>
         // Función para desplazarse al principio de la página
@@ -47,7 +47,7 @@
 
         // Mostrar el botón cuando se desplaza hacia abajo
         window.onscroll = function() {
-            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            const scrollTopBtn = document.getElementById('upButton');
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                 scrollTopBtn.style.display = 'block';
             } else {
