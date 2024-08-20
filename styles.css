@@ -99,7 +99,7 @@ main {
 .actions {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 5px;
 }
 
 .like-button, .comment-button {
@@ -109,10 +109,14 @@ main {
     cursor: pointer;
 }
 
+.like-button .like-count {
+    color: #000; /* Cambia el color del número a negro */
+}
+
 .comments {
     display: none;
     flex-direction: column;
-    padding: 10px;
+    padding: 5px;
 }
 
 .comments textarea {
@@ -124,7 +128,7 @@ main {
 }
 
 .comments .send-comment {
-    background-color: #ffb199;
+    background-color: #ff9999;
     color: #fff;
     border: none;
     padding: 5px 10px;
