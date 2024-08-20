@@ -167,7 +167,7 @@
     // Importa los módulos de Firebase
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
         import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        import { getFirestore, collection, query, where, orderBy, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
         
         // Configuración de Firebase
         const firebaseConfig = {
@@ -275,22 +275,24 @@ async function saveComment(imageId, comment) {
         }
 
 // Recuperar comentarios
-function loadComments(imageId, commentList) {
-    db.collection("comments").where("imageId", "==", imageId).orderBy("timestamp").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const comment = doc.data().text;
-            const newComment = document.createElement('div');
-            newComment.classList.add('comment');
-            newComment.innerHTML = `
-                <div class="comment-content">
-                    <span>${comment}</span>
-                    <div>
-                        <button class="edit-button">✏️</button>
-                        <button class="delete-button">🗑️</button>
-                    </div>
-                </div>
-            `;
-            commentList.appendChild(newComment);
+async function loadComments(imageId, commentList) {
+            try {
+                const q = query(collection(db, "comments"), where("imageId", "==", imageId), orderBy("timestamp"));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    const comment = doc.data().text;
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('comment');
+                    newComment.innerHTML = `
+                        <div class="comment-content">
+                            <span>${comment}</span>
+                            <div>
+                                <button class="edit-button">✏️</button>
+                                <button class="delete-button">🗑️</button>
+                            </div>
+                        </div>
+                    `;
+                    commentList.appendChild(newComment);
 
             // Agregar funcionalidad de editar y eliminar
             newComment.querySelector('.edit-button').addEventListener('click', () => {
