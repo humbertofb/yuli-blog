@@ -252,57 +252,66 @@ async function saveComment(imageId, comment) {
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const likeButtons = document.querySelectorAll('.like-button');
-            const commentButtons = document.querySelectorAll('.comment-button');
-            const sendCommentButtons = document.querySelectorAll('.send-comment');
+    const likeButtons = document.querySelectorAll('.like-button');
+    const commentButtons = document.querySelectorAll('.comment-button');
+    const sendCommentButtons = document.querySelectorAll('.send-comment');
 
-            likeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const likeCount = button.querySelector('.like-count');
-                    if (button.classList.toggle('liked')) {
-                        likeCount.textContent = parseInt(likeCount.textContent) + 1;
-                    } else {
-                        likeCount.textContent = parseInt(likeCount.textContent) - 1;
-                    }
-                });
-            });
+    likeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const likeCount = button.querySelector('.like-count');
+            if (button.classList.toggle('liked')) {
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+            } else {
+                likeCount.textContent = parseInt(likeCount.textContent) - 1;
+            }
+            console.log("Like button clicked");
+        });
+    });
 
-            commentButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const commentsSection = event.target.closest('.image-container').querySelector('.comments');
-                    commentsSection.style.display = commentsSection.style.display === 'flex' ? 'none' : 'flex';
-                    if (commentsSection.style.display === 'flex') {
-                        const commentList = commentsSection.querySelector('.comment-list');
-                        const imageId = event.target.closest('.image-container').dataset.id;
-                        loadComments(imageId, commentList);
-                    }
-                });
-            });
+    commentButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const commentsSection = event.target.closest('.image-container').querySelector('.comments');
+            commentsSection.style.display = commentsSection.style.display === 'flex' ? 'none' : 'flex';
+            if (commentsSection.style.display === 'flex') {
+                const commentList = commentsSection.querySelector('.comment-list');
+                const imageId = event.target.closest('.image-container').dataset.id;
+                console.log("Loading comments for imageId:", imageId);
+                loadComments(imageId, commentList);
+            }
+        });
+    });
 
-            sendCommentButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const commentText = event.target.previousElementSibling.value;
-                    const imageId = event.target.closest('.image-container').dataset.id;
-                    if (commentText) {
-                        saveComment(imageId, commentText)
-                            .then(() => {
-                                const commentList = event.target.closest('.comments').querySelector('.comment-list');
-                                const newComment = document.createElement('div');
-                                newComment.classList.add('comment');
-                                newComment.innerHTML = `
-                                    <div class="comment-content">
-                                        <span>${commentText}</span>
-                                        <div>
-                                            <button class="edit-button">✏️</button>
-                                            <button class="delete-button">🗑️</button>
-                                        </div>
-                                    </div>
-                                `;
-                                commentList.appendChild(newComment);
-                                event.target.previousElementSibling.value = '';
-                            });
-                    }
-                });
+    sendCommentButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const commentText = event.target.previousElementSibling.value;
+            const imageId = event.target.closest('.image-container').dataset.id;
+            if (commentText) {
+                console.log("Sending comment:", commentText);
+                saveComment(imageId, commentText)
+                    .then(() => {
+                        const commentList = event.target.closest('.comments').querySelector('.comment-list');
+                        const newComment = document.createElement('div');
+                        newComment.classList.add('comment');
+                        newComment.innerHTML = `
+                            <div class="comment-content">
+                                <span>${commentText}</span>
+                                <div>
+                                    <button class="edit-button">✏️</button>
+                                    <button class="delete-button">🗑️</button>
+                                </div>
+                            </div>
+                        `;
+                        commentList.appendChild(newComment);
+                        event.target.previousElementSibling.value = '';
+                    })
+                    .catch(error => {
+                        console.error("Error saving comment:", error);
+                    });
+            }
+        });
+    });
+});
+
             });
         });
 
