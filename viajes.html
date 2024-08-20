@@ -200,6 +200,56 @@ signInAnonymously(auth)
 const db = getFirestore(app);
 console.log("Firestore inicializado");
 
+// Función para reacción me gusta
+async function toggleLike(imageId, userId) {
+    try {
+        const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+        const likeDoc = await getDoc(likeRef);
+
+        if (likeDoc.exists()) {
+            // Si el usuario ya ha dado "me gusta", eliminar el documento
+            await deleteDoc(likeRef);
+            console.log("Me gusta eliminado");
+        } else {
+            // Si el usuario no ha dado "me gusta", crear el documento
+            await setDoc(likeRef, {
+                imageId: imageId,
+                userId: userId,
+                timestamp: serverTimestamp()
+            });
+            console.log("Me gusta añadido");
+        }
+    } catch (error) {
+        console.error("Error al cambiar el estado de 'me gusta':", error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const likeButtons = document.querySelectorAll('.like-button');
+    const commentButtons = document.querySelectorAll('.comment-button');
+    const sendCommentButtons = document.querySelectorAll('.send-comment');
+
+    likeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const likeCount = button.querySelector('.like-count');
+            const imageId = button.closest('.image-container').dataset.id;
+            const userId = "userId"; // Reemplaza esto con el ID del usuario actual
+
+            toggleLike(imageId, userId).then(() => {
+                if (button.classList.toggle('liked')) {
+                    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                } else {
+                    likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                }
+                console.log("Like button clicked");
+            });
+        });
+    });
+
+    // Código existente para los botones de comentarios...
+});
+
+
 // Función para guardar comentarios
 async function saveComment(imageId, comment) {
     try {
