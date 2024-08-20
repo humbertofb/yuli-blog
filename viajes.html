@@ -280,6 +280,26 @@ async function saveComment(imageId, comment) {
     const likeButtons = document.querySelectorAll('.like-button');
     const commentButtons = document.querySelectorAll('.comment-button');
     const sendCommentButtons = document.querySelectorAll('.send-comment');
+    
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const commentId = event.target.closest('.comment').dataset.id;
+            const newText = prompt("Edita tu comentario:");
+            if (newText) {
+                editComment(commentId, newText);
+            }
+        });
+    });
+
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const commentId = event.target.closest('.comment').dataset.id;
+            if (confirm("¿Estás seguro de que deseas eliminar este comentario?")) {
+                deleteComment(commentId);
+            }
+        });
+    });
+});
 
     likeButtons.forEach(button => {
         button.addEventListener('click', () => {
