@@ -164,7 +164,30 @@
     </script>
     <script>
     // Comentarios y reacciones
-    document.addEventListener('DOMContentLoaded', () => {
+    // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
+            authDomain: "mi-web-5402c.firebaseapp.com",
+            databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "mi-web-5402c",
+            storageBucket: "mi-web-5402c.appspot.com",
+            messagingSenderId: "31272724190",
+            appId: "1:31272724190:web:51fcc8750c51abf783844f"
+        };
+
+// Inicializa Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Autenticación anónima
+firebase.auth().signInAnonymously()
+    .catch((error) => {
+        alert("Error al autenticar: " + error.message);
+    });
+
+// Referencia a Firestore
+const db = firebase.firestore();
+
+document.addEventListener('DOMContentLoaded', () => {
     const likeButtons = document.querySelectorAll('.like-button');
     const commentButtons = document.querySelectorAll('.comment-button');
     const sendCommentButtons = document.querySelectorAll('.send-comment');
@@ -190,69 +213,51 @@
     sendCommentButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const commentText = event.target.previousElementSibling.value;
+            const imageId = event.target.closest('.image-container').dataset.id;
             if (commentText) {
-                const commentList = event.target.closest('.comments').querySelector('.comment-list');
-                const newComment = document.createElement('div');
-                newComment.classList.add('comment');
-                newComment.innerHTML = `
-                    <span>${commentText}</span>
-                    <div>
-                        <button class="edit-button">✏️</button>
-                        <button class="delete-button">🗑️</button>
-                    </div>
-                `;
-                commentList.appendChild(newComment);
-                event.target.previousElementSibling.value = '';
+                saveComment(imageId, commentText)
+                    .then(() => {
+                        const commentList = event.target.closest('.comments').querySelector('.comment-list');
+                        const newComment = document.createElement('div');
+                        newComment.classList.add('comment');
+                        newComment.innerHTML = `
+                            <div class="comment-content">
+                                <span>${commentText}</span>
+                                <div>
+                                    <button class="edit-button">✏️</button>
+                                    <button class="delete-button">🗑️</button>
+                                </div>
+                            </div>
+                        `;
+                        commentList.appendChild(newComment);
+                        event.target.previousElementSibling.value = '';
 
-                // Agregar funcionalidad de editar y eliminar
-                newComment.querySelector('.edit-button').addEventListener('click', () => {
-                    const newText = prompt('Edita tu comentario:', commentText);
-                    if (newText) {
-                        newComment.querySelector('span').textContent = newText;
-                    }
-                });
+                        // Agregar funcionalidad de editar y eliminar
+                        newComment.querySelector('.edit-button').addEventListener('click', () => {
+                            const newText = prompt('Edita tu comentario:', commentText);
+                            if (newText) {
+                                newComment.querySelector('span').textContent = newText;
+                            }
+                        });
 
-                newComment.querySelector('.delete-button').addEventListener('click', () => {
-                    newComment.remove();
-                });
+                        newComment.querySelector('.delete-button').addEventListener('click', () => {
+                            newComment.remove();
+                        });
+                    })
+                    .catch((error) => {
+                        alert("Error al guardar el comentario: " + error.message);
+                    });
             }
         });
     });
 });
 
-// Configuración de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
-            authDomain: "mi-web-5402c.firebaseapp.com",
-            databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "mi-web-5402c",
-            storageBucket: "mi-web-5402c.appspot.com",
-            messagingSenderId: "31272724190",
-            appId: "1:31272724190:web:51fcc8750c51abf783844f"
-        };
-
-// Inicializa Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Autenticación anónima
-firebase.auth().signInAnonymously()
-    .catch((error) => {
-        console.error("Error al autenticar:", error);
-    });
-
-// Referencia a Firestore
-const db = firebase.firestore();
-
 // Guardar un nuevo comentario
 function saveComment(imageId, comment) {
-    db.collection("comments").add({
+    return db.collection("comments").add({
         imageId: imageId,
         text: comment,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-        console.log("Comentario guardado!");
-    }).catch((error) => {
-        console.error("Error al guardar el comentario:", error);
     });
 }
 
@@ -264,10 +269,12 @@ function loadComments(imageId, commentList) {
             const newComment = document.createElement('div');
             newComment.classList.add('comment');
             newComment.innerHTML = `
-                <span>${comment}</span>
-                <div>
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
+                <div class="comment-content">
+                    <span>${comment}</span>
+                    <div>
+                        <button class="edit-button">✏️</button>
+                        <button class="delete-button">🗑️</button>
+                    </div>
                 </div>
             `;
             commentList.appendChild(newComment);
@@ -285,7 +292,7 @@ function loadComments(imageId, commentList) {
             });
         });
     }).catch((error) => {
-        console.error("Error al cargar los comentarios:", error);
+        alert("Error al cargar los comentarios: " + error.message);
     });
 }
 
