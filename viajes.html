@@ -201,7 +201,7 @@ const db = getFirestore(app);
 console.log("Firestore inicializado");
 
 // Función para reacción me gusta
-async function toggleLike(imageId, userId) {
+async function toggleLike(imageId, userId, button) {
     try {
         const likeRef = doc(db, "likes", `${imageId}_${userId}`);
         const likeDoc = await getDoc(likeRef);
@@ -209,6 +209,7 @@ async function toggleLike(imageId, userId) {
         if (likeDoc.exists()) {
             // Si el usuario ya ha dado "me gusta", eliminar el documento
             await deleteDoc(likeRef);
+            button.classList.remove('liked');
             console.log("Me gusta eliminado");
         } else {
             // Si el usuario no ha dado "me gusta", crear el documento
@@ -217,6 +218,7 @@ async function toggleLike(imageId, userId) {
                 userId: userId,
                 timestamp: serverTimestamp()
             });
+            button.classList.add('liked');
             console.log("Me gusta añadido");
         }
     } catch (error) {
@@ -233,10 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const likeCount = button.querySelector('.like-count');
             const imageId = button.closest('.image-container').dataset.id;
-            const userId = "userId"; // Reemplaza esto con el ID del usuario actual
+            const userId = "user1"; // Reemplaza esto con el ID del usuario actual
 
-            toggleLike(imageId, userId).then(() => {
-                if (button.classList.toggle('liked')) {
+            toggleLike(imageId, userId, button).then(() => {
+                if (button.classList.contains('liked')) {
                     likeCount.textContent = parseInt(likeCount.textContent) + 1;
                 } else {
                     likeCount.textContent = parseInt(likeCount.textContent) - 1;
