@@ -195,52 +195,41 @@ signInAnonymously(auth)
 const db = getFirestore(app);
 console.log("Firestore inicializado");
 
-document.addEventListener('DOMContentLoaded', () => {
-    const likeButtons = document.querySelectorAll('.like-button');
-    const commentButtons = document.querySelectorAll('.comment-button');
-    const sendCommentButtons = document.querySelectorAll('.send-comment');
-
-    likeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const likeCount = button.querySelector('.like-count');
-            if (button.classList.toggle('liked')) {
-                likeCount.textContent = parseInt(likeCount.textContent) + 1;
-            } else {
-                likeCount.textContent = parseInt(likeCount.textContent) - 1;
+// Función para guardar comentarios
+async function saveComment(imageId, comment) {
+            try {
+                await addDoc(collection(db, "comments"), {
+                    imageId: imageId,
+                    text: comment,
+                    timestamp: serverTimestamp()
+                });
+                console.log("Comentario guardado");
+            } catch (error) {
+                console.error("Error al guardar el comentario: ", error);
             }
-        });
-    });
+        }
 
-    commentButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const commentsSection = event.target.closest('.image-container').querySelector('.comments');
-            commentsSection.style.display = commentsSection.style.display === 'flex' ? 'none' : 'flex';
-        });
-    });
-
-    sendCommentButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const commentText = event.target.previousElementSibling.value;
-            const imageId = event.target.closest('.image-container').dataset.id;
-            if (commentText) {
-                saveComment(imageId, commentText)
-                    .then(() => {
-                        const commentList = event.target.closest('.comments').querySelector('.comment-list');
-                        const newComment = document.createElement('div');
-                        newComment.classList.add('comment');
-                        newComment.innerHTML = `
-                            <div class="comment-content">
-                                <span>${commentText}</span>
-                                <div>
-                                    <button class="edit-button">✏️</button>
-                                    <button class="delete-button">🗑️</button>
-                                </div>
+        // Función para cargar comentarios
+        async function loadComments(imageId, commentList) {
+            try {
+                const q = query(collection(db, "comments"), where("imageId", "==", imageId), orderBy("timestamp"));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    const comment = doc.data().text;
+                    const newComment = document.createElement('div');
+                    newComment.classList.add('comment');
+                    newComment.innerHTML = `
+                        <div class="comment-content">
+                            <span>${comment}</span>
+                            <div>
+                                <button class="edit-button">✏️</button>
+                                <button class="delete-button">🗑️</button>
                             </div>
-                        `;
-                        commentList.appendChild(newComment);
-                        event.target.previousElementSibling.value = '';
+                        </div>
+                    `;
+                    commentList.appendChild(newComment);
 
-                        // Agregar funcionalidad de editar y eliminar
+                    // Agregar funcionalidad de editar y eliminar
                     newComment.querySelector('.edit-button').addEventListener('click', () => {
                         const newText = prompt('Edita tu comentario:', comment);
                         if (newText) {
@@ -252,7 +241,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         newComment.remove();
                     });
                 });
-            } 
+            } catch (error) {
+                alert("Error al cargar los comentarios: " + error.message);
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
