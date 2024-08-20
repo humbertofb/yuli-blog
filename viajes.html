@@ -47,11 +47,11 @@
 
         // Mostrar el botón cuando se desplaza hacia abajo
         window.onscroll = function() {
-            const scrollTopBtn = document.getElementById('upButton');
+            const upButton = document.getElementById('upButton');
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                scrollTopBtn.style.display = 'block';
+                upButton.style.display = 'block';
             } else {
-                scrollTopBtn.style.display = 'none';
+                upButton.style.display = 'none';
             }
         };
         
