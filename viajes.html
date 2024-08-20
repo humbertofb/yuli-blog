@@ -24,22 +24,125 @@
         <section>
             <center><h2>Galería de Viajes</h2></center>
             <div class="gallery">
+                <div class="image-container">
                 <img src="IMG_2486.jpeg" alt="Viaje 1">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
+               <div class="image-container">
                 <img src="IMG_2487.jpeg" alt="Viaje 2">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
+              <div class="image-container">
                 <img src="IMG_2493.jpeg" alt="Viaje 3">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
+              <div class="image-container">
                 <img src="IMG_2494.jpeg" alt="Viaje 4">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
+               <div class="image-container">
                 <img src="IMG_2497.jpeg" alt="Viaje 5">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
+              <div class="image-container">
                 <img src="IMG_2498.jpeg" alt="Viaje 6">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
+              <div class="image-container">
                 <img src="IMG_2516.jpeg" alt="Viaje 7">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
+               <div class="image-container">
                 <img src="IMG_2517.jpeg" alt="Viaje 8">
+                    <div class="actions">
+                <button class="like-button">❤️</button>
+                <button class="comment-button">💬</button>
+            </div>
+            <div class="comments">
+                <textarea placeholder="Escribe un comentario..."></textarea>
+                <button class="send-comment">Enviar</button>
+                <div class="comment-list">
+                    <!-- Aquí se mostrarán los comentarios -->
+                </div>
+            </div>
+        </div>
                 <!-- Agrega más imágenes aquí -->
             </div>
         </section>
     </main>
     <!-- Botón flotante -->
     <button id="upButton" onclick="scrollToTop()">↑</button>
-
-    <script>
+      <script>
         // Función para desplazarse al principio de la página
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -56,6 +159,91 @@
         };
         
     </script>
+    // Comentarios y reacciones
+    document.addEventListener('DOMContentLoaded', () => {
+    const likeButtons = document.querySelectorAll('.like-button');
+    const commentButtons = document.querySelectorAll('.comment-button');
+    const sendCommentButtons = document.querySelectorAll('.send-comment');
+
+    likeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            button.classList.toggle('liked');
+        });
+    });
+
+    commentButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const commentsSection = event.target.closest('.image-container').querySelector('.comments');
+            commentsSection.style.display = commentsSection.style.display === 'flex' ? 'none' : 'flex';
+        });
+    });
+
+    sendCommentButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const commentText = event.target.previousElementSibling.value;
+            if (commentText) {
+                const commentList = event.target.closest('.comments').querySelector('.comment-list');
+                const newComment = document.createElement('div');
+                newComment.classList.add('comment');
+                newComment.textContent = commentText;
+                commentList.appendChild(newComment);
+                event.target.previousElementSibling.value = '';
+            }
+        });
+    });
+});
+
+// Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
+            authDomain: "mi-web-5402c.firebaseapp.com",
+            databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "mi-web-5402c",
+            storageBucket: "mi-web-5402c.appspot.com",
+            messagingSenderId: "31272724190",
+            appId: "1:31272724190:web:51fcc8750c51abf783844f"
+        };
+
+// Inicializa Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Autenticación anónima
+firebase.auth().signInAnonymously()
+    .catch((error) => {
+        console.error("Error al autenticar:", error);
+    });
+
+// Referencia a Firestore
+const db = firebase.firestore();
+
+// Guardar un nuevo comentario
+function saveComment(imageId, comment) {
+    db.collection("comments").add({
+        imageId: imageId,
+        text: comment,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+        console.log("Comentario guardado!");
+    }).catch((error) => {
+        console.error("Error al guardar el comentario:", error);
+    });
+}
+
+// Recuperar comentarios
+function loadComments(imageId, commentList) {
+    db.collection("comments").where("imageId", "==", imageId).orderBy("timestamp").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            const comment = doc.data().text;
+            const newComment = document.createElement('div');
+            newComment.classList.add('comment');
+            newComment.textContent = comment;
+            commentList.appendChild(newComment);
+        });
+    }).catch((error) => {
+        console.error("Error al cargar los comentarios:", error);
+    });
+}
+
     <script src="scripts.js"></script>
 </body>
 </html>
