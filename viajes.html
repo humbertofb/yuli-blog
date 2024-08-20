@@ -217,8 +217,10 @@ async function saveComment(imageId, comment) {
             try {
                 const q = query(collection(db, "comments"), where("imageId", "==", imageId), orderBy("timestamp"));
                 const querySnapshot = await getDocs(q);
+                console.log("Comentarios recuperados:", querySnapshot.size); // Verifica el número de documentos recuperados
                 querySnapshot.forEach((doc) => {
                     const comment = doc.data().text;
+                    console.log("Comentario:", comment); // Verifica el contenido de cada comentario
                     const newComment = document.createElement('div');
                     newComment.classList.add('comment');
                     newComment.innerHTML = `
