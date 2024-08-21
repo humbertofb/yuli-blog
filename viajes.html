@@ -388,25 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-        
-        document.querySelectorAll('.edit-button').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const commentId = event.target.closest('.comment').dataset.id;
-            const newText = prompt("Edita tu comentario:");
-            if (newText) {
-                editComment(commentId, newText);
-            }
-        });
-    });
     
-    document.querySelectorAll('.delete-button').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const commentId = event.target.closest('.comment').dataset.id;
-            if (confirm("¿Estás seguro de que deseas eliminar este comentario?")) {
-                deleteComment(commentId);
-            }
-        });
-    });
 
         const likeButton = newComment.querySelector('.like-button');
         const likeCount = likeButton.querySelector('.like-count');
