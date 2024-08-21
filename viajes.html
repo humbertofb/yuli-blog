@@ -319,88 +319,77 @@ async function toggleLike(imageId, userId, button, likeCount) {
     }
 }
 
+// Función para cargar el estado de los "me gusta"
+async function loadLikes(imageId, userId, button, likeCount) {
+    try {
+        const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+        const likeDoc = await getDoc(likeRef);
+
+        if (likeDoc.exists()) {
+            button.classList.add('liked');
+            likeCount.textContent = parseInt(likeCount.textContent) + 1;
+        }
+    } catch (error) {
+        console.error("Error al cargar el estado de 'me gusta':", error);
+    }
+}
+
 // Eventos del DOM
 document.addEventListener('DOMContentLoaded', () => {
-    const likeButtons = document.querySelectorAll('.like-button');
-    const commentButtons = document.querySelectorAll('.comment-button');
-    const sendCommentButtons = document.querySelectorAll('.send-comment');
+    // Recupera todos los comentarios cuando se carga la página
+    loadAllComments();
 
-    likeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const likeCount = button.querySelector('.like-count');
-            const imageId = button.closest('.image-container').dataset.id;
+    function loadAllComments() {
+        const commentsContainer = document.querySelector('#comments-container');
+        commentsContainer.innerHTML = ''; // Limpiar el contenedor de comentarios
 
-            if (userId) {
-                toggleLike(imageId, userId, button, likeCount);
-            } else {
-                console.log("Usuario no autenticado");
+        // Cargar todos los comentarios desde Firestore
+        getDocs(collection(db, "comments"))
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    const comment = doc.data();
+                    comment.id = doc.id;
+                    renderComment(comment);
+                });
+            })
+            .catch(error => console.error('Error loading comments:', error));
+    }
+
+    function renderComment(comment) {
+        const commentsContainer = document.querySelector('#comments-container');
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment');
+        newComment.dataset.id = comment.id;
+
+        // Estructura del comentario, incluyendo el texto y los me gusta
+        newComment.innerHTML = `
+            <span>${comment.text}</span>
+            <button class="edit-button">Editar</button>
+            <button class="delete-button">Eliminar</button>
+            <button class="like-button">Me gusta (<span class="like-count">${comment.likes || 0}</span>)</button>
+        `;
+
+        commentsContainer.appendChild(newComment);
+
+        // Asignar eventos de edición y eliminación
+        newComment.querySelector('.edit-button').addEventListener('click', () => {
+            const newText = prompt('Edita tu comentario:', comment.text);
+            if (newText) {
+                editComment(comment.id, newText).then(() => {
+                    newComment.querySelector('span').textContent = newText;
+                });
             }
         });
-    });
 
-    commentButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const commentsSection = event.target.closest('.image-container').querySelector('.comments');
-            commentsSection.style.display = commentsSection.style.display === 'flex' ? 'none' : 'flex';
-            if (commentsSection.style.display === 'flex') {
-                const commentList = commentsSection.querySelector('.comment-list');
-                const imageId = event.target.closest('.image-container').dataset.id;
-                console.log("Loading comments for imageId:", imageId);
-                loadComments(imageId, commentList);
+        newComment.querySelector('.delete-button').addEventListener('click', () => {
+            if (confirm("¿Estás seguro de que deseas eliminar este comentario?")) {
+                deleteComment(comment.id).then(() => {
+                    newComment.remove();
+                });
             }
         });
-    });
-
-    sendCommentButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const commentText = event.target.previousElementSibling.value;
-            const imageId = event.target.closest('.image-container').dataset.id;
-            if (commentText) {
-                console.log("Sending comment:", commentText);
-                saveComment(imageId, commentText)
-                    .then(() => {
-                        const commentList = event.target.closest('.comments').querySelector('.comment-list');
-                        const newComment = document.createElement('div');
-                        newComment.classList.add('comment');
-                        newComment.innerHTML = `
-                            <div class="comment-content">
-                                <span>${commentText}</span>
-                                <div>
-                                    <button class="edit-button">✏️</button>
-                                    <button class="delete-button">🗑️</button>
-                                </div>
-                            </div>
-                        `;
-                        commentList.appendChild(newComment);
-                        event.target.previousElementSibling.value = '';
-
-                        // Añadir eventos a los nuevos botones de edición y eliminación
-                        newComment.querySelector('.edit-button').addEventListener('click', () => {
-                            const newText = prompt('Edita tu comentario:', commentText);
-                            if (newText) {
-                                editComment(newComment.dataset.id, newText).then(() => {
-                                    newComment.querySelector('span').textContent = newText;
-                                });
-                            }
-                        });
-
-                        newComment.querySelector('.delete-button').addEventListener('click', () => {
-                            if (confirm("¿Estás seguro de que deseas eliminar este comentario?")) {
-                                deleteComment(newComment.dataset.id).then(() => {
-                                    newComment.remove();
-                                });
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error("Error saving comment:", error);
-                    });
-            }
-        });
-    });
-});
-    
-    document.querySelectorAll('.edit-button').forEach(button => {
+        
+        document.querySelectorAll('.edit-button').forEach(button => {
         button.addEventListener('click', (event) => {
             const commentId = event.target.closest('.comment').dataset.id;
             const newText = prompt("Edita tu comentario:");
@@ -409,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
+    
     document.querySelectorAll('.delete-button').forEach(button => {
         button.addEventListener('click', (event) => {
             const commentId = event.target.closest('.comment').dataset.id;
@@ -418,6 +407,41 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+        const likeButton = newComment.querySelector('.like-button');
+        const likeCount = likeButton.querySelector('.like-count');
+
+        // Cargar el estado de "me gusta" para el comentario
+        if (userId) {
+            loadLikes(comment.id, userId, likeButton, likeCount);
+        }
+
+        likeButton.addEventListener('click', () => {
+            if (userId) {
+                toggleLike(comment.id, userId, likeButton, likeCount);
+            } else {
+                console.log("Usuario no autenticado");
+            }
+        });
+    }
+
+    // Evento para enviar un nuevo comentario
+    document.querySelector('.send-comment').addEventListener('click', (event) => {
+        const commentText = document.querySelector('.comment-input').value;
+        const imageId = document.querySelector('.image-container').dataset.id;
+        if (commentText) {
+            console.log("Sending comment:", commentText);
+            saveComment(imageId, commentText)
+                .then(() => {
+                    loadAllComments(); // Recargar todos los comentarios después de agregar uno nuevo
+                    document.querySelector('.comment-input').value = '';
+                })
+                .catch(error => {
+                    console.error("Error saving comment:", error);
+                });
+        }
+    });
+});
 
 </script>
 <script src="scripts.js"></script>
