@@ -291,58 +291,98 @@ async function deleteComment(commentId) {
     }
 }
 
-// Función para manejar el "me gusta"
-async function toggleLike(imageId, userId, button, likeCount) {
-    try {
-        const likeRef = doc(db, "likes", `${imageId}_${userId}`);
-        const likeDoc = await getDoc(likeRef);
-
-        if (likeDoc.exists()) {
-            // Si el usuario ya ha dado "me gusta", eliminar el documento
-            await deleteDoc(likeRef);
-            button.classList.remove('liked');
-            likeCount.textContent = parseInt(likeCount.textContent) - 1;
-            console.log("Me gusta eliminado");
-        } else {
-            // Si el usuario no ha dado "me gusta", crear el documento
-            await setDoc(likeRef, {
-                imageId: imageId,
-                userId: userId,
-                timestamp: serverTimestamp()
-            });
-            button.classList.add('liked');
-            likeCount.textContent = parseInt(likeCount.textContent) + 1;
-            console.log("Me gusta añadido");
-        }
-    } catch (error) {
-        console.error("Error al cambiar el estado de 'me gusta':", error);
-    }
-}
-
-// Función para cargar el estado de los "me gusta"
-async function loadLikes(imageId, userId, button, likeCount) {
-    try {
-        const likeRef = doc(db, "likes", `${imageId}_${userId}`);
-        const likeDoc = await getDoc(likeRef);
-
-        if (likeDoc.exists()) {
-            button.classList.add('liked');
-            likeCount.textContent = parseInt(likeCount.textContent) + 1;
-        }
-    } catch (error) {
-        console.error("Error al cargar el estado de 'me gusta':", error);
-    }
-}
+        
+         
+      
 
 // Eventos del DOM
 document.addEventListener('DOMContentLoaded', () => {
-    // Recupera todos los comentarios cuando se carga la página
-    loadAllComments();
+    const likeButtons = document.querySelectorAll('.like-button');
+    const commentButtons = document.querySelectorAll('.comment-button');
+    const sendCommentButtons = document.querySelectorAll('.send-comment');
 
-    function loadAllComments() {
-        const commentsContainer = document.querySelector('#comments-container');
-        commentsContainer.innerHTML = ''; // Limpiar el contenedor de comentarios
+    likeButtons.forEach(button =>{
+        button.addEventListener('click', () =>{
+            const likeCount = button.querySelector('.like-count');
+            if (button.classList.toggle('liked')){
+                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+            }else{
+                likeCount.textContent = parseInt(likeCount.textContent) -1;
+            }
+            console.log("Me gusta añadido");
+        });
+    });
 
+    commentButtons.forEach(button => {
+        button.addEventListener('click', (event) =>
+            {
+                const commentsSection = event.target.closet('.image-container').querySelector('.comments');
+                commentsSection.style.display = commentsSection.style.display = commentsSection.style.display === 'flex'? 'none':'flex';
+                if (commentsSection.style.display === 'flex'){
+                    const commentList = commentsSection.querySelector('.comment-list');
+                    const imageId = event.target.closet('.image-container').dataset.id;
+                    console.log("Cargando comentarios:", imageId);
+                    loadComments(imageId, commentList);
+                }
+            });
+    });
+
+    sendCommentButtons.forEach(button => {
+        button.addEventListener('click',(event) =>
+            {
+                const commentText = event.target.previousElementSibling.value;
+                const imageId = event.target.closet('.image-container').dataset.id;
+                if (commentText) {
+                    console.log("Enviando comentario:",
+                                commentText);
+                    saveComment(imageId, commentText)
+                    .then(() => {
+                        const commentList = event.target.closet('.comment').querySelector('.comment-list');
+                        const newComment = document.createElement('div');
+
+                        newComment.classList.add('comment');
+                        newComment.innerHTML = '
+                            <div class="comment-content">
+                            <span>${commentText}</span>
+                        <div>
+                          <button class="edit-button">✏️</button>
+                          <button class="delete-button">🗑️</button>
+                          </div>
+                          </div>
+                          ';
+                        commentList.appendChild(newComment);
+                    event.target.previousElementSibling.value = ";
+                })
+        .catch(error => {
+            console.error("Error guardando el comentario:", error);
+        });
+    }
+                               });
+});
+
+        document.querySelectorAll('.edit-button'.forEach(button => {
+            button.addEventListener('click', (event) =>
+                {
+                    const commentId = event.target.closet('.comment').dataset.id;
+                    const newText = prompt("Edita tu comentario:");
+                    if (newText) {
+                        editComment(commentId, newText);
+                    }
+                });
+        });
+
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', (event) =>
+                {
+                    const commentId = event.target.closes('.comment').dataset.id;
+                    if (confirm("¿Estás seguro de que deseas eliminar este comentario?")){
+                        deleteComment(commentId);
+                    }
+                });
+        });
+        });
+
+                        
         // Cargar todos los comentarios desde Firestore
         getDocs(collection(db, "comments"))
             .then(querySnapshot => {
@@ -354,21 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error('Error loading comments:', error));
     }
-
-    function renderComment(comment) {
-        const commentsContainer = document.querySelector('#comments-container');
-        const newComment = document.createElement('div');
-        newComment.classList.add('comment');
-        newComment.dataset.id = comment.id;
-
-        // Estructura del comentario, incluyendo el texto y los me gusta
-        newComment.innerHTML = `
-            <span>${comment.text}</span>
-            <button class="edit-button">Editar</button>
-            <button class="delete-button">Eliminar</button>
-        `;
-
-        commentsContainer.appendChild(newComment);
 
         // Asignar eventos de edición y eliminación
         newComment.querySelector('.edit-button').addEventListener('click', () => {
