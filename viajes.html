@@ -218,6 +218,8 @@ async function toggleLike(imageId, userId, button, likeCount) {
         const likeDoc = await getDoc(likeRef);
 
             // Si el usuario no ha dado "me gusta", crear el documento
+            if (!likeDoc.exists()) {
+            // Si el usuario no ha dado "me gusta", crear el documento
             await setDoc(likeRef, {
                 imageId: imageId,
                 userId: userId,
@@ -226,16 +228,16 @@ async function toggleLike(imageId, userId, button, likeCount) {
             button.classList.add('liked');
             likeCount.textContent = parseInt(likeCount.textContent) + 1;
             console.log("Me gusta añadido");
-    } catch (error) {
-        console.error("Error al cambiar el estado de 'me gusta':", error);
-    } else { 
-    if (likeDoc.exists()) {
+        } else {
             // Si el usuario ya ha dado "me gusta", eliminar el documento
             await deleteDoc(likeRef);
             button.classList.remove('liked');
             likeCount.textContent = parseInt(likeCount.textContent) - 1;
             console.log("Me gusta eliminado");
         }
+    } catch (error) {
+        console.error("Error al cambiar el estado de 'me gusta':", error);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
