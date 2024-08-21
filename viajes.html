@@ -36,7 +36,6 @@
                 <button class="comment-button">💬</button>
             </div>
             <div class="comments">
-              <div id="comments-container"></div>
                 <textarea placeholder="Escribe un comentario..."></textarea>
                 <button class="send-comment">Enviar</button>
                 <div class="comment-list">
@@ -367,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>${comment.text}</span>
             <button class="edit-button">Editar</button>
             <button class="delete-button">Eliminar</button>
-            <button class="like-button">Me gusta (<span class="like-count">${comment.likes || 0}</span>)</button>
         `;
 
         commentsContainer.appendChild(newComment);
@@ -389,23 +387,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         });
-    
-
-        const likeButton = newComment.querySelector('.like-button');
-        const likeCount = likeButton.querySelector('.like-count');
-
-        // Cargar el estado de "me gusta" para el comentario
-        if (userId) {
-            loadLikes(comment.id, userId, likeButton, likeCount);
-        }
-
-        likeButton.addEventListener('click', () => {
-            if (userId) {
-                toggleLike(comment.id, userId, likeButton, likeCount);
-            } else {
-                console.log("Usuario no autenticado");
-            }
-        });
     }
 
     // Evento para enviar un nuevo comentario
@@ -423,6 +404,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error("Error saving comment:", error);
                 });
         }
+    });
+
+    // Manejar los "me gusta" debajo de la imagen
+    const imageContainers = document.querySelectorAll('.image-container');
+    imageContainers.forEach(container => {
+        const likeButton = container.querySelector('.like-button');
+        const likeCount = likeButton.querySelector('.like-count');
+        const imageId = container.dataset.id;
+
+        if (userId) {
+            loadLikes(imageId, userId, likeButton, likeCount);
+        }
+
+        likeButton.addEventListener('click', () => {
+            if (userId) {
+                toggleLike(imageId, userId, likeButton, likeCount);
+            } else {
+                console.log("Usuario no autenticado");
+            }
+        });
     });
 });
 
