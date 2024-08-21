@@ -92,6 +92,8 @@ onAuthStateChanged(auth, (user) => {
       
       snapshot.forEach((childSnapshot) => {
         const comment = childSnapshot.val();
+        .then(() => {
+        alert('Error al mostrar comentarios');
         const commentElement = document.createElement('div');
         commentElement.classList.add('comment');
         commentElement.innerHTML = `
