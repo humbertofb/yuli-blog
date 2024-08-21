@@ -184,19 +184,19 @@
         
         // Inicializa Firebase
         const app = initializeApp(firebaseConfig);
-        console.log("Firebase inicializado");
-
-// Autenticación anónima
-const auth = getAuth(app);
+const db = getFirestore(app);
+const auth = getAuth();
 let userId = null;
+
+// Autenticar usuario anónimo
 signInAnonymously(auth)
-.then(() => {
-                console.log("Autenticación anónima exitosa");
-                })
-            .catch((error) => {
-                alert("Error al autenticar: " + error.message);
-            });
-            
+    .then(() => {
+        console.log("Usuario anónimo autenticado");
+    })
+    .catch((error) => {
+        console.error("Error al autenticar usuario anónimo:", error);
+    });
+
 // Obtener el ID del usuario autenticado
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -206,58 +206,6 @@ onAuthStateChanged(auth, (user) => {
         console.log("No hay usuario autenticado");
     }
 });
-
-// Referencia a Firestore
-const db = getFirestore(app);
-console.log("Firestore inicializado");
-
-// Función para reacción me gusta
-async function toggleLike(imageId, userId, button, likeCount) {
-    try {
-        const likeRef = doc(db, "likes", `${imageId}_${userId}`);
-        const likeDoc = await getDoc(likeRef);
-
-            // Si el usuario no ha dado "me gusta", crear el documento
-            if (!likeDoc.exists()) {
-            // Si el usuario no ha dado "me gusta", crear el documento
-            await setDoc(likeRef, {
-                imageId: imageId,
-                userId: userId,
-                timestamp: serverTimestamp()
-            });
-            button.classList.add('liked');
-            likeCount.textContent = parseInt(likeCount.textContent) + 1;
-            console.log("Me gusta añadido");
-        } else {
-            // Si el usuario ya ha dado "me gusta", eliminar el documento
-            await deleteDoc(likeRef);
-            button.classList.remove('liked');
-            likeCount.textContent = parseInt(likeCount.textContent) - 1;
-            console.log("Me gusta eliminado");
-        }
-    } catch (error) {
-        console.error("Error al cambiar el estado de 'me gusta':", error);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const likeButtons = document.querySelectorAll('.like-button');
-    const commentButtons = document.querySelectorAll('.comment-button');
-    const sendCommentButtons = document.querySelectorAll('.send-comment');
-
-    likeButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const likeCount = button.querySelector('.like-count');
-            const imageId = button.closest('.image-container').dataset.id;
-            const userId = "user123"; // Reemplaza esto con el ID del usuario actual
-
-            toggleLike(imageId, userId, button, likeCount);
-        });
-    });
-
-    // Código existente para los botones de comentarios...
-});
-
 
 // Función para guardar comentarios
 async function saveComment(imageId, comment) {
@@ -343,6 +291,34 @@ async function deleteComment(commentId) {
     }
 }
 
+// Función para manejar el "me gusta"
+async function toggleLike(imageId, userId, button, likeCount) {
+    try {
+        const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+        const likeDoc = await getDoc(likeRef);
+
+        if (likeDoc.exists()) {
+            // Si el usuario ya ha dado "me gusta", eliminar el documento
+            await deleteDoc(likeRef);
+            button.classList.remove('liked');
+            likeCount.textContent = parseInt(likeCount.textContent) - 1;
+            console.log("Me gusta eliminado");
+        } else {
+            // Si el usuario no ha dado "me gusta", crear el documento
+            await setDoc(likeRef, {
+                imageId: imageId,
+                userId: userId,
+                timestamp: serverTimestamp()
+            });
+            button.classList.add('liked');
+            likeCount.textContent = parseInt(likeCount.textContent) + 1;
+            console.log("Me gusta añadido");
+        }
+    } catch (error) {
+        console.error("Error al cambiar el estado de 'me gusta':", error);
+    }
+}
+
 // Eventos del DOM
 document.addEventListener('DOMContentLoaded', () => {
     const likeButtons = document.querySelectorAll('.like-button');
@@ -352,10 +328,12 @@ document.addEventListener('DOMContentLoaded', () => {
     likeButtons.forEach(button => {
         button.addEventListener('click', () => {
             const likeCount = button.querySelector('.like-count');
-            if (button.classList.toggle('liked')) {
-                likeCount.textContent = parseInt(likeCount.textContent) + 1;
+            const imageId = button.closest('.image-container').dataset.id;
+
+            if (userId) {
+                toggleLike(imageId, userId, button, likeCount);
             } else {
-                likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                console.log("Usuario no autenticado");
             }
         });
     });
