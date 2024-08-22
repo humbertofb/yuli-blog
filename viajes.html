@@ -364,6 +364,26 @@ console.error("Error al alternar el me gusta:", error);
 }
 }
 
+// Función para adjuntar eventos a los comentarios
+function attachCommentEvents(commentElement, commentId, commentText) {
+commentElement.querySelector('.edit-button').addEventListener('click', () => {
+const newText = prompt('Edita tu comentario:', commentText);
+if (newText) {
+editComment(commentId, newText).then(() => {
+commentElement.querySelector('span').textContent = newText;
+});
+}
+});
+
+commentElement.querySelector('.delete-button').addEventListener('click', () => {
+if (confirm("¿Estás seguro de que deseas eliminar este comentario?")) {
+deleteComment(commentId).then(() => {
+commentElement.remove();
+});
+}
+});
+}
+
 // Eventos del DOM
 document.addEventListener('DOMContentLoaded', () => {
 const likeButtons = document.querySelectorAll('.like-button');
