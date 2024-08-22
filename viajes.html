@@ -239,7 +239,7 @@ newComment.innerHTML = `
 <span>${comment}</span>
 <div>
 <button class="edit-button">✏️</button>
-<button class="delete-button">️</button>
+<button class="delete-button">🗑️️</button>
 </div>
 </div>
 `;
@@ -293,6 +293,38 @@ console.error("Error al eliminar el comentario:", error);
 }
 }
 
+// Función para guardar "me gusta"
+async function saveLike(imageId, userId, likeCount) {
+try {
+const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+await setDoc(likeRef, {
+imageId: imageId,
+userId: userId,
+count: likeCount
+});
+console.log("Me gusta guardado correctamente");
+} catch (error) {
+console.error("Error al guardar el me gusta:", error);
+}
+}
+
+// Función para cargar "me gusta"
+async function loadLikes(imageId, userId, likeButton, likeCount) {
+try {
+const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+const likeDoc = await getDoc(likeRef);
+if (likeDoc.exists()) {
+const data = likeDoc.data();
+likeCount.textContent = data.count;
+if (data.count > 0) {
+likeButton.classList.add('liked');
+}
+}
+} catch (error) {
+console.error("Error al cargar los me gusta:", error);
+}
+}
+
 // Eventos del DOM
 document.addEventListener('DOMContentLoaded', () => {
 const likeButtons = document.querySelectorAll('.like-button');
@@ -340,7 +372,7 @@ newComment.innerHTML = `
 <span>${commentText}</span>
 <div>
 <button class="edit-button">✏️</button>
-<button class="delete-button">️</button>
+<button class="delete-button">️🗑️</button>
 </div>
 </div>
 `;
