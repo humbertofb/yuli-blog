@@ -113,7 +113,7 @@ const comment = snapshot.val();
 document.getElementById('name').value = comment.name;
 document.getElementById('message').value = comment.message;
 document.getElementById('messageForm').dataset.editing = commentId;
-});
+}, { onlyOnce: true });
 });
 });
 
