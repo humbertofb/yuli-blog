@@ -224,6 +224,8 @@ console.error("Error al guardar el comentario:", error);
 // Función para cargar comentarios
 async function loadComments(imageId, commentList) {
 try {
+// Limpiar la lista de comentarios antes de cargar nuevos
+commentList.innerHTML = '';
 const q = query(collection(db, "comments"), where("imageId", "==", imageId), orderBy("timestamp"));
 const querySnapshot = await getDocs(q);
 querySnapshot.forEach((doc) => {
@@ -237,7 +239,7 @@ newComment.innerHTML = `
 <span>${comment}</span>
 <div>
 <button class="edit-button">✏️</button>
-<button class="delete-button">🗑️️</button>
+<button class="delete-button">️</button>
 </div>
 </div>
 `;
