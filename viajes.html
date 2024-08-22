@@ -325,6 +325,31 @@ console.error("Error al cargar los me gusta:", error);
 }
 }
 
+// Función para alternar "me gusta"
+async function toggleLike(imageId, userId, likeButton, likeCount) {
+try {
+const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+const likeDoc = await getDoc(likeRef);
+let newCount = 0;
+if (likeDoc.exists()) {
+const data = likeDoc.data();
+newCount = data.count;
+if (likeButton.classList.toggle('liked')) {
+newCount += 1;
+} else {
+newCount -= 1;
+}
+} else {
+newCount = 1;
+likeButton.classList.add('liked');
+}
+likeCount.textContent = newCount;
+await saveLike(imageId, userId, newCount);
+} catch (error) {
+console.error("Error al alternar el me gusta:", error);
+}
+}
+
 // Eventos del DOM
 document.addEventListener('DOMContentLoaded', () => {
 const likeButtons = document.querySelectorAll('.like-button');
@@ -332,14 +357,14 @@ const commentButtons = document.querySelectorAll('.comment-button');
 const sendCommentButtons = document.querySelectorAll('.send-comment');
 
 likeButtons.forEach(button => {
-button.addEventListener('click', () => {
+button.addEventListener('click', (event) => {
 const likeCount = button.querySelector('.like-count');
-if (button.classList.toggle('liked')) {
-likeCount.textContent = parseInt(likeCount.textContent) + 1;
+const imageId = event.target.closest('.image-container').dataset.id;
+if (userId) {
+toggleLike(imageId, userId, button, likeCount);
 } else {
-likeCount.textContent = parseInt(likeCount.textContent) - 1;
+console.log("Usuario no autenticado");
 }
-console.log("Me gusta añadido");
 });
 });
 
