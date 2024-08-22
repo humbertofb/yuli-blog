@@ -96,6 +96,18 @@ main {
 }
 
 /* me gusta y comentarios */
+.image-container {
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
+}
+
+.image-container img {
+max-width: 100%;
+height: auto;
+display: block;
+}
+
 .actions {
     display: flex;
     justify-content: space-between;
