@@ -296,12 +296,10 @@ console.error("Error al eliminar el comentario:", error);
 // Función para guardar "me gusta"
 async function saveLike(imageId, userId, likeCount) {
 try {
-const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+const likeRef = doc(db, "likes", imageId);
 await setDoc(likeRef, {
-imageId: imageId,
-userId: userId,
 count: likeCount
-});
+}, { merge: true });
 console.log("Me gusta guardado correctamente");
 } catch (error) {
 console.error("Error al guardar el me gusta:", error);
@@ -309,9 +307,9 @@ console.error("Error al guardar el me gusta:", error);
 }
 
 // Función para cargar "me gusta"
-async function loadLikes(imageId, userId, likeButton, likeCount) {
+async function loadLikes(imageId, likeButton, likeCount) {
 try {
-const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+const likeRef = doc(db, "likes", imageId);
 const likeDoc = await getDoc(likeRef);
 if (likeDoc.exists()) {
 const data = likeDoc.data();
@@ -328,7 +326,7 @@ console.error("Error al cargar los me gusta:", error);
 // Función para alternar "me gusta"
 async function toggleLike(imageId, userId, likeButton, likeCount) {
 try {
-const likeRef = doc(db, "likes", `${imageId}_${userId}`);
+const likeRef = doc(db, "likes", imageId);
 const likeDoc = await getDoc(likeRef);
 let newCount = 0;
 if (likeDoc.exists()) {
@@ -357,9 +355,12 @@ const commentButtons = document.querySelectorAll('.comment-button');
 const sendCommentButtons = document.querySelectorAll('.send-comment');
 
 likeButtons.forEach(button => {
+const imageId = button.closest('.image-container').dataset.id;
+const likeCount = button.querySelector('.like-count');
+loadLikes(imageId, button, likeCount);
+
 button.addEventListener('click', (event) => {
 const likeCount = button.querySelector('.like-count');
-const imageId = event.target.closest('.image-container').dataset.id;
 if (userId) {
 toggleLike(imageId, userId, button, likeCount);
 } else {
