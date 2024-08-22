@@ -104,83 +104,91 @@ commentsContainer.appendChild(commentElement);
 });
 
       // Añadir eventos de edición y eliminación después de que los comentarios se hayan renderizado
-      document.querySelectorAll('.editButton').forEach(button => {
-        button.addEventListener('click', (event) => {
-          const commentId = event.target.dataset.id;
-          const commentRef = ref(database, 'messages/' + commentId);
-          onValue(commentRef, (snapshot) => {
-            const comment = snapshot.val();
-            document.getElementById('name').value = comment.name;
-            document.getElementById('message').value = comment.message;
-            document.getElementById('messageForm').dataset.editing = commentId;
-          });
-        });
-      });
+document.querySelectorAll('.editButton').forEach(button => {
+button.addEventListener('click', (event) => {
+const commentId = event.target.dataset.id;
+const commentRef = ref(database, 'messages/' + commentId);
+onValue(commentRef, (snapshot) => {
+const comment = snapshot.val();
+document.getElementById('name').value = comment.name;
+document.getElementById('message').value = comment.message;
+document.getElementById('messageForm').dataset.editing = commentId;
+});
+});
+});
 
-      document.querySelectorAll('.deleteButton').forEach(button => {
-        button.addEventListener('click', (event) => {
-          const commentId = event.target.dataset.id;
-          remove(ref(database, 'messages/' + commentId)).then(() => {
-            alert('Comentario eliminado');
-          }).catch((error) => {
-            console.error('Error al eliminar el comentario:', error);
-          });
-        });
-      });
-    }, (error) => {
-      console.error('Error al leer los comentarios:', error);
-    });
-  } else {
-    console.log('Usuario no autenticado');
-  }
+document.querySelectorAll('.deleteButton').forEach(button => {
+button.addEventListener('click', (event) => {
+const commentId = event.target.dataset.id;
+remove(ref(database, 'messages/' + commentId)).then(() => {
+alert('Comentario eliminado');
+}).catch((error) => {
+console.error('Error al eliminar el comentario:', error);
+});
+});
+});
+}, (error) => {
+console.error('Error al leer los comentarios:', error);
+});
+} else {
+console.log('Usuario no autenticado');
+}
 });
 
 // Enviar comentario
 document.getElementById('messageForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+event.preventDefault();
 
-  // Verificar si el usuario está autenticado
-  const user = auth.currentUser;
-  if (user) {
-    console.log('Usuario autenticado:', user);
-    const name = document.getElementById('name').value;
-    const message = document.getElementById('message').value;
-    const editingId = document.getElementById('messageForm').dataset.editing;
+// Verificar si el usuario está autenticado
+const user = auth.currentUser;
+if (user) {
+console.log('Usuario autenticado:', user);
+const name = document.getElementById('name').value;
+const message = document.getElementById('message').value;
+const editingId = document.getElementById('messageForm').dataset.editing;
 
-    // Verificar que los campos no estén vacíos
-    if (name.trim() === '' || message.trim() === '') {
-      alert('Por favor, completa todos los campos.');
-      return;
-    }
+// Verificar que los campos no estén vacíos
+if (name.trim() === '' || message.trim() === '') {
+alert('Por favor, completa todos los campos.');
+return;
+}
 
-    if (editingId) {
-      // Actualizar un comentario existente
-      update(ref(database, 'messages/' + editingId), {
-        name: name,
-        message: message
-      }).then(() => {
-        alert('Mensaje actualizado');
-        document.getElementById('messageForm').reset();
-        delete document.getElementById('messageForm').dataset.editing;
-      }).catch((error) => {
-        console.error('Error al actualizar el mensaje:', error);
-      });
-    } else {
-      // Enviar un nuevo comentario
-      push(ref(database, 'messages'), {
-        name: name,
-        message: message
-      }).then(() => {
-        alert('Mensaje enviado');
-        document.getElementById('messageForm').reset();
-      }).catch((error) => {
-        console.error('Error al enviar el mensaje:', error);
-      });
-    }
-  } else {
-    console.log('Usuario no autenticado aún');
-    alert('Por favor, espera a que el sistema complete la autenticación.');
-  }
+if (editingId) {
+// Actualizar un comentario existente
+update(ref(database, 'messages/' + editingId), {
+name: name,
+message: message
+}).then(() => {
+alert('Mensaje actualizado');
+document.getElementById('messageForm').reset();
+delete document.getElementById('messageForm').dataset.editing;
+}).catch((error) => {
+console.error('Error al actualizar el mensaje:', error);
+});
+} else {
+// Enviar un nuevo comentario
+push(ref(database, 'messages'), {
+name: name,
+message: message
+}).then(() => {
+alert('Mensaje enviado');
+document.getElementById('messageForm').reset();
+}).catch((error) => {
+console.error('Error al enviar el mensaje:', error);
+});
+}
+} else {
+console.log('Usuario no autenticado aún');
+alert('Por favor, espera a que el sistema complete la autenticación.');
+}
+}).catch((error) => {
+console.error('Error al enviar el mensaje:', error);
+});
+}
+} else {
+console.log('Usuario no autenticado aún');
+alert('Por favor, espera a que el sistema complete la autenticación.');
+}
 });
 </script>
 </body>
