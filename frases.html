@@ -86,24 +86,22 @@ onAuthStateChanged(auth, (user) => {
     console.log('Usuario autenticado:', user);
 
     // Mostrar comentarios solo si el usuario está autenticado
-    onValue(ref(database, 'messages'), (snapshot) => {
-      const commentsContainer = document.getElementById('comments');
-      commentsContainer.innerHTML = '';
-      
-      snapshot.forEach((childSnapshot) => {
-        const comment = childSnapshot.val();
-        .then(() => {
-        alert('Error al mostrar comentarios');
-        const commentElement = document.createElement('div');
-        commentElement.classList.add('comment');
-        commentElement.innerHTML = `
-          <strong>${comment.name}</strong>
-          <p>${comment.message}</p>
-          <button class="editButton" data-id="${childSnapshot.key}">Editar</button>
-          <button class="deleteButton" data-id="${childSnapshot.key}">Eliminar</button>
-        `;
-        commentsContainer.appendChild(commentElement);
-      });
+onValue(ref(database, 'messages'), (snapshot) => {
+const commentsContainer = document.getElementById('comments');
+commentsContainer.innerHTML = '';
+
+snapshot.forEach((childSnapshot) => {
+const comment = childSnapshot.val();
+const commentElement = document.createElement('div');
+commentElement.classList.add('comment');
+commentElement.innerHTML = `
+<strong>${comment.name}</strong>
+<p>${comment.message}</p>
+<button class="editButton" data-id="${childSnapshot.key}">Editar</button>
+<button class="deleteButton" data-id="${childSnapshot.key}">Eliminar</button>
+`;
+commentsContainer.appendChild(commentElement);
+});
 
       // Añadir eventos de edición y eliminación después de que los comentarios se hayan renderizado
       document.querySelectorAll('.editButton').forEach(button => {
