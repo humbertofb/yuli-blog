@@ -294,12 +294,23 @@ console.error("Error al eliminar el comentario:", error);
 }
 
 // Función para guardar "me gusta"
-async function saveLike(imageId, userId, likeCount) {
+async function saveLike(imageId, userId, liked) {
 try {
 const likeRef = doc(db, "likes", imageId);
-await setDoc(likeRef, {
-count: likeCount
-}, { merge: true });
+const likeDoc = await getDoc(likeRef);
+let newCount = 0;
+if (likeDoc.exists()) {
+const data = likeDoc.data();
+newCount = data.count;
+if (liked) {
+newCount += 1;
+} else {
+newCount -= 1;
+}
+} else {
+newCount = liked ? 1 : 0;
+}
+await setDoc(likeRef, { count: newCount }, { merge: true });
 console.log("Me gusta guardado correctamente");
 } catch (error) {
 console.error("Error al guardar el me gusta:", error);
@@ -326,23 +337,28 @@ console.error("Error al cargar los me gusta:", error);
 // Función para alternar "me gusta"
 async function toggleLike(imageId, userId, likeButton, likeCount) {
 try {
+const userLikeRef = doc(db, "userLikes", `${imageId}_${userId}`);
+const userLikeDoc = await getDoc(userLikeRef);
+let liked = false;
+if (userLikeDoc.exists()) {
+liked = userLikeDoc.data().liked;
+liked = !liked;
+} else {
+liked = true;
+}
+await setDoc(userLikeRef, { liked: liked }, { merge: true });
+await saveLike(imageId, userId, liked);
 const likeRef = doc(db, "likes", imageId);
 const likeDoc = await getDoc(likeRef);
-let newCount = 0;
 if (likeDoc.exists()) {
 const data = likeDoc.data();
-newCount = data.count;
-if (likeButton.classList.toggle('liked')) {
-newCount += 1;
-} else {
-newCount -= 1;
-}
-} else {
-newCount = 1;
+likeCount.textContent = data.count;
+if (liked) {
 likeButton.classList.add('liked');
+} else {
+likeButton.classList.remove('liked');
 }
-likeCount.textContent = newCount;
-await saveLike(imageId, userId, newCount);
+}
 } catch (error) {
 console.error("Error al alternar el me gusta:", error);
 }
@@ -360,7 +376,6 @@ const likeCount = button.querySelector('.like-count');
 loadLikes(imageId, button, likeCount);
 
 button.addEventListener('click', (event) => {
-const likeCount = button.querySelector('.like-count');
 if (userId) {
 toggleLike(imageId, userId, button, likeCount);
 } else {
