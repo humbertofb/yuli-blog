@@ -100,6 +100,7 @@ main {
 width: 100%;
 max-width: 600px;
 margin: 0 auto;
+margin-bottom: 20px; /* Añade espacio entre las imágenes */
 }
 
 .image-container img {
@@ -129,7 +130,7 @@ border-radius: 10px;
 }
 
 .comments {
-display: flex;
+display: none; /* Oculto por defecto */
 flex-direction: column;
 padding: 10px;
 background-color: #fff;
