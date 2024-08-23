@@ -100,7 +100,7 @@ main {
 width: 100%;
 max-width: 600px;
 margin: 0 auto;
-margin-bottom: 25px; /* Añade espacio entre las imágenes */
+margin-bottom: 30px; /* Añade espacio entre las imágenes */
 }
 
 .image-container img {
@@ -114,7 +114,7 @@ border-radius: 10px;
     display: flex;
     justify-content: space-between;
     padding: 5px; /* Reduce el padding para menos espacio */
-    margin-bottom: 10px; /* Reduce el espacio entre los botones y el cuadro de comentarios */
+    margin-bottom: 20px; /* Reduce el espacio entre los botones y el cuadro de comentarios */
 }
 
 .like-button, .comment-button {
@@ -159,7 +159,7 @@ padding: 10px 20px;
 border-radius: 5px;
 cursor: pointer;
 transition: background-color 0.3s, transform 0.3s;
-margin-bottom: 10px; /* Reduce el espacio entre el botón y los comentarios */
+margin-bottom: 20px; /* Reduce el espacio entre el botón y los comentarios */
 }
 
 .comments .send-comment:hover {
