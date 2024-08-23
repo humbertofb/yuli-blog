@@ -100,7 +100,7 @@ main {
 width: 100%;
 max-width: 600px;
 margin: 0 auto;
-margin-bottom: 20px; /* Añade espacio entre las imágenes */
+margin-bottom: 35px; /* Añade espacio entre las imágenes */
 }
 
 .image-container img {
@@ -114,7 +114,7 @@ border-radius: 10px;
     display: flex;
     justify-content: space-between;
     padding: 5px; /* Reduce el padding para menos espacio */
-    margin-top: 5px; /* Reduce el espacio entre los botones y el cuadro de comentarios */
+    margin-top: 20px; /* Reduce el espacio entre los botones y el cuadro de comentarios */
 }
 
 .like-button, .comment-button {
@@ -139,6 +139,7 @@ border-radius: 10px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 margin-top: 10px;
 box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho */
+margin-top: 5px
 }
 
 .comments textarea {
