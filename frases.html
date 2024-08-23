@@ -86,9 +86,11 @@ console.log('Usuario autenticado:', user);
 onValue(ref(database, 'messages'), (snapshot) => {
 const commentsContainer = document.getElementById('comments');
 commentsContainer.innerHTML = '';
+console.log('Cargando comentarios...');
 
 snapshot.forEach((childSnapshot) => {
 const comment = childSnapshot.val();
+console.log('Comentario:', comment);
 const commentElement = document.createElement('div');
 commentElement.classList.add('comment');
 commentElement.innerHTML = `
