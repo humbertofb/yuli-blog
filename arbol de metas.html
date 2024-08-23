@@ -10,7 +10,7 @@
 #tree {
 width: 100%;
 height: 500px;
-background: url('imágenes/IMG_3054.png') no-repeat center center;
+background: url('tree.png') no-repeat center center;
 background-size: contain;
 position: relative;
 }
@@ -20,9 +20,16 @@ background-color: rgba(255, 255, 255, 0.8);
 padding: 5px;
 border-radius: 5px;
 cursor: pointer;
+width: 120px; /* Ajustar el tamaño del cuadro */
+font-size: 12px; /* Reducir el tamaño de la fuente */
+text-align: center;
 }
 .goal.completed {
 background-color: rgba(144, 238, 144, 0.8);
+}
+header, nav {
+position: relative;
+z-index: 10; /* Asegurar que el menú esté por encima */
 }
 </style>
 </head>
