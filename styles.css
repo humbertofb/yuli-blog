@@ -100,7 +100,7 @@ main {
 width: 100%;
 max-width: 600px;
 margin: 0 auto;
-margin-bottom: 10px; /* Añade espacio entre las imágenes */
+margin-bottom: 20px; /* Añade espacio entre las imágenes */
 }
 
 .image-container img {
