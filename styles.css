@@ -114,7 +114,7 @@ border-radius: 10px;
     display: flex;
     justify-content: space-between;
     padding: 5px; /* Reduce el padding para menos espacio */
-    margin-top: 20px; /* Reduce el espacio entre los botones y el cuadro de comentarios */
+    margin-top: 5px; /* Reduce el espacio entre los botones y el cuadro de comentarios */
 }
 
 .like-button, .comment-button {
@@ -160,7 +160,7 @@ padding: 10px 20px;
 border-radius: 5px;
 cursor: pointer;
 transition: background-color 0.3s, transform 0.3s;
-margin-bottom: 5px; /* Reduce el espacio entre el botón y los comentarios */
+margin-bottom: 10px; /* Reduce el espacio entre el botón y los comentarios */
 }
 
 .comments .send-comment:hover {
