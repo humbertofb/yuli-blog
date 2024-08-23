@@ -7,37 +7,94 @@
 <title>Cuadro de Emociones</title>
 <style>
 body {
-font-family: Arial, sans-serif;
-background-color: #f4f4f4;
-margin: 0;
-padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #ffe6e6;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 header {
-background-color: #4CAF50;
-color: white;
-text-align: center;
-padding: 1em 0;
+    background-color: #ff9999;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+    position: relative;
 }
+
+#menuButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #ff6666;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#menuButton:hover {
+    background-color: #ff3333;
+    transform: scale(1.1);
+}
+
+/* Menú */
+nav {
+    display: none;
+    position: fixed;
+    top: 3rem;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(255, 153, 153, 0.9);
+    padding: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 1rem 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff3333;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
 main {
 padding: 2em;
 }
+
 form {
 background: white;
 padding: 2em;
 border-radius: 5px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 label {
 display: block;
 margin-bottom: 0.5em;
 }
+
 select, input[type="text"], button {
 width: 100%;
 padding: 0.5em;
 margin-bottom: 1em;
 }
+
 button {
-background-color: #4CAF50;
+background-color: #ff9999;
 color: white;
 border: none;
 cursor: pointer;
@@ -102,6 +159,7 @@ color: #666; /* Color del párrafo */
 <p>Aquí se mostrarán los gráficos de emociones.</p>
 </div>
 </main>
+<script src="scripts.js"></script>
 <script>
 // Configuración de Firebase
 const firebaseConfig = {
@@ -137,6 +195,5 @@ console.error('Error al guardar la emoción: ', e);
 }
 });
 </script>
-<script src="scripts.js"></script>
 </body>
 </html>
