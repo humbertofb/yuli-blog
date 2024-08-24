@@ -29,7 +29,8 @@ top: 0.5rem;
 right: 0.5rem;
 background: #ff6666;
 border: none;
-font-size: 1.5rem;
+font-size: 1rem; /* Tamaño de fuente más pequeño */
+padding: 0.25rem 0.5rem; /* Tamaño del botón más pequeño */
 cursor: pointer;
 color: white;
 transition: background-color 0.3s, transform 0.3s;
@@ -126,6 +127,7 @@ padding: 1rem;
 border-radius: 10px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 margin: 1rem 0;
+position: relative;
 }
 
 .emotion-box h2 {
@@ -135,12 +137,29 @@ color: #ff3333; /* Color del título */
 .emotion-box p {
 color: #666; /* Color del párrafo */
 }
+
+.delete-button {
+position: absolute;
+top: 0.5rem;
+right: 0.5rem;
+background: #ff6666;
+border: none;
+font-size: 1rem;
+cursor: pointer;
+color: white;
+transition: background-color 0.3s, transform 0.3s;
+}
+
+.delete-button:hover {
+background-color: #ff3333;
+transform: scale(1.1);
+}
 </style>
 <!-- Importación modular de Firebase -->
 <script type="module">
 // Importar los módulos necesarios de Firebase
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getFirestore, collection, addDoc, serverTimestamp, getDocs } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
 
 // Configuración de Firebase
@@ -213,11 +232,23 @@ emotionElement.innerHTML = `
 <h3>${emotionData.emotion}</h3>
 <p>${emotionData.note}</p>
 <p><small>${new Date(emotionData.timestamp.seconds * 1000).toLocaleString()}</small></p>
+<button class="delete-button" onclick="deleteEmotion('${doc.id}')">Eliminar</button>
 `;
 emotionsContainer.appendChild(emotionElement);
 });
 } catch (e) {
 console.error('Error al cargar las emociones: ', e);
+}
+}
+
+// Función para eliminar emociones de Firestore
+async function deleteEmotion(id) {
+try {
+await deleteDoc(doc(db, 'emotions', id));
+alert('Emoción eliminada con éxito');
+loadEmotions(); // Recargar emociones después de eliminar
+} catch (e) {
+console.error('Error al eliminar la emoción: ', e);
 }
 }
 </script>
@@ -241,11 +272,11 @@ console.error('Error al cargar las emociones: ', e);
 <label for="emotion">Selecciona tu emoción:</label>
 <select id="emotion" name="emotion">
 <option value="Estoy feliz 🥳">Estoy feliz 🥳</option>
-<option value="sad">Estoy triste 😭</option>
-<option value="stressed">Estoy estresado 🙄</option>
-<option value="in_love">Estoy enamorado 😍</option>
-<option value="tired">Estoy cansado 😓</option>
-<option value="excited">Estoy emocionado 🤩</option>
+<option value="Estoy triste 😭">Estoy triste 😭</option>
+<option value="Estoy estresado 🙄">Estoy estresado 🙄</option>
+<option value="Estoy enamorado 😍">Estoy enamorado 😍</option>
+<option value="Estoy cansado 😪">Estoy cansado 😪</option>
+<option value="Estoy emocionado 🤩">Estoy emocionado 🤩</option>
 </select>
 <label for="note">Nota:</label>
 <input type="text" id="note" name="note">
