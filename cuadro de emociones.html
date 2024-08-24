@@ -1,3 +1,5 @@
+¡Entendido! Vamos a ajustar el tamaño del fondo del botón de menú, agregar bordes al menú y modificar el botón de "Guardar" para que sea más largo y estrecho. Aquí tienes el código actualizado:
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,13 +24,14 @@ position: relative;
 
 #menuButton {
 position: absolute;
-top: 1rem;
-right: 1rem;
+top: 0.5rem;
+right: 0.5rem;
 background: #ff6666;
 border: none;
-font-size: 1.5rem;
+font-size: 1.2rem; /* Tamaño más pequeño */
 cursor: pointer;
 color: white;
+padding: 0.5rem; /* Tamaño del fondo más pequeño */
 transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -46,6 +49,8 @@ width: 50%;
 height: 100%;
 background-color: rgba(255, 153, 153, 0.9);
 padding: 2rem;
+border: 2px solid #ff6666; /* Bordes del menú */
+border-radius: 10px; /* Bordes redondeados */
 }
 
 nav ul {
@@ -95,8 +100,8 @@ border: 1px solid #ccc;
 }
 
 button {
-width: auto;
-padding: 1em 1em;
+width: 100%; /* Más largo */
+padding: 0.5em 1em; /* Más estrecho */
 background-color: #ff6666;
 color: white;
 border: none;
