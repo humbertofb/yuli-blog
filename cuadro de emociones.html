@@ -181,22 +181,23 @@ transform: scale(1.1);
 <form id="emotion-form">
 <label for="emotion">Selecciona tu emoción:</label>
 <select id="emotion" name="emotion">
-<option value="happy">Estoy feliz party</option>
-<option value="sad">Estoy triste loudlycrying</option>
-<option value="stressed">Estoy estresado wasntme</option>
-<option value="in_love">Estoy enamorado hearteyes</option>
-<option value="tired">Estoy cansado sweat</option>
-<option value="excited">Estoy emocionado stareyes</option>
+<option value="Estoy feliz">Estoy feliz party</option>
+<option value="Estoy triste">Estoy triste loudlycrying</option>
+<option value="Estoy estresado">Estoy estresado wasntme</option>
+<option value="Estoy enamorado">Estoy enamorado hearteyes</option>
+<option value="Estoy cansado">Estoy cansado sweat</option>
+<option value="Estoy emocionado">Estoy emocionado stareyes</option>
 </select>
 <label for="note">Nota:</label>
 <input type="text" id="note" name="note">
 <button type="submit">Guardar</button>
 </form>
-<div id="emotion-chart" class="emotion-box">
+<div id="emotion-chart">
 <h2>Gráfico de Emociones</h2>
 <p>Aquí se mostrarán los gráficos de emociones.</p>
 </div>
 </main>
+<script src="scripts.js"></script>
 <script type="module">
 // Importar los módulos necesarios de Firebase
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
@@ -253,9 +254,9 @@ timestamp: serverTimestamp()
 });
 alert('Emoción guardada con éxito');
 loadEmotions(); // Recargar emociones después de guardar
+loadEmotions(); // Recargar emociones después de guardar
 } catch (e) {
 console.error('Error al guardar la emoción: ', e);
-}
 }
 });
 
@@ -294,41 +295,5 @@ console.error('Error al eliminar la emoción: ', e);
 }
 }
 </script>
-</head>
-<body>
-<header>
-<h1>Cuadro de Emociones</h1>
-<button id="menuButton">☰</button>
-</header>
-<nav id="menu">
-<ul>
-<li><a href="index.html">Inicio</a></li>
-<li><a href="videos.html">Videos</a></li>
-<li><a href="viajes.html">Viajes</a></li>
-<li><a href="preguntas y respuestas.html">Preguntas y Respuestas</a></li>
-<li><a href="reencuentro.html">Reencuentro</a></li>
-</ul>
-</nav>
-<main>
-<form id="emotion-form">
-<label for="emotion">Selecciona tu emoción:</label>
-<select id="emotion" name="emotion">
-<option value="Estoy feliz">Estoy feliz party</option>
-<option value="Estoy triste">Estoy triste loudlycrying</option>
-<option value="Estoy estresado">Estoy estresado wasntme</option>
-<option value="Estoy enamorado">Estoy enamorado hearteyes</option>
-<option value="Estoy cansado">Estoy cansado sweat</option>
-<option value="Estoy emocionado">Estoy emocionado stareyes</option>
-</select>
-<label for="note">Nota:</label>
-<input type="text" id="note" name="note">
-<button type="submit">Guardar</button>
-</form>
-<div id="emotion-chart">
-<h2>Gráfico de Emociones</h2>
-<p>Aquí se mostrarán los gráficos de emociones.</p>
-</div>
-</main>
-<script src="scripts.js"></script>
 </body>
 </html>
