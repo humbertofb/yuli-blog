@@ -4,84 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cuadro de Emociones</title>
+<link rel="stylesheet" href="styles.css">
 <style>
-/* Estilos generales */
-body {
-font-family: 'Arial', sans-serif;
-background-color: #ffe6e6;
-color: #333;
-margin: 0;
-padding: 0;
-}
-
-/* Encabezado */
-header {
-background-color: #ff9999;
-color: white;
-padding: 0.5rem;
-display: flex;
-text-align: center;
-position: relative;
-z-index: 2; /* Asegura que el encabezado esté por encima */
-}
-
-#menuButton {
-position: absolute;
-top: 1rem;
-right: 1rem;
-background: #ff6666;
-border: none;
-font-size: 1.5rem;
-cursor: pointer;
-color: white;
-transition: background-color 0.3s, transform 0.3s;
-}
-
-#menuButton:hover {
-background-color: #ff3333;
-transform: scale(1.1);
-}
-
-/* Menú */
-nav {
-display: none;
-position: fixed;
-top: 3rem;
-right: 0;
-width: 50%;
-height: 100%;
-background-color: rgba(255, 153, 153, 0.9);
-padding: 2rem;
-z-index: 1; /* Asegura que el menú esté por encima de los cuadros de emociones */
-}
-
-nav ul {
-list-style: none;
-padding: 0;
-}
-
-nav ul li {
-margin: 1rem 0;
-}
-
-nav ul li a {
-color: white;
-text-decoration: none;
-font-size: 1.2rem;
-transition: color 0.3s, text-shadow 0.3s;
-}
-
-nav ul li a:hover {
-color: #ff3333;
-text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-/* Contenido principal */
-main {
-padding: 2rem;
-z-index: 0; /* Asegura que el contenido principal esté por debajo del menú */
-}
-
 form {
 background: white;
 padding: 2em;
