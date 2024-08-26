@@ -6,51 +6,7 @@
 <title>Cuadro de Emociones</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-select, input[type="text"] {
-width: 100%;
-padding: 0.75em;
-margin-bottom: 1em;
-border-radius: 5px;
-border: 1px solid #ccc;
-}
-/* Estilos para el cuadro de emociones */
-.emotion-box {
-background-color: #ffcccc; /* Color de fondo */
-border: 2px solid #ff6666; /* Borde */
-color: #333; /* Color del texto */
-padding: 1rem;
-border-radius: 10px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-margin: 1rem 0;
-position: relative;
-}
-
-.emotion-box h2 {
-color: #ff3333; /* Color del título */
-}
-
-.emotion-box p {
-color: #666; /* Color del párrafo */
-}
-
-.delete-button {
-position: absolute;
-bottom: 0.5rem;
-right: 0.5rem;
-background: #ff6666;
-border: none;
-font-size: 0.8rem;
-padding: 0.5rem 2rem;
-cursor: pointer;
-color: white;
-border-radius: 5px; /* Forma cuadrada */
-transition: background-color 0.3s, transform 0.3s;
-}
-
-.delete-button:hover {
-background-color: #ff3333;
-transform: scale(1.1);
-}
+/* Tus estilos existentes */
 </style>
 </head>
 <body>
@@ -85,9 +41,10 @@ transform: scale(1.1);
 </form>
 <div id="emotion-chart">
 <h2>Gráfico de Emociones</h2>
-<p>Aquí se mostrarán los gráficos de emociones.</p>
+<canvas id="emotionChart"></canvas>
 </div>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="scripts.js"></script>
 <script type="module">
 // Importar los módulos necesarios de Firebase
@@ -157,21 +114,46 @@ emotionsContainer.innerHTML = '<h2>Gráfico de Emociones</h2>';
 
 try {
 const querySnapshot = await getDocs(collection(db, 'emotions'));
+const emotionsData = [];
 querySnapshot.forEach((doc) => {
 const emotionData = doc.data();
-const emotionElement = document.createElement('div');
-emotionElement.classList.add('emotion-box');
-emotionElement.innerHTML = `
-<h3>${emotionData.emotion}</h3>
-<p>${emotionData.note}</p>
-<p><small>${new Date(emotionData.timestamp.seconds * 1000).toLocaleString()}</small></p>
-<button class="delete-button" onclick="deleteEmotion('${doc.id}')">Eliminar</button>
-`;
-emotionsContainer.appendChild(emotionElement);
+emotionsData.push(emotionData);
 });
+renderChart(emotionsData);
 } catch (e) {
 console.error('Error al cargar las emociones: ', e);
 }
+}
+
+// Función para renderizar el gráfico
+function renderChart(data) {
+const ctx = document.getElementById('emotionChart').getContext('2d');
+const emotions = data.map(item => item.emotion);
+const counts = emotions.reduce((acc, emotion) => {
+acc[emotion] = (acc[emotion] || 0) + 1;
+return acc;
+}, {});
+
+new Chart(ctx, {
+type: 'bar',
+data: {
+labels: Object.keys(counts),
+datasets: [{
+label: 'Frecuencia de Emociones',
+data: Object.values(counts),
+backgroundColor: 'rgba(255, 99, 132, 0.2)',
+borderColor: 'rgba(255, 99, 132, 1)',
+borderWidth: 1
+}]
+},
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+});
 }
 
 // Función para eliminar emociones de Firestore
