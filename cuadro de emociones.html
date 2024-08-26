@@ -165,7 +165,7 @@ emotionElement.innerHTML = `
 <h3>${emotionData.emotion}</h3>
 <p>${emotionData.note}</p>
 <p><small>${new Date(emotionData.timestamp.seconds * 1000).toLocaleString()}</small></p>
-<button class="delete-button" onclick="deleteEmotionById('${doc.id}')">Eliminar</button>
+<button class="delete-button" onclick="deleteEmotion('${doc.id}')">Eliminar</button>
 `;
 emotionsContainer.appendChild(emotionElement);
 });
@@ -175,7 +175,7 @@ console.error('Error al cargar las emociones: ', e);
 }
 
 // Función para eliminar emociones de Firestore
-async function deleteEmotionById(id) {
+async function deleteEmotion(id) {
 try {
 await deleteDoc(doc(db, 'emotions', id));
 alert('Emoción eliminada con éxito');
