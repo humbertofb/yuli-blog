@@ -175,7 +175,7 @@ console.error('Error al cargar las emociones: ', e);
 }
 
 // Función para eliminar emociones de Firestore
-async function deleteEmotion(id) {
+window.deleteEmotion = async function(id) {
 try {
 await deleteDoc(doc(db, 'emotions', id));
 alert('Emoción eliminada con éxito');
