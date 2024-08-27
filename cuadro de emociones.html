@@ -109,7 +109,7 @@ console.error('Error al guardar la emoción: ', e);
 // Función para cargar emociones desde Firestore
 async function loadEmotions() {
 const emotionsContainer = document.getElementById('emotion-chart');
-emotionsContainer.innerHTML = '<h2>Gráfico de Emociones</h2>';
+emotionsContainer.innerHTML = '<h2>Gráfico de Emociones</h2>'<canvas id="emotionChart"></canvas>';
 
 try {
 const querySnapshot = await getDocs(collection(db, 'emotions'));
