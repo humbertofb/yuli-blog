@@ -43,11 +43,14 @@
 <h2>Gráfico de Emociones</h2>
 <canvas id="emotionChart"></canvas>
 </div>
+<div id="notes-container">
+<h2>Notas</h2>
+</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -109,63 +112,98 @@ console.error('Error al guardar la emoción: ', e);
 // Función para cargar emociones desde Firestore
 async function loadEmotions() {
 const emotionsContainer = document.getElementById('emotion-chart');
+const notesContainer = document.getElementById('notes-container');
 emotionsContainer.innerHTML = '<h2>Gráfico de Emociones</h2><canvas id="emotionChart"></canvas>';
+notesContainer.innerHTML = '<h2>Notas</h2>';
 
 try {
 const querySnapshot = await getDocs(collection(db, 'emotions'));
 const emotionsData = [];
 querySnapshot.forEach((doc) => {
 const emotionData = doc.data();
+emotionData.id = doc.id; // Agregar el ID del documento
 emotionsData.push(emotionData);
 });
 renderChart(emotionsData);
+renderNotes(emotionsData);
 } catch (e) {
 console.error('Error al cargar las emociones: ', e);
 }
 }
-        
+
 let myChart; // Variable global para almacenar la instancia del gráfico
 // Función para renderizar el gráfico
 function renderChart(data) {
-    const canvas = document.getElementById('emotionChart');
-    if (!canvas) {
-        console.error("El elemento canvas no está disponible en el DOM.");
-        return;
-    }
+const canvas = document.getElementById('emotionChart');
+if (!canvas) {
+console.error("El elemento canvas no está disponible en el DOM.");
+return;
+}
 
-    const ctx = canvas.getContext('2d');
-    const emotions = data.map(item => item.emotion);
-    const counts = emotions.reduce((acc, emotion) => {
-        acc[emotion] = (acc[emotion] || 0) + 1;
-        return acc;
-    }, {});
+const ctx = canvas.getContext('2d');
+const emotions = data.map(item => item.emotion);
+const counts = emotions.reduce((acc, emotion) => {
+acc[emotion] = (acc[emotion] || 0) + 1;
+return acc;
+}, {});
 
-    // Si ya existe un gráfico, destruirlo antes de crear uno nuevo
-    if (myChart) {
-        myChart.destroy();
-    }
+// Si ya existe un gráfico, destruirlo antes de crear uno nuevo
+if (myChart) {
+myChart.destroy();
+}
 
-    // Crear un nuevo gráfico y guardarlo en la variable global
-    myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(counts),
-            datasets: [{
-                label: 'Frecuencia de Emociones',
-                data: Object.values(counts),
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+// Crear un nuevo gráfico y guardarlo en la variable global
+myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: Object.keys(counts),
+datasets: [{
+label: 'Frecuencia de Emociones',
+data: Object.values(counts),
+backgroundColor: 'rgba(255, 99, 132, 0.2)',
+borderColor: 'rgba(255, 99, 132, 1)',
+borderWidth: 1
+}]
+},
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+});
+}
+
+// Función para renderizar las notas
+function renderNotes(data) {
+const notesContainer = document.getElementById('notes-container');
+data.forEach(item => {
+const noteDiv = document.createElement('div');
+noteDiv.classList.add('note');
+noteDiv.innerHTML = `
+<p><strong>Emoción:</strong> ${item.emotion}</p>
+<p><strong>Nota:</strong> ${item.note}</p>
+<textarea placeholder="Responder..."></textarea>
+<button onclick="addResponse('${item.id}', this.previousElementSibling.value)">Responder</button>
+<button onclick="deleteEmotion('${item.id}')">Eliminar</button>
+`;
+notesContainer.appendChild(noteDiv);
+});
+}
+
+// Función para agregar una respuesta a una nota
+window.addResponse = async function(id, response) {
+try {
+const noteRef = doc(db, 'emotions', id);
+await updateDoc(noteRef, {
+response: response
+});
+alert('Respuesta guardada con éxito');
+loadEmotions(); // Recargar emociones después de responder
+} catch (e) {
+console.error('Error al guardar la respuesta: ', e);
+}
 }
 
 // Función para eliminar emociones de Firestore
