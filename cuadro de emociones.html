@@ -47,6 +47,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="scripts.js"></script>
 <script type="module">
+document.addEventListener('DOMContentLoaded', () => {
 // Importar los módulos necesarios de Firebase
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
@@ -166,6 +167,7 @@ loadEmotions(); // Recargar emociones después de eliminar
 console.error('Error al eliminar la emoción: ', e);
 }
 }
+});
 </script>
 </body>
 </html>
