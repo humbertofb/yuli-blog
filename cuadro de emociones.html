@@ -123,42 +123,49 @@ renderChart(emotionsData);
 console.error('Error al cargar las emociones: ', e);
 }
 }
-
+        
+let myChart; // Variable global para almacenar la instancia del gráfico
 // Función para renderizar el gráfico
 function renderChart(data) {
-        const canvas = document.getElementById('emotionChart');
-        if (!canvas) {
-            console.error("El elemento canvas no está disponible en el DOM.");
-            return;
+    const canvas = document.getElementById('emotionChart');
+    if (!canvas) {
+        console.error("El elemento canvas no está disponible en el DOM.");
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    const emotions = data.map(item => item.emotion);
+    const counts = emotions.reduce((acc, emotion) => {
+        acc[emotion] = (acc[emotion] || 0) + 1;
+        return acc;
+    }, {});
+
+    // Si ya existe un gráfico, destruirlo antes de crear uno nuevo
+    if (myChart) {
+        myChart.destroy();
+    }
+
+    // Crear un nuevo gráfico y guardarlo en la variable global
+    myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(counts),
+            datasets: [{
+                label: 'Frecuencia de Emociones',
+                data: Object.values(counts),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-
-        const ctx = canvas.getContext('2d');
-        const emotions = data.map(item => item.emotion);
-        const counts = emotions.reduce((acc, emotion) => {
-            acc[emotion] = (acc[emotion] || 0) + 1;
-            return acc;
-        }, {});
-
-new Chart(ctx, {
-type: 'bar',
-data: {
-labels: Object.keys(counts),
-datasets: [{
-label: 'Frecuencia de Emociones',
-data: Object.values(counts),
-backgroundColor: 'rgba(255, 99, 132, 0.2)',
-borderColor: 'rgba(255, 99, 132, 1)',
-borderWidth: 1
-}]
-},
-options: {
-scales: {
-y: {
-beginAtZero: true
-}
-}
-}
-});
+    });
 }
 
 // Función para eliminar emociones de Firestore
