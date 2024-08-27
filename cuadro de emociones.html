@@ -126,12 +126,18 @@ console.error('Error al cargar las emociones: ', e);
 
 // Función para renderizar el gráfico
 function renderChart(data) {
-const ctx = document.getElementById('emotionChart').getContext('2d');
-const emotions = data.map(item => item.emotion);
-const counts = emotions.reduce((acc, emotion) => {
-acc[emotion] = (acc[emotion] || 0) + 1;
-return acc;
-}, {});
+        const canvas = document.getElementById('emotionChart');
+        if (!canvas) {
+            console.error("El elemento canvas no está disponible en el DOM.");
+            return;
+        }
+
+        const ctx = canvas.getContext('2d');
+        const emotions = data.map(item => item.emotion);
+        const counts = emotions.reduce((acc, emotion) => {
+            acc[emotion] = (acc[emotion] || 0) + 1;
+            return acc;
+        }, {});
 
 new Chart(ctx, {
 type: 'bar',
