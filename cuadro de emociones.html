@@ -6,7 +6,144 @@
 <title>Cuadro de Emociones</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-/* Tus estilos existentes */
+/* Estilos generales */
+body {
+font-family: 'Arial', sans-serif;
+background-color: #ffe6e6;
+color: #333;
+margin: 0;
+padding: 0;
+}
+
+/* Encabezado */
+header {
+background-color: #ff9999;
+color: white;
+padding: 0.5rem;
+text-align: center;
+position: relative;
+}
+
+#menuButton {
+position: absolute;
+top: 1rem;
+right: 1rem;
+background: #ff6666;
+border: none;
+font-size: 1.5rem;
+cursor: pointer;
+color: white;
+transition: background-color 0.3s, transform 0.3s;
+}
+
+#menuButton:hover {
+background-color: #ff3333;
+transform: scale(1.1);
+}
+
+/* Menú */
+nav {
+display: none;
+position: fixed;
+top: 3rem;
+right: 0;
+width: 50%;
+height: 100%;
+background-color: rgba(255, 153, 153, 0.9);
+padding: 2rem;
+}
+
+nav ul {
+list-style: none;
+padding: 0;
+}
+
+nav ul li {
+margin: 1rem 0;
+}
+
+nav ul li a {
+color: white;
+text-decoration: none;
+font-size: 1.2rem;
+transition: color 0.3s, text-shadow 0.3s;
+}
+
+nav ul li a:hover {
+color: #ff3333;
+text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenido principal */
+main {
+padding: 2rem;
+}
+
+/* Estilos para las notas */
+.note {
+background-color: #fff;
+padding: 1rem;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+margin-bottom: 1rem;
+position: relative;
+}
+
+.note textarea {
+width: 100%;
+padding: 10px;
+margin-bottom: 10px;
+border-radius: 5px;
+border: 1px solid #ccc;
+resize: vertical;
+box-sizing: border-box;
+}
+
+.note button {
+background-color: #ff6666;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s, transform 0.3s;
+margin-bottom: 10px;
+}
+
+.note button:hover {
+background-color: #ff3333;
+transform: scale(1.05);
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.note .delete-button {
+position: absolute;
+top: 0.5rem;
+right: 0.5rem;
+background: none;
+border: none;
+cursor: pointer;
+color: #ff6666;
+font-size: 0.8rem;
+transition: color 0.3s, transform 0.3s;
+}
+
+.note .delete-button:hover {
+color: #ff3333;
+transform: scale(1.1);
+}
+
+/* Estilos para el gráfico de emociones */
+#emotion-chart {
+margin-top: 2rem;
+}
+
+#emotion-chart canvas {
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
+display: block;
+}
 </style>
 </head>
 <body>
@@ -187,7 +324,7 @@ noteDiv.innerHTML = `
 <p><strong>Nota:</strong> ${item.note}</p>
 <textarea placeholder="Responder..."></textarea>
 <button onclick="addResponse('${item.id}', this.previousElementSibling.value)">Responder</button>
-<button onclick="deleteEmotion('${item.id}')">Eliminar</button>
+<button class="delete-button" onclick="deleteEmotion('${item.id}')">Eliminar</button>
 `;
 notesContainer.appendChild(noteDiv);
 });
