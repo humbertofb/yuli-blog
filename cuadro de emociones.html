@@ -45,14 +45,12 @@
 </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="scripts.js"></script>
 <script type="module">
-document.addEventListener('DOMContentLoaded', () => {
-// Importar los módulos necesarios de Firebase
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
 
+document.addEventListener('DOMContentLoaded', () => {
 // Configuración de Firebase
 const firebaseConfig = {
 apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
