@@ -247,7 +247,7 @@ const email = document.getElementById('login-usuario').value;
 const password = document.getElementById('login-password').value;
 try {
 await signInWithEmailAndPassword(auth, email, password);
-window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
+window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
 } catch (error) {
 if (error.code === 'auth/user-not-found') {
 showErrorModal('Usuario no registrado');
