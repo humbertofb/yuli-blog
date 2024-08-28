@@ -7,173 +7,173 @@
 <style>
 /* Estilos generales */
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('IMG_3101.jpeg'); /* Reemplaza con la ruta de tu imagen de fondo */
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+font-family: 'Arial', sans-serif;
+background-image: url('IMG_3101.jpeg'); /* Reemplaza con la ruta de tu imagen de fondo */
+background-size: cover;
+background-position: center;
+color: #fff;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
 }
 
 /* Cuadro de autenticación */
 .auth-box {
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 300px;
-    text-align: center;
+background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+width: 300px;
+text-align: center;
 }
 
 .auth-box h2 {
-    margin-bottom: 20px;
-    color: #fff;
+margin-bottom: 20px;
+color: #fff;
 }
 
 .auth-box form {
-    display: none;
+display: none;
 }
 
 .auth-box form.active {
-    display: block;
+display: block;
 }
 
 .auth-box label {
-    display: block;
-    margin-bottom: 5px;
-    color: #fff;
-    text-align: left;
+display: block;
+margin-bottom: 5px;
+color: #fff;
+text-align: left;
 }
 
 .auth-box input {
-    width: calc(100% - 22px); /* Ajustar el ancho de los inputs */
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #333;
-    color: #fff;
+width: calc(100% - 22px); /* Ajustar el ancho de los inputs */
+padding: 10px;
+margin-bottom: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+background-color: #333;
+color: #fff;
 }
 
 .auth-box button {
-    padding: 10px 20px;
-    background-color: #ff6666;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 10px;
+padding: 10px 20px;
+background-color: #ff6666;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+margin-bottom: 10px;
 }
 
 .auth-box button:hover {
-    background-color: #ff3333;
+background-color: #ff3333;
 }
 
 .auth-box .toggle-text {
-    color: #fff;
-    margin-top: 10px;
+color: #fff;
+margin-top: 10px;
 }
 
 .auth-box .toggle-link {
-    color: #ff6666;
-    cursor: pointer;
-    text-decoration: underline;
+color: #ff6666;
+cursor: pointer;
+text-decoration: underline;
 }
 
 /* Estilos para los botones de Google */
 .auth-box .social-login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #4285F4;
-    margin-top: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #4285F4;
+margin-top: 10px;
 }
 
 .auth-box .social-login img {
-    margin-right: 10px;
+margin-right: 10px;
 }
 
 .auth-box .social-login:hover {
-    background-color: #357ae8;
+background-color: #357ae8;
 }
 
 /* Estilos para los modales */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 10px;
-    text-align: center;
+background-color: #fff;
+margin: 15% auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+max-width: 400px;
+border-radius: 10px;
+text-align: center;
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+color: black;
+text-decoration: none;
+cursor: pointer;
 }
 </style>
 </head>
 <body>
 <div class="auth-box">
-    <h2 id="form-title">Iniciar Sesión</h2>
-    <form id="login-form" class="active">
-        <label for="login-usuario">Usuario:</label>
-        <input type="text" id="login-usuario" required>
-        <label for="login-password">Contraseña:</label>
-        <input type="password" id="login-password" required>
-        <button type="submit">Iniciar Sesión</button>
-        <div class="toggle-text">¿No te has registrado? <span id="toggle-register" class="toggle-link">Registrarse</span></div>
-    </form>
-    <form id="register-form">
-        <label for="register-username">Nombre de Usuario:</label>
-        <input type="text" id="register-username" required>
-        <label for="register-usuario">Correo Electrónico:</label>
-        <input type="email" id="register-usuario" required>
-        <label for="register-password">Contraseña:</label>
-        <input type="password" id="register-password" required>
-        <button type="submit">Registrarse</button>
-        <div class="toggle-text">¿Ya te registraste? <span id="toggle-login" class="toggle-link">Iniciar sesión</span></div>
-    </form>
-    <button id="google-login" class="social-login">
-        <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo"> Iniciar sesión con Google
-    </button>
+<h2 id="form-title">Iniciar Sesión</h2>
+<form id="login-form" class="active">
+<label for="login-usuario">Usuario:</label>
+<input type="text" id="login-usuario" required>
+<label for="login-password">Contraseña:</label>
+<input type="password" id="login-password" required>
+<button type="submit">Iniciar Sesión</button>
+<div class="toggle-text">¿No te has registrado? <span id="toggle-register" class="toggle-link">Registrarse</span></div>
+</form>
+<form id="register-form">
+<label for="register-username">Nombre de Usuario:</label>
+<input type="text" id="register-username" required>
+<label for="register-usuario">Correo Electrónico:</label>
+<input type="email" id="register-usuario" required>
+<label for="register-password">Contraseña:</label>
+<input type="password" id="register-password" required>
+<button type="submit">Registrarse</button>
+<div class="toggle-text">¿Ya te registraste? <span id="toggle-login" class="toggle-link">Iniciar sesión</span></div>
+</form>
+<button id="google-login" class="social-login">
+<img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo"> Iniciar sesión con Google
+</button>
 </div>
 
 <!-- Modales para mensajes de error -->
 <div id="error-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">×</span>
-        <p id="error-message"></p>
-    </div>
+<div class="modal-content">
+<span class="close">×</span>
+<p id="error-message"></p>
+</div>
 </div>
 
 <script type="module">
@@ -181,15 +181,14 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
 import { getFirestore, doc, getDocs, setDoc, query, collection, where } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
 
-// Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
-    authDomain: "mi-web-5402c.firebaseapp.com",
-    databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "mi-web-5402c",
-    storageBucket: "mi-web-5402c.appspot.com",
-    messagingSenderId: "31272724190",
-    appId: "1:31272724190:web:51fcc8750c51abf783844f"
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_AUTH_DOMAIN",
+databaseURL: "YOUR_DATABASE_URL",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_STORAGE_BUCKET",
+messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+appId: "YOUR_APP_ID"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -198,118 +197,125 @@ const db = getFirestore(app);
 
 // Alternar entre formularios de inicio de sesión y registro
 document.getElementById('toggle-register').addEventListener('click', () => {
-    document.getElementById('login-form').classList.remove('active');
-    document.getElementById('register-form').classList.add('active');
-    document.getElementById('form-title').textContent = 'Registrarse';
+document.getElementById('login-form').classList.remove('active');
+document.getElementById('register-form').classList.add('active');
+document.getElementById('form-title').textContent = 'Registrarse';
 });
 
 document.getElementById('toggle-login').addEventListener('click', () => {
-    document.getElementById('register-form').classList.remove('active');
-    document.getElementById('login-form').classList.add('active');
-    document.getElementById('form-title').textContent = 'Iniciar Sesión';
+document.getElementById('register-form').classList.remove('active');
+document.getElementById('login-form').classList.add('active');
+document.getElementById('form-title').textContent = 'Iniciar Sesión';
 });
 
 // Mostrar modal de error
 function showErrorModal(message) {
-    const modal = document.getElementById('error-modal');
-    const errorMessage = document.getElementById('error-message');
-    errorMessage.textContent = message;
-    modal.style.display = 'block';
+const modal = document.getElementById('error-modal');
+const errorMessage = document.getElementById('error-message');
+errorMessage.textContent = message;
+modal.style.display = 'block';
 }
 
 // Cerrar modal de error
 document.querySelector('.close').addEventListener('click', () => {
-    document.getElementById('error-modal').style.display = 'none';
+document.getElementById('error-modal').style.display = 'none';
 });
 
 // Función para verificar si el nombre de usuario está en uso
 async function isUsernameTaken(username) {
-    const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', username)));
-    return !querySnapshot.empty;
+const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', username)));
+return !querySnapshot.empty;
 }
-
 // Registro de Usuario
 document.getElementById('register-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('register-usuario').value;
-    const password = document.getElementById('register-password').value;
-    const username = document.getElementById('register-username').value;
+e.preventDefault();
+const email = document.getElementById('register-usuario').value;
+const password = document.getElementById('register-password').value;
+const username = document.getElementById('register-username').value;
 
-    // Verificar si el nombre de usuario ya está en uso
-    const usernameTaken = await isUsernameTaken(username);
-    if (usernameTaken) {
-        showErrorModal('El nombre de usuario ya está en uso. Por favor, elige otro.');
-        return;
-    }
+// Verificar si el nombre de usuario ya está en uso
+const usernameTaken = await isUsernameTaken(username);
+if (usernameTaken) {
+showErrorModal('El nombre de usuario ya está en uso. Por favor, elige otro.');
+return;
+}
 
-    try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+try {
+const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+const user = userCredential.user;
 
-        const userRef = doc(db, 'users', user.uid);
-        await setDoc(userRef, {
-            username: username,
-            email: email,
-        });
+const userRef = doc(db, 'users', user.uid);
+await setDoc(userRef, {
+username: username,
+email: email,
+});
 
-        window.location.href = 'cuadro de emociones.html';
+window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
 
-    } catch (error) {
-        if (error.code === 'auth/email-already-in-use') {
-            showErrorModal('El correo electrónico ya está en uso. Por favor, inicia sesión.');
-        } else if (error.code === 'auth/invalid-email') {
-            showErrorModal('El correo electrónico no es válido.');
-        } else if (error.code === 'auth/weak-password') {
-            showErrorModal('La contraseña es demasiado débil.');
-        } else {
-            showErrorModal('Hubo un error en el registro. Por favor, inténtalo de nuevo.');
-        }
-    }
+} catch (error) {
+if (error.code === 'auth/email-already-in-use') {
+showErrorModal('El correo electrónico ya está en uso. Por favor, inicia sesión.');
+} else if (error.code === 'auth/invalid-email') {
+showErrorModal('El correo electrónico no es válido.');
+} else if (error.code === 'auth/weak-password') {
+showErrorModal('La contraseña es demasiado débil.');
+} else {
+showErrorModal('Hubo un error en el registro. Por favor, inténtalo de nuevo.');
+}
+}
 });
 
 // Inicio de Sesión
 document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-usuario').value;
-    const password = document.getElementById('login-password').value;
+e.preventDefault();
+const email = document.getElementById('login-usuario').value;
+const password = document.getElementById('login-password').value;
 
-    try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        window.location.href = 'cuadro de emociones.html';
-    } catch (error) {
-        if (error.code === 'auth/wrong-password') {
-            showErrorModal('Contraseña incorrecta.');
-        } else if (error.code === 'auth/user-not-found') {
-            showErrorModal('No se encontró una cuenta con este correo electrónico.');
-        } else {
-            showErrorModal('Hubo un error en el inicio de sesión. Por favor, inténtalo de nuevo.');
-        }
-    }
+try {
+const userCredential = await signInWithEmailAndPassword(auth, email, password);
+const user = userCredential.user;
+window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
+} catch (error) {
+if (error.code === 'auth/wrong-password') {
+showErrorModal('Contraseña incorrecta.');
+} else if (error.code === 'auth/user-not-found') {
+showErrorModal('No se encontró una cuenta con este correo electrónico.');
+} else {
+showErrorModal('Hubo un error en el inicio de sesión. Por favor, inténtalo de nuevo.');
+}
+}
 });
 
 // Inicio de Sesión con Google
 document.getElementById('google-login').addEventListener('click', async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        const userRef = doc(db, 'users', user.uid);
-        const userSnapshot = await getDoc(userRef);
+const provider = new GoogleAuthProvider();
+try {
+const result = await signInWithPopup(auth, provider);
+const user = result.user;
+const userRef = doc(db, 'users', user.uid);
+const userSnapshot = await getDoc(userRef);
 
-        if (!userSnapshot.exists()) {
-            await setDoc(userRef, {
-                username: user.displayName,
-                email: user.email,
-            });
-        }
-
-        window.location.href = 'cuadro de emociones.html';
-
-    } catch (error) {
-        showErrorModal('Hubo un error al iniciar sesión con Google. Por favor, inténtalo de nuevo.');
-    }
+if (!userSnapshot.exists()) {
+await setDoc(userRef, {
+username: user.displayName,
+email: user.email,
 });
+}
+
+window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
+
+} catch (error) {
+showErrorModal('Hubo un error al iniciar sesión con Google. Por favor, inténtalo de nuevo.');
+}
+});
+
+// Cerrar modal de error al hacer clic fuera del modal
+window.onclick = function(event) {
+const modal = document.getElementById('error-modal');
+if (event.target == modal) {
+modal.style.display = 'none';
+}
+};
 </script>
 </body>
 </html>
