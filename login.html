@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inicio de Sesión</title>
+<link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.8.0/firebaseui.css" />
 <style>
 /* Estilos generales */
 body {
@@ -145,27 +146,8 @@ cursor: pointer;
 <body>
 <div class="auth-box">
 <h2 id="form-title">Iniciar Sesión</h2>
-<form id="login-form" class="active">
-<label for="login-usuario">Usuario:</label>
-<input type="text" id="login-usuario" required>
-<label for="login-password">Contraseña:</label>
-<input type="password" id="login-password" required>
-<button type="submit">Iniciar Sesión</button>
-<div class="toggle-text">¿No te has registrado? <span id="toggle-register" class="toggle-link">Registrarse</span></div>
-</form>
-<form id="register-form">
-<label for="register-username">Nombre de Usuario:</label>
-<input type="text" id="register-username" required>
-<label for="register-usuario">Correo Electrónico:</label>
-<input type="email" id="register-usuario" required>
-<label for="register-password">Contraseña:</label>
-<input type="password" id="register-password" required>
-<button type="submit">Registrarse</button>
-<div class="toggle-text">¿Ya te registraste? <span id="toggle-login" class="toggle-link">Iniciar sesión</span></div>
-</form>
-<button id="google-login" class="social-login">
-<img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo"> Iniciar sesión con Google
-</button>
+<div id="firebaseui-auth-container"></div>
+<div id="loader">Loading...</div>
 </div>
 
 <!-- Modales para mensajes de error -->
@@ -176,38 +158,35 @@ cursor: pointer;
 </div>
 </div>
 
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
-import { getFirestore, doc, getDocs, setDoc, query, collection, where } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/4.8.0/firebaseui.js"></script>
+<script>
+const firebaseConfig = {
+apiKey: "YOUR_API_KEY",
+authDomain: "YOUR_AUTH_DOMAIN",
+databaseURL: "YOUR_DATABASE_URL",
+projectId: "YOUR_PROJECT_ID",
+storageBucket: "YOUR_STORAGE_BUCKET",
+messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+appId: "YOUR_APP_ID"
+};
 
-// Configuración de Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
-            authDomain: "mi-web-5402c.firebaseapp.com",
-            databaseURL: "https://mi-web-5402c-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "mi-web-5402c",
-            storageBucket: "mi-web-5402c.appspot.com",
-            messagingSenderId: "31272724190",
-            appId: "1:31272724190:web:51fcc8750c51abf783844f"
-        };
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const uiConfig = {
+signInSuccessUrl: 'cuadro_de_emociones.html',
+signInOptions: [
+firebase.auth.EmailAuthProvider.PROVIDER_ID,
+firebase.auth.GoogleAuthProvider.PROVIDER_ID
+],
+tosUrl: 'terms_of_service.html',
+privacyPolicyUrl: 'privacy_policy.html'
+};
 
-// Alternar entre formularios de inicio de sesión y registro
-document.getElementById('toggle-register').addEventListener('click', () => {
-document.getElementById('login-form').classList.remove('active');
-document.getElementById('register-form').classList.add('active');
-document.getElementById('form-title').textContent = 'Registrarse';
-});
-
-document.getElementById('toggle-login').addEventListener('click', () => {
-document.getElementById('register-form').classList.remove('active');
-document.getElementById('login-form').classList.add('active');
-document.getElementById('form-title').textContent = 'Iniciar Sesión';
-});
+const ui = new firebaseui.auth.AuthUI(auth);
+ui.start('#firebaseui-auth-container', uiConfig);
 
 // Mostrar modal de error
 function showErrorModal(message) {
@@ -220,94 +199,6 @@ modal.style.display = 'block';
 // Cerrar modal de error
 document.querySelector('.close').addEventListener('click', () => {
 document.getElementById('error-modal').style.display = 'none';
-});
-
-// Función para verificar si el nombre de usuario está en uso
-async function isUsernameTaken(username) {
-const querySnapshot = await getDocs(query(collection(db, 'users'), where('username', '==', username)));
-return !querySnapshot.empty;
-}
-// Registro de Usuario
-document.getElementById('register-form').addEventListener('submit', async (e) => {
-e.preventDefault();
-const email = document.getElementById('register-usuario').value;
-const password = document.getElementById('register-password').value;
-const username = document.getElementById('register-username').value;
-
-// Verificar si el nombre de usuario ya está en uso
-const usernameTaken = await isUsernameTaken(username);
-if (usernameTaken) {
-showErrorModal('El nombre de usuario ya está en uso. Por favor, elige otro.');
-return;
-}
-
-try {
-const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-const user = userCredential.user;
-
-const userRef = doc(db, 'users', user.uid);
-await setDoc(userRef, {
-username: username,
-email: email,
-});
-
-window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
-
-} catch (error) {
-if (error.code === 'auth/email-already-in-use') {
-showErrorModal('El correo electrónico ya está en uso. Por favor, inicia sesión.');
-} else if (error.code === 'auth/invalid-email') {
-showErrorModal('El correo electrónico no es válido.');
-} else if (error.code === 'auth/weak-password') {
-showErrorModal('La contraseña es demasiado débil.');
-} else {
-showErrorModal('Hubo un error en el registro. Por favor, inténtalo de nuevo.');
-}
-}
-});
-
-// Inicio de Sesión
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-e.preventDefault();
-const email = document.getElementById('login-usuario').value;
-const password = document.getElementById('login-password').value;
-
-try {
-const userCredential = await signInWithEmailAndPassword(auth, email, password);
-const user = userCredential.user;
-window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
-} catch (error) {
-if (error.code === 'auth/wrong-password') {
-showErrorModal('Contraseña incorrecta.');
-} else if (error.code === 'auth/user-not-found') {
-showErrorModal('No se encontró una cuenta con este correo electrónico.');
-} else {
-showErrorModal('Hubo un error en el inicio de sesión. Por favor, inténtalo de nuevo.');
-}
-}
-});
-
-// Inicio de Sesión con Google
-document.getElementById('google-login').addEventListener('click', async () => {
-const provider = new GoogleAuthProvider();
-try {
-const result = await signInWithPopup(auth, provider);
-const user = result.user;
-const userRef = doc(db, 'users', user.uid);
-const userSnapshot = await getDoc(userRef);
-
-if (!userSnapshot.exists()) {
-await setDoc(userRef, {
-username: user.displayName,
-email: user.email,
-});
-}
-
-window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
-
-} catch (error) {
-showErrorModal('Hubo un error al iniciar sesión con Google. Por favor, inténtalo de nuevo.');
-}
 });
 
 // Cerrar modal de error al hacer clic fuera del modal
