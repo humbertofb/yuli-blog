@@ -13,6 +13,10 @@ background-color: #ffe6e6;
 color: #333;
 margin: 0;
 padding: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
 }
 
 /* Encabezado */
@@ -246,11 +250,10 @@ background-color: #ff3333;
 <h2>Notas</h2>
 </div>
 </main>
-<script src="scripts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
-import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc, updateDoc, getDoc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js';
 
@@ -264,10 +267,10 @@ messagingSenderId: "31272724190",
 appId: "1:31272724190:web:51fcc8750c51abf783844f"
 };
 
+Claro, aquí tienes la continuación del código HTML y JavaScript para la página principal de emociones:
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-Claro, aquí tienes la continuación del código HTML y JavaScript para la página principal de emociones, incluyendo la funcionalidad para subir y mostrar imágenes de perfil:
-
 const auth = getAuth(app);
 const storage = getStorage(app);
 
