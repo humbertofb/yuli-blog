@@ -76,6 +76,44 @@ cursor: pointer;
 text-decoration: underline;
 margin-top: 10px;
 }
+
+/* Estilos para los modales */
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+background-color: #fff;
+margin: 15% auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+max-width: 400px;
+border-radius: 10px;
+text-align: center;
+}
+
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -101,9 +139,28 @@ margin-top: 10px;
 <button id="toggle-form" class="toggle-button">Registrarse</button>
 </div>
 
+<!-- Modales para mensajes de error -->
+<div id="error-modal" class="modal">
+<div class="modal-content">
+<span class="close">×</span>
+<p id="error-message"></p>
+</div>
+</div>
+
+<!-- Formulario para subir imagen de perfil -->
+<form id="profile-pic-form">
+<input type="file" id="profile-pic-input" accept="image/*">
+<button type="submit">Subir Imagen de Perfil</button>
+</form>
+<img id="profile-pic" src="" alt="Imagen de Perfil">
+<button id="delete-profile-pic">Eliminar Imagen de Perfil</button>
+<button id="edit-profile-pic">Editar Imagen de Perfil</button>
+
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js';
 
 const firebaseConfig = {
 apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
@@ -117,6 +174,8 @@ appId: "1:31272724190:web:51fcc8750c51abf783844f"
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
 // Alternar entre formularios de inicio de sesión y registro
 document.getElementById('toggle-form').addEventListener('click', () => {
@@ -138,51 +197,153 @@ toggleButton.textContent = 'Registrarse';
 }
 });
 
+// Mostrar modal de error
+function showErrorModal(message) {
+const modal = document.getElementById('error-modal');
+const errorMessage = document.getElementById('error-message');
+errorMessage.textContent = message;
+modal.style.display = 'block';
+}
+
+// Cerrar modal de error
+document.querySelector('.close').addEventListener('click', () => {
+document.getElementById('error-modal').style.display = 'none';
+});
+
 // Registro de Usuario
-document.getElementById('register-form').addEventListener('submit', (e) => {
+document.getElementById('register-form').addEventListener('submit', async (e) => {
 e.preventDefault();
 const email = document.getElementById('register-email').value;
 const password = document.getElementById('register-password').value;
-createUserWithEmailAndPassword(auth, email, password)
-.then((userCredential) => {
-console.log('Usuario registrado:', userCredential.user);
+try {
+await createUserWithEmailAndPassword(auth, email, password);
 window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
-})
-.catch((error) => {
-console.error('Error en el registro:', error);
-});
+} catch (error) {
+if (error.code === 'auth/email-already-in-use') {
+showErrorModal('El correo electrónico ya está en uso. Por favor, inicia sesión.');
+} else if (error.code === 'auth/invalid-email') {
+showErrorModal('El correo electrónico no es válido.');
+} else if (error.code === 'auth/weak-password') {
+showErrorModal('La contraseña es demasiado débil.');
+} else {
+showErrorModal('Error en el registro: ' + error.message);
+}
+}
 });
 
 // Login de Usuario
-document.getElementById('login-form').addEventListener('submit', (e) => {
+document.getElementById('login-form').addEventListener('submit', async (e) => {
 e.preventDefault();
 const email = document.getElementById('login-email').value;
 const password = document.getElementById('login-password').value;
-signInWithEmailAndPassword(auth, email, password)
-.then((userCredential) => {
-console.log('Usuario autenticado:', userCredential.user);
+try {
+await signInWithEmailAndPassword(auth, email, password);
 window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
-})
-.catch((error) => {
+} catch (error) {
 if (error.code === 'auth/user-not-found') {
-alert('Usuario no registrado. Por favor, regístrese en el sistema.');
+showErrorModal('Usuario no registrado. Por favor, regístrese en el sistema.');
+} else if (error.code === 'auth/invalid-email') {
+showErrorModal('El correo electrónico no es válido.');
+} else if (error.code === 'auth/wrong-password') {
+showErrorModal('La contraseña es incorrecta.');
 } else {
-console.error('Error en el login:', error);
+showErrorModal('Error en el login: ' + error.message);
+}
 }
 });
+
+// Subir imagen de perfil
+document.getElementById('profile-pic-form').addEventListener('submit', async (e) => {
+e.preventDefault();
+const file = document.getElementById('profile-pic-input').files[0];
+if (file) {
+const user = auth.currentUser;
+const storageRef = ref(storage, `profile_pics/${user.uid}`);
+try {
+await uploadBytes(storageRef, file);
+const url = await getDownloadURL(storageRef);
+
+const userDocRef = doc(db, 'users', user.uid);
+const userDoc = await getDoc(userDocRef);
+
+if (userDoc.exists()) {
+await updateDoc(userDocRef, { profilePic: url });
+} else {
+await setDoc(userDocRef, { profilePic: url });
+}
+
+document.getElementById('profile-pic').src = url;
+alert('Imagen de perfil subida con éxito');
+} catch (error) {
+console.error('Error al subir la imagen de perfil:', error);
+}
+}
 });
 
-// Login con Google
-document.getElementById('google-login').addEventListener('click', () => {
-const provider = new GoogleAuthProvider();
-signInWithPopup(auth, provider)
-.then((result) => {
-console.log('Usuario autenticado con Google:', result.user);
-window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
-})
-.catch((error) => {
-console.error('Error en el login con Google:', error);
+// Eliminar imagen de perfil
+document.getElementById('delete-profile-pic').addEventListener('click', async () => {
+const user = auth.currentUser;
+const storageRef = ref(storage, `profile_pics/${user.uid}`);
+try {
+await deleteObject(storageRef);
+
+const userDocRef = doc(db, 'users', user.uid);
+await updateDoc(userDocRef, { profilePic: '' });
+
+document.getElementById('profile-pic').src = '';
+alert('Imagen de perfil eliminada con éxito');
+} catch (error) {
+console.error('Error al eliminar la imagen de perfil:', error);
+}
 });
+
+// Editar imagen de perfil
+document.getElementById('edit-profile-pic').addEventListener('click', () => {
+document.getElementById('profile-pic-input').click();
+});
+
+// Cargar imagen de perfil
+async function loadProfilePic(uid) {
+try {
+const userDoc = await getDoc(doc(db, 'users', uid));
+if (userDoc.exists() && userDoc.data().profilePic) {
+document.getElementById('profile-pic').src = userDoc.data().profilePic;
+}
+} catch (error) {
+console.error('Error al cargar la imagen de perfil:', error);
+}
+}
+
+// Guardar datos en Firebase
+document.getElementById('emotion-form').addEventListener('submit', async (e) => {
+e.preventDefault();
+
+const emotion = document.getElementById('emotion').value;
+const note = document.getElementById('note').value;
+
+try {
+await addDoc(collection(db, 'emotions'), {
+emotion,
+note,
+timestamp: serverTimestamp()
+});
+alert('Emoción guardada con éxito');
+loadEmotions(); // Recargar emociones después de guardar
+} catch (e) {
+console.error('Error al guardar la emoción:', e);
+}
+});
+
+// Cargar emociones
+async function loadEmotions() {
+// Implementa la lógica para cargar y mostrar las emociones guardadas
+}
+
+// Inicializar la imagen de perfil al cargar la página
+auth.onAuthStateChanged((user) => {
+if (user) {
+loadProfilePic(user.uid);
+}
 });
 </script>
 </body>
