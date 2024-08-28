@@ -228,7 +228,16 @@ const storageRef = ref(storage, `profile_pics/${user.uid}`);
 try {
 await uploadBytes(storageRef, file);
 const url = await getDownloadURL(storageRef);
-await updateDoc(doc(db, 'users', user.uid), { profilePic: url });
+
+const userDocRef = doc(db, 'users', user.uid);
+const userDoc = await getDoc(userDocRef);
+
+if (userDoc.exists()) {
+await updateDoc(userDocRef, { profilePic: url });
+} else {
+await setDoc(userDocRef, { profilePic: url });
+}
+
 document.getElementById('profile-pic').src = url;
 alert('Imagen de perfil subida con éxito');
 } catch (error) {
@@ -265,7 +274,7 @@ timestamp: serverTimestamp()
 alert('Emoción guardada con éxito');
 loadEmotions(); // Recargar emociones después de guardar
 } catch (e) {
-console.error('Error al guardar la emoción: ', e);
+console.error('Error al guardar la emoción:', e);
 }
 });
 
