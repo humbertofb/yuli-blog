@@ -156,7 +156,7 @@ const password = document.getElementById('login-password').value;
 signInWithEmailAndPassword(auth, email, password)
 .then((userCredential) => {
 console.log('Usuario autenticado:', userCredential.user);
-window.location.href = 'emotions.html'; // Redirigir a la página de emociones
+window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
 })
 .catch((error) => {
 console.error('Error en el login:', error);
@@ -169,7 +169,7 @@ const provider = new GoogleAuthProvider();
 signInWithPopup(auth, provider)
 .then((result) => {
 console.log('Usuario autenticado con Google:', result.user);
-window.location.href = 'emotions.html'; // Redirigir a la página de emociones
+window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
 })
 .catch((error) => {
 console.error('Error en el login con Google:', error);
@@ -182,7 +182,7 @@ const provider = new FacebookAuthProvider();
 signInWithPopup(auth, provider)
 .then((result) => {
 console.log('Usuario autenticado con Facebook:', result.user);
-window.location.href = 'emotions.html'; // Redirigir a la página de emociones
+window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
 })
 .catch((error) => {
 console.error('Error en el login con Facebook:', error);
@@ -195,7 +195,7 @@ const provider = new GoogleAuthProvider();
 signInWithPopup(auth, provider)
 .then((result) => {
 console.log('Usuario registrado con Google:', result.user);
-window.location.href = 'emotions.html'; // Redirigir a la página de emociones
+window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
 })
 .catch((error) => {
 console.error('Error en el registro con Google:', error);
@@ -208,7 +208,7 @@ const provider = new FacebookAuthProvider();
 signInWithPopup(auth, provider)
 .then((result) => {
 console.log('Usuario registrado con Facebook:', result.user);
-window.location.href = 'emotions.html'; // Redirigir a la página de emociones
+window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
 })
 .catch((error) => {
 console.error('Error en el registro con Facebook:', error);
