@@ -51,7 +51,7 @@ text-align: left;
 }
 
 .auth-box input {
-width: 100%;
+width: calc(100% - 22px); /* Ajustar el ancho de los inputs */
 padding: 10px;
 margin-bottom: 10px;
 border: 1px solid #ccc;
@@ -75,18 +75,15 @@ margin-bottom: 10px;
 background-color: #ff3333;
 }
 
-.auth-box .toggle-button {
-background-color: transparent;
-color: #ff6666;
-border: none;
-cursor: pointer;
-text-decoration: underline;
-margin-top: 10px;
-}
-
 .auth-box .toggle-text {
 color: #fff;
 margin-top: 10px;
+}
+
+.auth-box .toggle-link {
+color: #ff6666;
+cursor: pointer;
+text-decoration: underline;
 }
 
 /* Estilos para los botones de Google */
@@ -154,6 +151,7 @@ cursor: pointer;
 <label for="login-password">Contraseña:</label>
 <input type="password" id="login-password" required>
 <button type="submit">Iniciar Sesión</button>
+<div class="toggle-text">¿No te has registrado? <span id="toggle-register" class="toggle-link">Registrarse</span></div>
 </form>
 <form id="register-form">
 <label for="register-usuario">Usuario:</label>
@@ -161,11 +159,11 @@ cursor: pointer;
 <label for="register-password">Contraseña:</label>
 <input type="password" id="register-password" required>
 <button type="submit">Registrarse</button>
+<div class="toggle-text">¿Ya te registraste? <span id="toggle-login" class="toggle-link">Iniciar sesión</span></div>
 </form>
 <button id="google-login" class="social-login">
 <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google Logo"> Iniciar sesión con Google
 </button>
-<div class="toggle-text">¿No te has registrado? <button id="toggle-form" class="toggle-button">Registrarse</button></div>
 </div>
 
 <!-- Modales para mensajes de error -->
@@ -196,23 +194,16 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // Alternar entre formularios de inicio de sesión y registro
-document.getElementById('toggle-form').addEventListener('click', () => {
-const loginForm = document.getElementById('login-form');
-const registerForm = document.getElementById('register-form');
-const formTitle = document.getElementById('form-title');
-const toggleButton = document.getElementById('toggle-form');
+document.getElementById('toggle-register').addEventListener('click', () => {
+document.getElementById('login-form').classList.remove('active');
+document.getElementById('register-form').classList.add('active');
+document.getElementById('form-title').textContent = 'Registrarse';
+});
 
-if (loginForm.classList.contains('active')) {
-loginForm.classList.remove('active');
-registerForm.classList.add('active');
-formTitle.textContent = 'Registrarse';
-toggleButton.textContent = 'Iniciar Sesión';
-} else {
-registerForm.classList.remove('active');
-loginForm.classList.add('active');
-formTitle.textContent = 'Iniciar Sesión';
-toggleButton.textContent = 'Registrarse';
-}
+document.getElementById('toggle-login').addEventListener('click', () => {
+document.getElementById('register-form').classList.remove('active');
+document.getElementById('login-form').classList.add('active');
+document.getElementById('form-title').textContent = 'Iniciar Sesión';
 });
 
 // Mostrar modal de error
