@@ -226,7 +226,7 @@ const email = document.getElementById('register-usuario').value;
 const password = document.getElementById('register-password').value;
 try {
 await createUserWithEmailAndPassword(auth, email, password);
-window.location.href = 'cuadro_de_emociones.html'; // Redirigir a la página de emociones
+window.location.href = 'cuadro de emociones.html'; // Redirigir a la página de emociones
 } catch (error) {
 if (error.code === 'auth/email-already-in-use') {
 showErrorModal('El correo electrónico ya está en uso. Por favor, inicia sesión.');
