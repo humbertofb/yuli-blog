@@ -145,51 +145,16 @@ margin: 0 auto;
 display: block;
 }
 
-/* Estilos para formularios de autenticación */
-form {
-margin: 20px 0;
-padding: 20px;
-background-color: #fff;
-border-radius: 10px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-form h2 {
-margin-bottom: 10px;
-}
-
-form label {
-display: block;
-margin-bottom: 5px;
-}
-
-form input {
-width: 100%;
-padding: 10px;
-margin-bottom: 10px;
-border: 1px solid #ccc;
-border-radius: 5px;
-}
-
-form button {
-padding: 10px 20px;
-background-color: #ff6666;
-color: #fff;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-}
-
-form button:hover {
-background-color: #ff3333;
-}
-
+/* Estilos para el perfil de usuario */
 #user-profile {
 margin: 20px 0;
 padding: 20px;
 background-color: #fff;
 border-radius: 10px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
 #user-profile h2 {
@@ -197,6 +162,24 @@ margin-bottom: 10px;
 }
 
 #user-profile p {
+margin-bottom: 10px;
+}
+
+#user-profile img {
+width: 100px;
+height: 100px;
+border-radius: 50%;
+object-fit: cover;
+margin-bottom: 10px;
+}
+
+#profile-pic-form {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+#profile-pic-form input {
 margin-bottom: 10px;
 }
 
@@ -230,45 +213,26 @@ background-color: #ff3333;
 </ul>
 </nav>
 <main>
-<!-- Formulario de Registro -->
-<form id="register-form">
-<h2>Registro</h2>
-<label for="register-email">Correo Electrónico:</label>
-<input type="email" id="register-email" required>
-<label for="register-password">Contraseña:</label>
-<input type="password" id="register-password" required>
-<button type="submit">Registrarse</button>
-</form>
-
-<!-- Formulario de Login -->
-<form id="login-form">
-<h2>Iniciar Sesión</h2>
-<label for="login-email">Correo Electrónico:</label>
-<input type="email" id="login-email" required>
-<label for="login-password">Contraseña:</label>
-<input type="password" id="login-password" required>
-<button type="submit">Iniciar Sesión</button>
-</form>
-
-<!-- Botones de Login con Google y Facebook -->
-<button id="google-login">Iniciar sesión con Google</button>
-<button id="facebook-login">Iniciar sesión con Facebook</button>
-
 <div id="user-profile" style="display: none;">
 <h2>Perfil de Usuario</h2>
+<img id="profile-pic" src="" alt="Imagen de Perfil">
 <p id="user-email"></p>
+<form id="profile-pic-form">
+<input type="file" id="profile-pic-input" accept="image/*">
+<button type="submit">Subir Imagen</button>
+</form>
 <button id="logout-button">Cerrar Sesión</button>
 </div>
 
 <form id="emotion-form">
 <label for="emotion">Selecciona tu emoción:</label>
 <select id="emotion" name="emotion">
-<option value="Estoy feliz 🥳">Estoy feliz 🥳</option>
-<option value="Estoy triste 😭">Estoy triste 😭</option>
-<option value="Estoy estresado 😒">Estoy estresado 😒</option>
-<option value="Estoy enamorado 😍">Estoy enamorado 😍</option>
-<option value="Estoy cansado 😪">Estoy cansado 😪</option>
-<option value="Estoy emocionado 🤩">Estoy emocionado 🤩</option>
+<option value="Estoy feliz">Estoy feliz party</option>
+<option value="Estoy triste">Estoy triste loudlycrying</option>
+<option value="Estoy estresado">Estoy estresado wasntme</option>
+<option value="Estoy enamorado">Estoy enamorado hearteyes</option>
+<option value="Estoy cansado">Estoy cansado sweat</option>
+<option value="Estoy emocionado">Estoy emocionado stareyes</option>
 </select>
 <label for="note">Nota:</label>
 <input type="text" id="note" name="note">
@@ -282,14 +246,14 @@ background-color: #ff3333;
 <h2>Notas</h2>
 </div>
 </main>
+<script src="scripts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
 import { getFirestore, collection, addDoc, serverTimestamp, getDocs, deleteDoc, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-// Configuración de Firebase
 const firebaseConfig = {
 apiKey: "AIzaSyBfGBf5Zmp1hEZHT9aKIhTRcXjULD-jbGw",
 authDomain: "mi-web-5402c.firebaseapp.com",
@@ -300,71 +264,22 @@ messagingSenderId: "31272724190",
 appId: "1:31272724190:web:51fcc8750c51abf783844f"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+Claro, aquí tienes la continuación del código HTML y JavaScript para la página principal de emociones, incluyendo la funcionalidad para subir y mostrar imágenes de perfil:
+
 const auth = getAuth(app);
-
-// Registro de Usuario
-document.getElementById('register-form').addEventListener('submit', (e) => {
-e.preventDefault();
-const email = document.getElementById('register-email').value;
-const password = document.getElementById('register-password').value;
-createUserWithEmailAndPassword(auth, email, password)
-.then((userCredential) => {
-console.log('Usuario registrado:', userCredential.user);
-})
-.catch((error) => {
-console.error('Error en el registro:', error);
-});
-});
-
-// Login de Usuario
-document.getElementById('login-form').addEventListener('submit', (e) => {
-e.preventDefault();
-const email = document.getElementById('login-email').value;
-const password = document.getElementById('login-password').value;
-signInWithEmailAndPassword(auth, email, password)
-.then((userCredential) => {
-console.log('Usuario autenticado:', userCredential.user);
-})
-.catch((error) => {
-console.error('Error en el login:', error);
-});
-});
-
-// Login con Google
-document.getElementById('google-login').addEventListener('click', () => {
-const provider = new GoogleAuthProvider();
-signInWithPopup(auth, provider)
-.then((result) => {
-console.log('Usuario autenticado con Google:', result.user);
-})
-.catch((error) => {
-console.error('Error en el login con Google:', error);
-});
-});
-
-// Login con Facebook
-document.getElementById('facebook-login').addEventListener('click', () => {
-const provider = new FacebookAuthProvider();
-signInWithPopup(auth, provider)
-.then((result) => {
-console.log('Usuario autenticado con Facebook:', result.user);
-})
-.catch((error) => {
-console.error('Error en el login con Facebook:', error);
-});
-});
+const storage = getStorage(app);
 
 // Verificar el estado de autenticación
 onAuthStateChanged(auth, (user) => {
 if (user) {
 document.getElementById('user-profile').style.display = 'block';
 document.getElementById('user-email').textContent = `Correo: ${user.email}`;
+loadProfilePic(user.uid); // Cargar imagen de perfil
 loadEmotions(); // Cargar emociones al autenticarse
 } else {
-document.getElementById('user-profile').style.display = 'none';
+window.location.href = 'login.html'; // Redirigir a la página de login si no está autenticado
 }
 });
 
@@ -372,10 +287,42 @@ document.getElementById('user-profile').style.display = 'none';
 document.getElementById('logout-button').addEventListener('click', () => {
 auth.signOut().then(() => {
 console.log('Usuario desconectado');
+window.location.href = 'login.html'; // Redirigir a la página de login
 }).catch((error) => {
 console.error('Error al cerrar sesión:', error);
 });
 });
+
+// Subir imagen de perfil
+document.getElementById('profile-pic-form').addEventListener('submit', async (e) => {
+e.preventDefault();
+const file = document.getElementById('profile-pic-input').files[0];
+if (file) {
+const user = auth.currentUser;
+const storageRef = ref(storage, `profile_pics/${user.uid}`);
+try {
+await uploadBytes(storageRef, file);
+const url = await getDownloadURL(storageRef);
+await updateDoc(doc(db, 'users', user.uid), { profilePic: url });
+document.getElementById('profile-pic').src = url;
+alert('Imagen de perfil subida con éxito');
+} catch (error) {
+console.error('Error al subir la imagen de perfil:', error);
+}
+}
+});
+
+// Cargar imagen de perfil
+async function loadProfilePic(uid) {
+try {
+const userDoc = await getDoc(doc(db, 'users', uid));
+if (userDoc.exists() && userDoc.data().profilePic) {
+document.getElementById('profile-pic').src = userDoc.data().profilePic;
+}
+} catch (error) {
+console.error('Error al cargar la imagen de perfil:', error);
+}
+}
 
 // Guardar datos en Firebase
 document.getElementById('emotion-form').addEventListener('submit', async (e) => {
@@ -504,7 +451,6 @@ loadEmotions(); // Recargar emociones después de eliminar
 console.error('Error al eliminar la emoción: ', e);
 }
 }
-});
 </script>
 </body>
 </html>
