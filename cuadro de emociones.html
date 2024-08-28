@@ -198,6 +198,7 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 
 // Verificar el estado de autenticación
+// Verificar el estado de autenticación
 onAuthStateChanged(auth, (user) => {
 if (user) {
 document.getElementById('user-profile').style.display = 'block';
