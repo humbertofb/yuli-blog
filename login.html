@@ -8,104 +8,106 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
     body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('IMG_3101.jpeg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+        font-family: 'Arial', sans-serif;
+        background-image: url('IMG_3101.jpeg');
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
-.auth-box {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 320px;
-    text-align: center;
-}
+    .auth-box {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 320px;
+        text-align: center;
+    }
 
-.auth-box h2 {
-    margin-bottom: 20px;
-    color: #fff;
-}
+    .auth-box h2 {
+        margin-bottom: 20px;
+        color: #fff;
+    }
 
-.input-group {
-    position: relative;
-    margin-bottom: 20px;
-}
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
 
-.input-group input {
-    width: 100%;
-    justify-content: center;
-    padding: 10px 40px 10px 40px;
-    border-radius: 5px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-}
+    .input-group input {
+        width: 100%;
+        padding: 10px 40px 10px 40px;
+        border-radius: 5px;
+        border: none;
+        background-color: #333;
+        color: #fff;
+    }
 
-.input-group .icon-left,
-.input-group .icon-right {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #fff;
-}
+    .input-group .icon-left,
+    .input-group .icon-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fff;
+    }
 
-.input-group .icon-left {
-    left: 10px;
-}
+    .input-group .icon-left {
+        left: 10px;
+    }
 
-.input-group .icon-right {
-    right: 10px;
-    cursor: pointer;
-    display: none;
-}
+    .input-group .icon-right {
+        right: 10px;
+        cursor: pointer;
+        display: none;
+    }
 
-.toggle-password {
-    cursor: pointer;
-}
+    .toggle-password {
+        cursor: pointer;
+    }
 
-.auth-box a {
-    color: #7BBDF5;
-    text-decoration: none;
-}
+    .auth-box a {
+        color: #7BBDF5;
+        text-decoration: none;
+    }
 
-.auth-box a:hover {
-    text-decoration: underline;
-}
+    .auth-box a:hover {
+        text-decoration: underline;
+    }
 
-.auth-box button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
+    input, button {
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-.google-button {
-    background-color: #DB4437;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-}
+    .auth-box button {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
 
-.google-button img {
-    margin-right: 10px;
-}
+    .google-button {
+        background-color: #DB4437;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .google-button img {
+        margin-right: 10px;
+    }
     </style>
 
-    <!-- Carga del script de Auth0 con defer -->
     <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js" defer></script>
 </head>
 <body>
@@ -147,9 +149,8 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Inicia el objeto auth0 dentro del DOMContentLoaded
-    const auth0 = new auth0.WebAuth({
+    // Inicializar Auth0
+    const auth0Client = new auth0.WebAuth({
         domain: 'dev-myj57y5jrguwrn5r.eu.auth0.com',
         clientID: 'hRLIsVJcX0MifDbcUOUrg43ICEnl2xKw',
         redirectUri: window.location.origin + '/cuadro de emociones.html',
@@ -157,12 +158,13 @@ document.addEventListener('DOMContentLoaded', function() {
         scope: 'openid profile email'
     });
 
+    // Funciones globales
     function login() {
-        auth0.authorize();
+        auth0Client.authorize();
     }
 
     function register() {
-        auth0.authorize();
+        auth0Client.authorize();
     }
 
     function toggleForm(form) {
@@ -171,25 +173,27 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('form-title').innerText = form === 'login' ? 'Iniciar Sesión' : 'Registrarse';
     }
 
-    document.getElementById('password').addEventListener('input', function() {
-        const togglePassword = document.querySelector('#login-form .toggle-password');
-        togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
-    });
+    // Evento para mostrar/ocultar contraseña
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('password').addEventListener('input', function() {
+            const togglePassword = document.querySelector('#login-form .toggle-password');
+            togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
+        });
 
-    document.getElementById('reg-password').addEventListener('input', function() {
-        const togglePassword = document.querySelector('#register-form .toggle-password');
-        togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
-    });
+        document.getElementById('reg-password').addEventListener('input', function() {
+            const togglePassword = document.querySelector('#register-form .toggle-password');
+            togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
+        });
 
-    document.querySelectorAll('.toggle-password').forEach(function(toggle) {
-        toggle.addEventListener('click', function() {
-            const passwordInput = this.previousElementSibling;
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+        document.querySelectorAll('.toggle-password').forEach(function(toggle) {
+            toggle.addEventListener('click', function() {
+                const passwordInput = this.previousElementSibling;
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+            });
         });
     });
-});
 </script>
 </body>
 </html>
