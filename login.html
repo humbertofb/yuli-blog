@@ -146,9 +146,9 @@ margin-right: 10px;
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 const auth0 = new auth0.WebAuth({
-domain: 'tu-dominio.auth0.com',
-clientID: 'tu-clientID',
-redirectUri: window.location.origin + '/callback.html',
+domain: 'dev-myj57y5jrguwrn5r.eu.auth0.com',
+clientID: 'hRLIsVJcX0MifDbcUOUrg43ICEnl2xKw',
+redirectUri: window.location.origin + 'cuadro de emociones.html',
 responseType: 'token id_token',
 scope: 'openid profile email'
 });
@@ -184,41 +184,6 @@ const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'passw
 passwordInput.setAttribute('type', type);
 this.innerHTML = type === 'password' ? '' : '';
 });
-});
-});
-</script>
-</body>
-</html>
-
-Paso 3: Crear la Página de Callback
-Crea una página callback.html que manejará la redirección después de la autenticación:
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Callback</title>
-</head>
-<body>
-<script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-const auth0 = new auth0.WebAuth({
-domain: 'tu-dominio.auth0.com',
-clientID: 'tu-clientID',
-redirectUri: window.location.origin + '/callback.html',
-responseType: 'token id_token',
-scope: 'openid profile email'
-});
-
-auth0.parseHash((err, authResult) => {
-if (authResult && authResult.accessToken && authResult.idToken) {
-window.location.href = 'dashboard.html'; // Redirigir a la página deseada
-} else if (err) {
-console.log(err);
-alert('Error: ' + err.error + '. Check the console for further details.');
-}
 });
 });
 </script>
