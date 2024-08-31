@@ -42,6 +42,7 @@ body {
 
 .input-group input {
     width: 100%;
+    display: flex;
     padding: 10px 40px 10px 40px;
     border-radius: 5px;
     border: none;
@@ -145,10 +146,11 @@ body {
 <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Inicia el objeto auth0 dentro del DOMContentLoaded
     const auth0 = new auth0.WebAuth({
         domain: 'dev-myj57y5jrguwrn5r.eu.auth0.com',
         clientID: 'hRLIsVJcX0MifDbcUOUrg43ICEnl2xKw',
-        redirectUri: window.location.origin + 'cuadro de emociones.html',
+        redirectUri: window.location.origin + '/cuadro de emociones.html',
         responseType: 'token id_token',
         scope: 'openid profile email'
     });
