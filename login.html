@@ -41,13 +41,14 @@
     }
 
     .input-group input {
-        width: 100%;
-        padding: 10px 40px;
-        border-radius: 5px;
-        border: none;
-        background-color: #333;
-        color: #fff;
-    }
+    width: 100%; /* Esto hace que el campo de entrada tenga el 100% del ancho del contenedor */
+    padding: 10px 40px; /* Mantén el padding ajustado para los íconos */
+    border-radius: 5px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total del campo */
+}
 
     .input-group .icon-left {
         position: absolute;
