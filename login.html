@@ -1,3 +1,9 @@
+Vamos a ajustar el código para que los íconos se muestren correctamente, los cuadros de usuario y contraseña tengan el mismo largo que los botones, y los botones sean un poco más estrechos.
+
+Ajustes en el HTML y CSS
+https://www.bing.com/search?form=SKPBOT&q=Aseg%C3%BArate%20de%20que%20los%20%C3%ADconos%20se%20carguen%20correctamente: Utilizaremos Font Awesome para los íconos.https://www.bing.com/search?form=SKPBOT&q=Ajustar%20el%20ancho%20de%20los%20cuadros%20de%20entrada%20y%20los%20botones.
+Aquí tienes el código actualizado:
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,10 +11,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inicio de Sesión</title>
 <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/latest/index.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 <style>
 body {
 font-family: 'Arial', sans-serif;
-background-image: url('IMG_3101.jpeg');
+background-image: url('IMG_3104.jpeg');
 background-size: cover;
 background-position: center;
 color: #fff;
@@ -40,8 +47,8 @@ margin-bottom: 20px;
 }
 
 .input-group input {
-width: 100%;
-padding: 10px 40px 10px 10px;
+width: calc(100% - 40px);
+padding: 10px 10px 10px 40px;
 border-radius: 5px;
 border: none;
 background-color: #333;
@@ -81,7 +88,7 @@ text-decoration: underline;
 }
 
 .auth-box button {
-width: 100%;
+width: 90%;
 padding: 10px;
 border-radius: 5px;
 border: none;
@@ -109,13 +116,13 @@ margin-right: 10px;
 <h2 id="form-title">Iniciar Sesión</h2>
 <div id="login-form">
 <div class="input-group">
-<span class="icon-left">&#xf007</span> <!-- Ícono de usuario -->
-<input type="text" placeholder=" Nombre de Usuario" id="username">
+<span class="icon-left"><i class="fas fa-user"></i></span> <!-- Ícono de usuario -->
+<input type="text" placeholder="Nombre de Usuario" id="username">
 </div>
 <div class="input-group">
-<span class="icon-left">&#xf023</span> <!-- Ícono de candado -->
-<input type="password" placeholder=" Contraseña" id="password">
-<span class="icon-right toggle-password">&#xf06e</span> <!-- Ícono para mostrar/ocultar contraseña -->
+<span class="icon-left"><i class="fas fa-lock"></i></span> <!-- Ícono de candado -->
+<input type="password" placeholder="Contraseña" id="password">
+<span class="icon-right toggle-password"><i class="fas fa-eye"></i></span> <!-- Ícono para mostrar/ocultar contraseña -->
 </div>
 <div>
 <input type="checkbox" id="remember-me">
@@ -128,13 +135,13 @@ margin-right: 10px;
 </div>
 <div id="register-form" style="display: none;">
 <div class="input-group">
-<span class="icon-left">&#xf007</span> <!-- Ícono de usuario -->
-<input type="text" placeholder=" Nombre de Usuario" id="reg-username">
+<span class="icon-left"><i class="fas fa-user"></i></span> <!-- Ícono de usuario -->
+<input type="text" placeholder="Nombre de Usuario" id="reg-username">
 </div>
 <div class="input-group">
-<span class="icon-left">&#xf023</span> <!-- Ícono de candado -->
-<input type="password" placeholder=" Contraseña" id="reg-password">
-<span class="icon-right toggle-password">&#xf06e</span> <!-- Ícono para mostrar/ocultar contraseña -->
+<span class="icon-left"><i class="fas fa-lock"></i></span> <!-- Ícono de candado -->
+<input type="password" placeholder="Contraseña" id="reg-password">
+<span class="icon-right toggle-password"><i class="fas fa-eye"></i></span> <!-- Ícono para mostrar/ocultar contraseña -->
 </div>
 <button onclick="register()">Registrarse</button>
 <button class="google-button"><img src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" width="20px" />Registrarse con Google</button>
@@ -182,10 +189,14 @@ toggle.addEventListener('click', function() {
 const passwordInput = this.previousElementSibling;
 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
 passwordInput.setAttribute('type', type);
-this.innerHTML = type === 'password' ? '' : '';
+this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
 });
 });
 });
 </script>
 </body>
 </html>
+
+Explicación de los Cambios
+https://www.bing.com/search?form=SKPBOT&q=%C3%8Dconos: Se ha añadido el enlace a Font Awesome para los íconos.https://www.bing.com/search?form=SKPBOT&q=Ancho%20de%20los%20cuadros%20de%20entrada: Se ha ajustado el ancho de los cuadros de entrada para que coincidan con el ancho de los botones.https://www.bing.com/search?form=SKPBOT&q=Botones%20m%C3%A1s%20estrechos: Se ha ajustado el ancho de los botones al 90% del contenedor.
+Prueba estos cambios y dime si necesitas más ajustes. blush
