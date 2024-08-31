@@ -47,6 +47,7 @@
         border: none;
         background-color: #333;
         color: #fff;
+        box-sizing: border-box;
     }
 
     .input-group .icon-left,
@@ -106,9 +107,18 @@
     .google-button img {
         margin-right: 10px;
     }
+
+    label {
+        color: white;
+        font-size: 14px;
+    }
+
+    #remember-me {
+        margin-right: 5px;
+    }
     </style>
 
-    <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js" defer></script>
+    <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
 </head>
 <body>
 <div class="auth-box">
@@ -123,7 +133,7 @@
             <input type="password" placeholder="Contraseña" id="password">
             <span class="icon-right toggle-password"><i class="fas fa-eye"></i></span>
         </div>
-        <div>
+        <div style="margin-bottom: 20px;">
             <input type="checkbox" id="remember-me">
             <label for="remember-me">Recuérdame</label>
             <a href="#" style="float: right;">¿Olvidaste tu contraseña?</a>
@@ -149,7 +159,8 @@
 </div>
 
 <script>
-    // Inicializar Auth0
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicialización de Auth0 dentro de DOMContentLoaded
     const auth0Client = new auth0.WebAuth({
         domain: 'dev-myj57y5jrguwrn5r.eu.auth0.com',
         clientID: 'hRLIsVJcX0MifDbcUOUrg43ICEnl2xKw',
@@ -158,42 +169,41 @@
         scope: 'openid profile email'
     });
 
-    // Funciones globales
-    function login() {
+    window.login = function() {
         auth0Client.authorize();
     }
 
-    function register() {
+    window.register = function() {
         auth0Client.authorize();
     }
 
-    function toggleForm(form) {
+    window.toggleForm = function(form) {
         document.getElementById('login-form').style.display = form === 'login' ? 'block' : 'none';
         document.getElementById('register-form').style.display = form === 'register' ? 'block' : 'none';
         document.getElementById('form-title').innerText = form === 'login' ? 'Iniciar Sesión' : 'Registrarse';
     }
 
-    // Evento para mostrar/ocultar contraseña
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('password').addEventListener('input', function() {
-            const togglePassword = document.querySelector('#login-form .toggle-password');
-            togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
-        });
-
-        document.getElementById('reg-password').addEventListener('input', function() {
-            const togglePassword = document.querySelector('#register-form .toggle-password');
-            togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
-        });
-
-        document.querySelectorAll('.toggle-password').forEach(function(toggle) {
-            toggle.addEventListener('click', function() {
-                const passwordInput = this.previousElementSibling;
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
-            });
+    // Mostrar/ocultar contraseña
+    document.querySelectorAll('.toggle-password').forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+            const passwordInput = this.previousElementSibling;
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
         });
     });
+
+    // Mostrar el icono de ojo solo si hay algo en el campo de contraseña
+    document.getElementById('password').addEventListener('input', function() {
+        const togglePassword = document.querySelector('#login-form .toggle-password');
+        togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
+    });
+
+    document.getElementById('reg-password').addEventListener('input', function() {
+        const togglePassword = document.querySelector('#register-form .toggle-password');
+        togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
+    });
+});
 </script>
 </body>
 </html>
