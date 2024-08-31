@@ -43,6 +43,7 @@ color: #fff;
 
 <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
 <script>
+document.addEventListener('DOMContentLoaded', function() {
 // Configuración de Auth0
 const auth0 = new auth0.WebAuth({
 domain: 'dev-myj57y5jrguwrn5r.eu.auth0.com',
@@ -54,6 +55,7 @@ scope: 'openid profile email'
 
 // Mostrar el formulario de inicio de sesión
 auth0.authorize();
+});
 </script>
 </body>
 </html>
