@@ -8,7 +8,7 @@
 <style>
 body {
 font-family: 'Arial', sans-serif;
-background-image: url('IMG_3101.jpeg');
+background-image: url('IMG_3097.jpeg');
 background-size: cover;
 background-position: center;
 color: #fff;
@@ -25,7 +25,7 @@ background-color: rgba(0, 0, 0, 0.7);
 padding: 20px;
 border-radius: 10px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-width: 300px;
+width: 320px;
 text-align: center;
 }
 
@@ -33,28 +33,193 @@ text-align: center;
 margin-bottom: 20px;
 color: #fff;
 }
+
+.input-group {
+position: relative;
+margin-bottom: 20px;
+}
+
+.input-group input {
+width: 100%;
+padding: 10px 40px 10px 10px;
+border-radius: 5px;
+border: none;
+background-color: #333;
+color: #fff;
+}
+
+.input-group .icon-left,
+.input-group .icon-right {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+color: #fff;
+}
+
+.input-group .icon-left {
+left: 10px;
+}
+
+.input-group .icon-right {
+right: 10px;
+cursor: pointer;
+display: none;
+}
+
+.toggle-password {
+display: none;
+cursor: pointer;
+}
+
+.auth-box a {
+color: #7BBDF5;
+text-decoration: none;
+}
+
+.auth-box a:hover {
+text-decoration: underline;
+}
+
+.auth-box button {
+width: 100%;
+padding: 10px;
+border-radius: 5px;
+border: none;
+background-color: #007bff;
+color: #fff;
+cursor: pointer;
+margin-bottom: 10px;
+}
+
+.google-button {
+background-color: #DB4437;
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 10px;
+}
+
+.google-button img {
+margin-right: 10px;
+}
 </style>
 </head>
 <body>
 <div class="auth-box">
 <h2 id="form-title">Iniciar Sesión</h2>
-<div id="auth0-login-container"></div>
+<div id="login-form">
+<div class="input-group">
+<span class="icon-left"></span> <!-- Ícono de usuario -->
+<input type="text" placeholder="Nombre de Usuario" id="username">
+</div>
+<div class="input-group">
+<span class="icon-left"></span> <!-- Ícono de candado -->
+<input type="password" placeholder="Contraseña" id="password">
+<span class="icon-right toggle-password"></span> <!-- Ícono para mostrar/ocultar contraseña -->
+</div>
+<div>
+<input type="checkbox" id="remember-me">
+<label for="remember-me">Recuérdame</label>
+<a href="#" style="float: right;">¿Olvidaste tu contraseña?</a>
+</div>
+<button onclick="login()">Iniciar Sesión</button>
+<button class="google-button"><img src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" width="20px" />Iniciar Sesión con Google</button>
+<p>No has iniciado sesión? <a href="#" onclick="toggleForm('register')">Regístrate</a></p>
+</div>
+<div id="register-form" style="display: none;">
+<div class="input-group">
+<span class="icon-left"></span> <!-- Ícono de usuario -->
+<input type="text" placeholder="Nombre de Usuario" id="reg-username">
+</div>
+<div class="input-group">
+<span class="icon-left"></span> <!-- Ícono de candado -->
+<input type="password" placeholder="Contraseña" id="reg-password">
+<span class="icon-right toggle-password"></span> <!-- Ícono para mostrar/ocultar contraseña -->
+</div>
+<button onclick="register()">Registrarse</button>
+<button class="google-button"><img src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" width="20px" />Registrarse con Google</button>
+<p>¿Ya te has registrado? <a href="#" onclick="toggleForm('login')">Iniciar Sesión</a></p>
+</div>
 </div>
 
 <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-// Configuración de Auth0
 const auth0 = new auth0.WebAuth({
-domain: 'dev-myj57y5jrguwrn5r.eu.auth0.com',
-clientID: 'hRLIsVJcX0MifDbcUOUrg43ICEnl2xKw',
-redirectUri: 'cuadro de emociones.html',
+domain: 'tu-dominio.auth0.com',
+clientID: 'tu-clientID',
+redirectUri: window.location.origin + '/callback.html',
 responseType: 'token id_token',
 scope: 'openid profile email'
 });
 
-// Mostrar el formulario de inicio de sesión
+function login() {
 auth0.authorize();
+}
+
+function register() {
+auth0.authorize();
+}
+
+function toggleForm(form) {
+document.getElementById('login-form').style.display = form === 'login' ? 'block' : 'none';
+document.getElementById('register-form').style.display = form === 'register' ? 'block' : 'none';
+document.getElementById('form-title').innerText = form === 'login' ? 'Iniciar Sesión' : 'Registrarse';
+}
+
+document.getElementById('password').addEventListener('input', function() {
+const togglePassword = document.querySelector('#login-form .toggle-password');
+togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
+});
+
+document.getElementById('reg-password').addEventListener('input', function() {
+const togglePassword = document.querySelector('#register-form .toggle-password');
+togglePassword.style.display = this.value.length > 0 ? 'inline' : 'none';
+});
+
+document.querySelectorAll('.toggle-password').forEach(function(toggle) {
+toggle.addEventListener('click', function() {
+const passwordInput = this.previousElementSibling;
+const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+passwordInput.setAttribute('type', type);
+this.innerHTML = type === 'password' ? '' : '';
+});
+});
+});
+</script>
+</body>
+</html>
+
+Paso 3: Crear la Página de Callback
+Crea una página callback.html que manejará la redirección después de la autenticación:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Callback</title>
+</head>
+<body>
+<script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const auth0 = new auth0.WebAuth({
+domain: 'tu-dominio.auth0.com',
+clientID: 'tu-clientID',
+redirectUri: window.location.origin + '/callback.html',
+responseType: 'token id_token',
+scope: 'openid profile email'
+});
+
+auth0.parseHash((err, authResult) => {
+if (authResult && authResult.accessToken && authResult.idToken) {
+window.location.href = 'dashboard.html'; // Redirigir a la página deseada
+} else if (err) {
+console.log(err);
+alert('Error: ' + err.error + '. Check the console for further details.');
+}
+});
 });
 </script>
 </body>
