@@ -1,122 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inicio de Sesión</title>
-<link rel="stylesheet" href="https://cdn.auth0.com/styleguide/latest/index.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-<style>
-body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('IMG_3101.jpeg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/latest/index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ... tu CSS aquí ... */
+    </style>
 
-.auth-box {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 320px;
-    text-align: center;
-}
-
-.auth-box h2 {
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-.input-group {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.input-group input {
-    width: 100%;
-    display: flex;
-    padding: 10px 40px 10px 40px;
-    border-radius: 5px;
-    border: none;
-    background-color: #333;
-    color: #fff;
-}
-
-.input-group .icon-left,
-.input-group .icon-right {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #fff;
-}
-
-.input-group .icon-left {
-    left: 10px;
-}
-
-.input-group .icon-right {
-    right: 10px;
-    cursor: pointer;
-    display: none;
-}
-
-.toggle-password {
-    cursor: pointer;
-}
-
-.auth-box a {
-    color: #7BBDF5;
-    text-decoration: none;
-}
-
-.auth-box a:hover {
-    text-decoration: underline;
-}
-
-.auth-box button {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-.google-button {
-    background-color: #DB4437;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.google-button img {
-    margin-right: 10px;
-}
-</style>
+    <!-- Carga del script de Auth0 con defer -->
+    <script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js" defer></script>
 </head>
 <body>
 <div class="auth-box">
     <h2 id="form-title">Iniciar Sesión</h2>
     <div id="login-form">
         <div class="input-group">
-            <span class="icon-left"><i class="fas fa-user"></i></span> <!-- Ícono de usuario -->
+            <span class="icon-left"><i class="fas fa-user"></i></span>
             <input type="text" placeholder="Nombre de Usuario" id="username">
         </div>
         <div class="input-group">
-            <span class="icon-left"><i class="fas fa-lock"></i></span> <!-- Ícono de candado -->
+            <span class="icon-left"><i class="fas fa-lock"></i></span>
             <input type="password" placeholder="Contraseña" id="password">
-            <span class="icon-right toggle-password"><i class="fas fa-eye"></i></span> <!-- Ícono para mostrar/ocultar contraseña -->
+            <span class="icon-right toggle-password"><i class="fas fa-eye"></i></span>
         </div>
         <div>
             <input type="checkbox" id="remember-me">
@@ -129,13 +37,13 @@ body {
     </div>
     <div id="register-form" style="display: none;">
         <div class="input-group">
-            <span class="icon-left"><i class="fas fa-user"></i></span> <!-- Ícono de usuario -->
+            <span class="icon-left"><i class="fas fa-user"></i></span>
             <input type="text" placeholder="Nombre de Usuario" id="reg-username">
         </div>
         <div class="input-group">
-            <span class="icon-left"><i class="fas fa-lock"></i></span> <!-- Ícono de candado -->
+            <span class="icon-left"><i class="fas fa-lock"></i></span>
             <input type="password" placeholder="Contraseña" id="reg-password">
-            <span class="icon-right toggle-password"><i class="fas fa-eye"></i></span> <!-- Ícono para mostrar/ocultar contraseña -->
+            <span class="icon-right toggle-password"><i class="fas fa-eye"></i></span>
         </div>
         <button onclick="register()">Registrarse</button>
         <button class="google-button"><img src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" width="20px" />Registrarse con Google</button>
@@ -143,7 +51,6 @@ body {
     </div>
 </div>
 
-<script src="https://cdn.auth0.com/js/auth0/9.19/auth0.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Inicia el objeto auth0 dentro del DOMContentLoaded
